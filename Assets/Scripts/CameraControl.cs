@@ -1,12 +1,14 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Networking;
 
-public class CameraControl : MonoBehaviour {
+public class CameraControl : NetworkBehaviour {
 
 	private float mouseH = 0.0f;
 	private float mouseV = 0.0f;
 	public float mouseSensitivity;
+    public Camera playerCam;
 
 	// Use this for initialization
 	void Start () {
@@ -15,9 +17,13 @@ public class CameraControl : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		mouseH += Input.GetAxis ("Mouse X") * mouseSensitivity;
-		mouseV -= Input.GetAxis ("Mouse Y") * mouseSensitivity;
+        if (isLocalPlayer)
+        {
+            mouseH += Input.GetAxis("Mouse X") * mouseSensitivity;
+            mouseV -= Input.GetAxis("Mouse Y") * mouseSensitivity;
 
-		transform.rotation = Quaternion.Euler (Mathf.Clamp(mouseV, -90, 90), mouseH, 0);
+            playerCam.transform.rotation = Quaternion.Euler(Mathf.Clamp(mouseV, -90, 90), mouseH, 0);
+            transform.rotation = Quaternion.Euler(Mathf.Clamp(mouseV, -90, 90), mouseH, 0);
+        }
 	}
 }
