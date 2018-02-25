@@ -2,8 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.Networking;
 
-public class Health : MonoBehaviour {
+public class Health : NetworkBehaviour {
 
     public const int maxHealth = 100;
     public int currentHealth = maxHealth;
@@ -11,23 +12,21 @@ public class Health : MonoBehaviour {
 
     // Use this for initialization
     void Start () {
-        currentHealth = maxHealth;
-        healthText.text = "Health: " + currentHealth;
+
     }
 	
 	// Update is called once per frame
 	void Update () {
-		
-	}
+        if (isLocalPlayer) healthText.text = "Health: " + currentHealth;
+        else healthText.enabled = false;
+    }
 
     public void TakeDamage(int amount)
     {
         currentHealth = currentHealth - amount;
-        healthText.text = "Health: " + currentHealth;
         if (currentHealth <= 0)
         {
             currentHealth = 0;
-            Debug.Log("Dead!");
         }
     }
 }

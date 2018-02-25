@@ -10,7 +10,7 @@ public class CharacterControl : NetworkBehaviour {
 	public float crouchSpeedReduction;
 	public float mouseSpeed;
 	public float jumpHeight;
-	public GameObject playerCamera;
+    public GameObject playerCamera;
 	private Rigidbody rb;
 	private bool isCrouched = false;
 	private bool onGround = true;
@@ -26,7 +26,7 @@ public class CharacterControl : NetworkBehaviour {
 	void Update() {
         if (isLocalPlayer)
         {
-            transform.rotation = Quaternion.Euler(0, playerCamera.transform.rotation.eulerAngles.y, 0);
+            transform.rotation = Quaternion.Euler(playerCamera.transform.rotation.eulerAngles.x, playerCamera.transform.rotation.eulerAngles.y, playerCamera.transform.rotation.eulerAngles.z);
             
             if (Input.GetButtonDown("Crouch"))
             {
@@ -57,11 +57,20 @@ public class CharacterControl : NetworkBehaviour {
 	void FixedUpdate () {
         if (isLocalPlayer)
         {
+            //float moveHorizontal = Input.GetAxis("Horizontal");
+            //float moveVertical = Input.GetAxis("Vertical");
+
             float moveHorizontal = Input.GetAxis("Horizontal");
             float moveVertical = Input.GetAxis("Vertical");
 
-            Vector3 forward = transform.forward * moveSpeed * moveVertical;
-            Vector3 horizontal = transform.right * moveSpeed * moveHorizontal;
+            //Vector3 forward = new Vector3(transform.forward.x, 0, transform.forward.z) * moveSpeed * moveVertical;
+            //Vector3 horizontal = new Vector3(transform.right.x, 0, transform.right.z) * moveSpeed * moveHorizontal;
+
+            Vector3 forward = new Vector3(transform.forward.x, 0, transform.forward.z).normalized * moveSpeed * moveVertical;
+            Vector3 horizontal = new Vector3(transform.right.x, 0, transform.right.z).normalized * moveSpeed * moveHorizontal;
+
+            //Vector3 forward = transform.forward * moveSpeed * moveVertical;
+            //Vector3 horizontal = transform.right * moveSpeed * moveHorizontal;
 
             rb.velocity = forward + horizontal + new Vector3(0, rb.velocity.y, 0);
 

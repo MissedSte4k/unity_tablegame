@@ -8,7 +8,7 @@ public class CameraControl : NetworkBehaviour {
 	private float mouseH = 0.0f;
 	private float mouseV = 0.0f;
 	public float mouseSensitivity;
-    public Camera playerCam;
+    public Camera playerCamera;
 
 	// Use this for initialization
 	void Start () {
@@ -22,8 +22,8 @@ public class CameraControl : NetworkBehaviour {
             mouseH += Input.GetAxis("Mouse X") * mouseSensitivity;
             mouseV -= Input.GetAxis("Mouse Y") * mouseSensitivity;
 
-            playerCam.transform.rotation = Quaternion.Euler(Mathf.Clamp(mouseV, -90, 90), mouseH, 0);
-            transform.rotation = Quaternion.Euler(Mathf.Clamp(mouseV, -90, 90), mouseH, 0);
+            playerCamera.transform.rotation = Quaternion.Euler(Mathf.Clamp(mouseV, -90, 90), mouseH, 0);
         }
+        else playerCamera.enabled = false;
 	}
 }
