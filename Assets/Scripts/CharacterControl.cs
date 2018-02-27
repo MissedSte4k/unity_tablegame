@@ -16,6 +16,8 @@ public class CharacterControl : NetworkBehaviour {
 	private bool onGround = true;
     public GameObject bulletPrefab;
     public Transform bulletSpawn;
+    public int bulletSpeed;
+    public Text healthText;
 
 
 	// Use this for initialization
@@ -26,6 +28,8 @@ public class CharacterControl : NetworkBehaviour {
 	void Update() {
         if (isLocalPlayer)
         {
+            Health health = GetComponent<Health>();
+            healthText.text = "Health: " + health.CurrentHealth();
             transform.rotation = Quaternion.Euler(playerCamera.transform.rotation.eulerAngles.x, playerCamera.transform.rotation.eulerAngles.y, playerCamera.transform.rotation.eulerAngles.z);
             
             if (Input.GetButtonDown("Crouch"))
@@ -50,6 +54,7 @@ public class CharacterControl : NetworkBehaviour {
             {
                 CmdFire();
             }
+
         }
 	}
 
@@ -57,14 +62,8 @@ public class CharacterControl : NetworkBehaviour {
 	void FixedUpdate () {
         if (isLocalPlayer)
         {
-            //float moveHorizontal = Input.GetAxis("Horizontal");
-            //float moveVertical = Input.GetAxis("Vertical");
-
             float moveHorizontal = Input.GetAxis("Horizontal");
             float moveVertical = Input.GetAxis("Vertical");
-
-            //Vector3 forward = new Vector3(transform.forward.x, 0, transform.forward.z) * moveSpeed * moveVertical;
-            //Vector3 horizontal = new Vector3(transform.right.x, 0, transform.right.z) * moveSpeed * moveHorizontal;
 
             Vector3 forward = new Vector3(transform.forward.x, 0, transform.forward.z).normalized * moveSpeed * moveVertical;
             Vector3 horizontal = new Vector3(transform.right.x, 0, transform.right.z).normalized * moveSpeed * moveHorizontal;
@@ -117,7 +116,7 @@ public class CharacterControl : NetworkBehaviour {
         GameObject bullet = Instantiate(bulletPrefab, bulletSpawn.position, bulletSpawn.rotation);
 
         // Add velocity to the bullet
-        bullet.GetComponent<Rigidbody>().velocity = bullet.transform.forward * 6;
+        bullet.GetComponent<Rigidbody>().velocity = bullet.transform.forward * bulletSpeed;
 
         NetworkServer.Spawn(bullet);
 
