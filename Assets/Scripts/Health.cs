@@ -6,35 +6,11 @@ using UnityEngine.Networking;
 
 public class Health : NetworkBehaviour {
 
-    /*public const int maxHealth = 100;
-    public int currentHealth;
-    public Text healthText;
-
-    // Use this for initialization
-    void Start () {
-        currentHealth = maxHealth;
-    }
-	
-	// Update is called once per frame
-	void Update () {
-        if (isLocalPlayer) healthText.text = "Health: " + currentHealth;
-        else healthText.enabled = false;
-    }
-    
-    public void TakeDamage(int amount)
-    {
-        currentHealth = currentHealth - amount;
-        if (currentHealth <= 0)
-        {
-            currentHealth = 0;
-        }
-    }*/
-
     [SerializeField] int maxHealth = 100;
     public Text healthText;
 
     PlayerRespawn pr;
-    int health;
+    [SyncVar (hook = "OnHealthChanged")] int health;
 
     void Awake()
     {
@@ -70,5 +46,11 @@ public class Health : NetworkBehaviour {
     public int CurrentHealth()
     {
         return health;
+    }
+
+    void OnHealthChanged(int value)
+    {
+        health = value;
+        if(isLocalPlayer) healthText.text = "Health: " + health;
     }
 }

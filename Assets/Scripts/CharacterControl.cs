@@ -31,8 +31,8 @@ public class CharacterControl : NetworkBehaviour {
 	void Update() {
         if (isLocalPlayer)
         {
-            Health health = GetComponent<Health>();
-            healthText.text = "Health: " + health.CurrentHealth();
+            //Health health = GetComponent<Health>();
+            //healthText.text = "Health: " + health.CurrentHealth();
             transform.rotation = Quaternion.Euler(playerCamera.transform.rotation.eulerAngles.x, playerCamera.transform.rotation.eulerAngles.y, playerCamera.transform.rotation.eulerAngles.z);
 
             mouseH += Input.GetAxis("Mouse X") * mouseSensitivity;
