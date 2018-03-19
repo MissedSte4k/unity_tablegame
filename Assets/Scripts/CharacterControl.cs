@@ -8,24 +8,34 @@ public class CharacterControl : NetworkBehaviour {
 	
 	public float moveSpeed;
 	public float crouchSpeedReduction;
+    public float sprintSpeedBoost;
+    public int increaseTime;
+    public int decreaseTime;
+    public int sprintStaminaUse;
+    public int jumpStaminaUse;
+    public int shootStaminaUse;
 	public float jumpHeight;
 	private Rigidbody rb;
+    private Health health;
 	private bool isCrouched = false;
     private bool isJumped = false;
 	private bool onGround = true;
+    private bool onSprint = false;
     public GameObject bulletPrefab;
     public Transform bulletSpawn;
     public int bulletSpeed;
-    public Text healthText;
     private float mouseH = 0.0f;
     private float mouseV = 0.0f;
     public float mouseSensitivity;
     public Camera playerCamera;
-
+    private int currentIncreaseTime;
+    private int currentDecreaseTime;
 
     // Use this for initialization
     void Start () {
 		rb = GetComponent<Rigidbody> ();
+        health = GetComponent<Health>();
+        currentIncreaseTime = increaseTime;
 	}
 
 	void Update() {
@@ -58,11 +68,49 @@ public class CharacterControl : NetworkBehaviour {
                 }
             }
 
-            if(Input.GetButtonDown("Fire1"))
+            if (Input.GetButtonDown("Fire1"))
             {
-                CmdFire();
+                if (!health.ChangeStamina(-shootStaminaUse)) CmdFire();
             }
 
+            if (Input.GetButtonDown("Sprint") && !isStanding() && onGround && !isCrouched)
+            {
+                onSprint = true;
+            }
+
+            if (Input.GetButtonUp("Sprint") || isStanding() || !onGround || isCrouched)
+            {
+                onSprint = false;
+            }
+
+            if (onSprint)
+            {
+                if (currentDecreaseTime < 1)
+                {
+                    if (health.ChangeStamina(-sprintStaminaUse)) onSprint = false;
+                    currentDecreaseTime = decreaseTime;
+                }
+                else currentDecreaseTime--;
+            }
+
+            if (!onSprint)
+            {
+                if (currentIncreaseTime < 1)
+                {
+                    health.ChangeStamina(1);
+                    currentIncreaseTime = increaseTime;
+                }
+                else currentIncreaseTime--;
+            }
+
+            if (Input.GetButtonDown("Jump") && onGround)
+            {
+                //rb.AddForce(Vector3.up * jumpHeight, ForceMode.Impulse);
+                if (!health.ChangeStamina(-jumpStaminaUse))
+                {
+                    rb.velocity = new Vector3(rb.velocity.x, jumpHeight, rb.velocity.z);
+                }
+            }
         }
         else playerCamera.enabled = false;
     }
@@ -73,9 +121,10 @@ public class CharacterControl : NetworkBehaviour {
         {
             float moveHorizontal = Input.GetAxis("Horizontal");
             float moveVertical = Input.GetAxis("Vertical");
-
-            Vector3 forward = new Vector3(transform.forward.x, 0, transform.forward.z).normalized * moveSpeed * moveVertical;
-            Vector3 horizontal = new Vector3(transform.right.x, 0, transform.right.z).normalized * moveSpeed * moveHorizontal;
+            float speed = moveSpeed;
+            if (onSprint) speed = moveSpeed + sprintSpeedBoost;
+            Vector3 forward = new Vector3(transform.forward.x, 0, transform.forward.z).normalized * speed * moveVertical;
+            Vector3 horizontal = new Vector3(transform.right.x, 0, transform.right.z).normalized * speed * moveHorizontal;
 
             //Vector3 forward = transform.forward * moveSpeed * moveVertical;
             //Vector3 horizontal = transform.right * moveSpeed * moveHorizontal;
@@ -86,13 +135,22 @@ public class CharacterControl : NetworkBehaviour {
 
             //if (rb.velocity.magnitude > moveSpeed) rb.velocity = rb.velocity.normalized * moveSpeed;
 
-            if (Input.GetButtonDown("Jump") && onGround)
+            /*if (Input.GetButtonDown("Jump") && onGround)
             {
                 //rb.AddForce(Vector3.up * jumpHeight, ForceMode.Impulse);
-                rb.velocity = new Vector3(rb.velocity.x, jumpHeight, rb.velocity.z);
-            }
+                if (!health.ChangeStamina(-jumpStaminaUse))
+                {
+                    rb.velocity = new Vector3(rb.velocity.x, jumpHeight, rb.velocity.z);
+                }
+            }*/
         }
 	}
+
+    private bool isStanding()
+    {
+        if (rb.velocity.x == 0 && rb.velocity.z == 0) return true;
+        else return false;
+    }
 
 	private void OnCollisionEnter (Collision collision) {
         if (isLocalPlayer)
