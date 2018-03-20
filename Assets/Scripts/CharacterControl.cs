@@ -17,7 +17,7 @@ public class CharacterControl : NetworkBehaviour {
 	public float jumpHeight;
 	private Rigidbody rb;
     private Health health;
-	private CapsuleCollider hitBox;
+	public CapsuleCollider hitBox;
 	private bool isCrouched = false;
 	private bool onGround = true;
     private bool onSprint = false;
@@ -61,8 +61,7 @@ public class CharacterControl : NetworkBehaviour {
 
             playerCamera.transform.rotation = Quaternion.Euler(Mathf.Clamp(mouseV, -60, 60), mouseH, 0);
 
-
-			if (isCrouched == false) {
+            if (isCrouched == false) {
 				hitBox.height = Mathf.Lerp (hitBox.height, 2.2f, Time.deltaTime * 5);
 				hitBox.center = new Vector3 (0, Mathf.Lerp(hitBox.center.y, 0.1f, Time.deltaTime * 5), 0);
 
@@ -87,10 +86,10 @@ public class CharacterControl : NetworkBehaviour {
                 }
             }
 				
-            if (Input.GetButtonDown("Fire1"))
+            /*if (Input.GetButtonDown("Fire1"))
             {
                 if (!health.ChangeStamina(-shootStaminaUse)) CmdFire();
-            }
+            }*/
 
             if (Input.GetButtonDown("Sprint") && !isStanding() && onGround && !isCrouched)
             {
@@ -165,6 +164,8 @@ public class CharacterControl : NetworkBehaviour {
                     rb.velocity = new Vector3(rb.velocity.x, jumpHeight, rb.velocity.z);
                 }
             }
+
+            Physics.SyncTransforms();
         }
         else playerCamera.enabled = false;
     }
