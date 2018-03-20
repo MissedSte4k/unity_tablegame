@@ -16,11 +16,8 @@ public class CharacterControl : NetworkBehaviour {
     public int shootStaminaUse;
 	public float jumpHeight;
 	private Rigidbody rb;
-<<<<<<< HEAD
     private Health health;
-=======
 	private CapsuleCollider hitBox;
->>>>>>> Animation
 	private bool isCrouched = false;
 	private bool onGround = true;
     private bool onSprint = false;
@@ -31,28 +28,21 @@ public class CharacterControl : NetworkBehaviour {
     private float mouseV = 0.0f;
     public float mouseSensitivity;
     public Camera playerCamera;
-<<<<<<< HEAD
     private int currentIncreaseTime;
     private int currentDecreaseTime;
-=======
 	public float smoothing = 5f;
 	NetworkAnimator anim;
 	// dvi apatinės skeleto stuburo dalys, naudojamos žiūrėt aukštyn/žemyn
 	public Transform spine;
 	public Transform spine1;
 
->>>>>>> Animation
-
     // Use this for initialization
     void Start () {
 		rb = GetComponent<Rigidbody> ();
-<<<<<<< HEAD
         health = GetComponent<Health>();
         currentIncreaseTime = increaseTime;
-=======
 		anim = GetComponent<NetworkAnimator> ();
 		hitBox = GetComponent<CapsuleCollider> ();
->>>>>>> Animation
 	}
 
 	void Update() {
@@ -96,8 +86,7 @@ public class CharacterControl : NetworkBehaviour {
 					anim.animator.SetBool ("Crouched", false);
                 }
             }
-
-<<<<<<< HEAD
+				
             if (Input.GetButtonDown("Fire1"))
             {
                 if (!health.ChangeStamina(-shootStaminaUse)) CmdFire();
@@ -122,7 +111,7 @@ public class CharacterControl : NetworkBehaviour {
                 }
                 else currentDecreaseTime--;
             }
-=======
+
 			// ataka vyksta kol laikomas nuspaustas mygtukas
 			if (Input.GetButton ("Fire1")) {
 				anim.animator.SetBool ("Attack1", true);
@@ -157,7 +146,6 @@ public class CharacterControl : NetworkBehaviour {
 			} else {
 				anim.animator.SetBool ("Block", false);
 			}
->>>>>>> Animation
 
             if (!onSprint)
             {
