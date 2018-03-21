@@ -40,9 +40,10 @@ public class CharacterControl : NetworkBehaviour {
     // Use this for initialization
     void Start () {
 		rb = GetComponent<Rigidbody> ();
-        health = GetComponent<Health>();
         currentIncreaseTime = increaseTime;
-		anim = GetComponent<NetworkAnimator> ();
+        currentDecreaseTime = decreaseTime;
+		anim = GetComponent<NetworkAnimator>();
+        health = GetComponent<Health>();
 	}
 
     void Update() {
@@ -82,10 +83,12 @@ public class CharacterControl : NetworkBehaviour {
             }
 
             if (onSprint)
-            {
+            { 
                 if (currentDecreaseTime < 1)
                 {
-                    if (health.ChangeStamina(-sprintStaminaUse)) onSprint = false;
+                    //if (health.ChangeStamina(-sprintStaminaUse)) onSprint = false;
+                    CmdChangeStamina(-sprintStaminaUse);
+                    if(health.isStaminaZero()) onSprint = false;
                     currentDecreaseTime = decreaseTime;
                 }
                 else currentDecreaseTime--;
@@ -128,9 +131,10 @@ public class CharacterControl : NetworkBehaviour {
 
             if (!onSprint)
             {
-                if (currentIncreaseTime < 1)
+                if (currentIncreaseTime < 1 && !health.isStaminaMax())
                 {
-                    health.ChangeStamina(1);
+                    //health.ChangeStamina(1);
+                    CmdChangeStamina(1);
                     currentIncreaseTime = increaseTime;
                 }
                 else currentIncreaseTime--;
@@ -139,8 +143,10 @@ public class CharacterControl : NetworkBehaviour {
             if (Input.GetButtonDown("Jump") && onGround)
             {
                 //rb.AddForce(Vector3.up * jumpHeight, ForceMode.Impulse);
-                if (!health.ChangeStamina(-jumpStaminaUse))
+                //if (!health.ChangeStamina(-jumpStaminaUse))
+                if (!health.isStaminaZero(-jumpStaminaUse))
                 {
+                    CmdChangeStamina(-jumpStaminaUse);
                     rb.velocity = new Vector3(rb.velocity.x, jumpHeight, rb.velocity.z);
                 }
             }
@@ -236,6 +242,13 @@ public class CharacterControl : NetworkBehaviour {
 
         // Destroy the bullet after 2 seconds
         Destroy(bullet, 2.0f);
+    }
+
+    [Command]
+    private void CmdChangeStamina(int value)
+    {
+        //health.GetComponent<Health>();
+        health.ChangeStamina(value);
     }
 
     [Command]
