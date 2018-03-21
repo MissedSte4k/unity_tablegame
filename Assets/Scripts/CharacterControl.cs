@@ -251,7 +251,7 @@ public class CharacterControl : NetworkBehaviour {
         if (value)
         {
             hitBox.height = Mathf.Lerp(hitBox.height, 1.5f, 0.5f);
-            hitBox.center = new Vector3(0, Mathf.Lerp(hitBox.center.y, 0.25f, 0.5f), 0);
+            hitBox.center = new Vector3(0, Mathf.Lerp(hitBox.center.y, 0.70f, 0.5f), 0);
             moveSpeed -= crouchSpeedReduction;
             anim.animator.SetBool("Crouched", true);
 
@@ -261,7 +261,7 @@ public class CharacterControl : NetworkBehaviour {
         else
         {
             hitBox.height = Mathf.Lerp(hitBox.height, 2.2f, 0.5f);
-            hitBox.center = new Vector3(0, Mathf.Lerp(hitBox.center.y, 0.1f, 0.5f), 0);
+            hitBox.center = new Vector3(0, Mathf.Lerp(hitBox.center.y, -0.35f, 0.5f), 0);
             moveSpeed += crouchSpeedReduction;
             anim.animator.SetBool("Crouched", false);
 
