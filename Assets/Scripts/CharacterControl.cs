@@ -17,8 +17,7 @@ public class CharacterControl : NetworkBehaviour {
 	public float jumpHeight;
 	private Rigidbody rb;
     private Health health;
-	public CapsuleCollider hitBox;
-	private bool isCrouched = false;
+    private CapsuleCollider hitBox;
 	private bool onGround = true;
     private bool onSprint = false;
     public GameObject bulletPrefab;
@@ -36,16 +35,17 @@ public class CharacterControl : NetworkBehaviour {
 	public Transform spine;
 	public Transform spine1;
 
+    [SyncVar(hook = "OnCrouch")] bool isCrouched = false;
+
     // Use this for initialization
     void Start () {
 		rb = GetComponent<Rigidbody> ();
         health = GetComponent<Health>();
         currentIncreaseTime = increaseTime;
 		anim = GetComponent<NetworkAnimator> ();
-		hitBox = GetComponent<CapsuleCollider> ();
 	}
 
-	void Update() {
+    void Update() {
         if (isLocalPlayer)
         {
 			anim.animator.ResetTrigger ("Attack2");
@@ -61,29 +61,9 @@ public class CharacterControl : NetworkBehaviour {
 
             playerCamera.transform.rotation = Quaternion.Euler(Mathf.Clamp(mouseV, -60, 60), mouseH, 0);
 
-            if (isCrouched == false) {
-				hitBox.height = Mathf.Lerp (hitBox.height, 2.2f, Time.deltaTime * 5);
-				hitBox.center = new Vector3 (0, Mathf.Lerp(hitBox.center.y, 0.1f, Time.deltaTime * 5), 0);
-
-			} else {
-				hitBox.height = Mathf.Lerp (hitBox.height, 1.5f, Time.deltaTime * 5);
-				hitBox.center = new Vector3 (0, Mathf.Lerp(hitBox.center.y, 0.25f, Time.deltaTime * 5), 0);
-			}
-
             if (Input.GetButtonDown("Crouch"))
             {
-                if (isCrouched == false)
-                {
-                    isCrouched = true;
-                    moveSpeed -= crouchSpeedReduction;
-					anim.animator.SetBool ("Crouched", true);
-                }
-                else
-                {
-                    isCrouched = false;
-                    moveSpeed += crouchSpeedReduction;
-					anim.animator.SetBool ("Crouched", false);
-                }
+                CmdCrouch();
             }
 				
             /*if (Input.GetButtonDown("Fire1"))
@@ -197,15 +177,6 @@ public class CharacterControl : NetworkBehaviour {
                 rb.velocity = new Vector3(rb.velocity.x, 0, rb.velocity.z);
 
             //if (rb.velocity.magnitude > moveSpeed) rb.velocity = rb.velocity.normalized * moveSpeed;
-
-            /*if (Input.GetButtonDown("Jump") && onGround)
-            {
-                //rb.AddForce(Vector3.up * jumpHeight, ForceMode.Impulse);
-                if (!health.ChangeStamina(-jumpStaminaUse))
-                {
-                    rb.velocity = new Vector3(rb.velocity.x, jumpHeight, rb.velocity.z);
-                }
-            }*/
         }
 	}
 
@@ -265,5 +236,37 @@ public class CharacterControl : NetworkBehaviour {
 
         // Destroy the bullet after 2 seconds
         Destroy(bullet, 2.0f);
+    }
+
+    [Command]
+    private void CmdCrouch()
+    {
+        isCrouched = !isCrouched;
+    }
+
+    void OnCrouch(bool value)
+    {
+        hitBox = GetComponent<CapsuleCollider>();
+        anim = GetComponent<NetworkAnimator>();
+        if (value)
+        {
+            hitBox.height = Mathf.Lerp(hitBox.height, 1.5f, 0.5f);
+            hitBox.center = new Vector3(0, Mathf.Lerp(hitBox.center.y, 0.25f, 0.5f), 0);
+            moveSpeed -= crouchSpeedReduction;
+            anim.animator.SetBool("Crouched", true);
+
+            //hitBox.height = Mathf.Lerp(hitBox.height, 1.5f, Time.deltaTime * 5);
+            //hitBox.center = new Vector3(0, Mathf.Lerp(hitBox.center.y, 0.25f, Time.deltaTime * 5), 0);
+        }
+        else
+        {
+            hitBox.height = Mathf.Lerp(hitBox.height, 2.2f, 0.5f);
+            hitBox.center = new Vector3(0, Mathf.Lerp(hitBox.center.y, 0.1f, 0.5f), 0);
+            moveSpeed += crouchSpeedReduction;
+            anim.animator.SetBool("Crouched", false);
+
+            //hitBox.height = Mathf.Lerp(hitBox.height, 2.2f, Time.deltaTime * 5);
+            //hitBox.center = new Vector3(0, Mathf.Lerp(hitBox.center.y, 0.1f, Time.deltaTime * 5), 0);
+        }
     }
 }
