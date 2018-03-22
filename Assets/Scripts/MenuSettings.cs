@@ -10,15 +10,29 @@ public class MenuSettings : MonoBehaviour
     public int[] screenWidths;
     int activeScreenResolutionIndex;
 
+    public Dropdown graphicsDropdown;
+
+
     //Loads saved user settings
     public void Start()
     {
+        //Resolutiom
         activeScreenResolutionIndex = PlayerPrefs.GetInt("screen res index");
 
         for (int i = 0; i < resolutionToggles.Length; i++)
         {
             resolutionToggles[i].isOn = i == activeScreenResolutionIndex;
         }
+
+        //Graphics                      
+        int qualityIndex = PlayerPrefs.GetInt("graphics index");        
+                                    
+        if (qualityIndex == 0 || qualityIndex == 1 || qualityIndex == 2)
+        {
+            QualitySettings.SetQualityLevel(qualityIndex);
+            graphicsDropdown.value = qualityIndex;
+            graphicsDropdown.RefreshShownValue();
+        }       
     }
 
 
@@ -52,6 +66,15 @@ public class MenuSettings : MonoBehaviour
         }
         activeScreenResolutionIndex = i;
         PlayerPrefs.SetInt("screen res index", activeScreenResolutionIndex);
+        PlayerPrefs.Save();
+    }
+
+
+    //Graphics settings
+    public void SetQuality(int qualityIndex)
+    {
+        QualitySettings.SetQualityLevel(qualityIndex);
+        PlayerPrefs.SetInt("graphics index", qualityIndex);
         PlayerPrefs.Save();
     }
 }
