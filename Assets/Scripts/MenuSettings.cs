@@ -25,12 +25,12 @@ public class MenuSettings : MonoBehaviour
         }
 
         //Graphics                      
-        int qualityIndex = PlayerPrefs.GetInt("graphics index");        
+        int activeGraphicsIndex = PlayerPrefs.GetInt("graphics index");        
                                     
-        if (qualityIndex == 0 || qualityIndex == 1 || qualityIndex == 2)
+        if (activeGraphicsIndex == 0 || activeGraphicsIndex == 1 || activeGraphicsIndex == 2)
         {
-            QualitySettings.SetQualityLevel(qualityIndex);
-            graphicsDropdown.value = qualityIndex;
+            QualitySettings.SetQualityLevel(activeGraphicsIndex);
+            graphicsDropdown.value = activeGraphicsIndex;          
             graphicsDropdown.RefreshShownValue();
         }       
     }
