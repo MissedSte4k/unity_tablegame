@@ -30,7 +30,12 @@ public class CharacterControl : NetworkBehaviour {
     public Camera playerCamera;
     private int currentIncreaseTime;
     private int currentDecreaseTime;
-    public float smoothing = 5f;
+    private float normalHeight = 2.2f;
+    private float crouchHeight = 1.5f;
+    private float normalCenter = 0.1f;
+    private float crouchCenter = 0.25f;
+    private float minHeightChangeSpeed = 0.01f;
+    private float minCenterChangeSpeed = 0.01f;
     NetworkAnimator anim;
     // dvi apatinės skeleto stuburo dalys, naudojamos žiūrėt aukštyn/žemyn
     public Transform spine;
@@ -82,7 +87,7 @@ public class CharacterControl : NetworkBehaviour {
                 }
             }
 
-            if(height != 2.2f && height != 1.5f)
+            if (height < normalHeight && height > crouchHeight || center > normalCenter && center < crouchCenter)
             {
                 if (isCrouched) CmdCrouch();
                 else CmdUncrouch();
@@ -108,7 +113,7 @@ public class CharacterControl : NetworkBehaviour {
                 if (currentDecreaseTime < 1)
                 {
                     //if (health.ChangeStamina(-sprintStaminaUse)) onSprint = false;
-                    CmdChangeStamina(-sprintStaminaUse);
+                    health.ChangeStamina(-sprintStaminaUse);
                     if (health.isStaminaZero()) onSprint = false;
                     currentDecreaseTime = decreaseTime;
                 }
@@ -155,7 +160,7 @@ public class CharacterControl : NetworkBehaviour {
                 if (currentIncreaseTime < 1 && !health.isStaminaMax())
                 {
                     //health.ChangeStamina(1);
-                    CmdChangeStamina(1);
+                    health.ChangeStamina(1);
                     currentIncreaseTime = increaseTime;
                 }
                 else currentIncreaseTime--;
@@ -167,7 +172,7 @@ public class CharacterControl : NetworkBehaviour {
                 //if (!health.ChangeStamina(-jumpStaminaUse))
                 if (!health.isStaminaZero(-jumpStaminaUse))
                 {
-                    CmdChangeStamina(-jumpStaminaUse);
+                    health.ChangeStamina(-jumpStaminaUse);
                     rb.velocity = new Vector3(rb.velocity.x, jumpHeight, rb.velocity.z);
                 }
             }
@@ -265,22 +270,27 @@ public class CharacterControl : NetworkBehaviour {
         Destroy(bullet, 2.0f);
     }
 
-    [Command]
+    /*[Command]
     private void CmdChangeStamina(int value)
     {
         //health.GetComponent<Health>();
         health.ChangeStamina(value);
-    }
+    }*/
 
     [Command]
     private void CmdCrouch()
     {
-        CrouchUncrouch(Mathf.Lerp(height, 1.5f, Time.deltaTime * 5), Mathf.Lerp(center, 0.25f, Time.deltaTime * 5));
+        float h = Mathf.Max(Mathf.Min(Mathf.Lerp(height, crouchHeight, Time.deltaTime * 5), height - minHeightChangeSpeed), crouchHeight);
+        float c = Mathf.Min(Mathf.Max(Mathf.Lerp(center, crouchCenter, Time.deltaTime * 5), center + minCenterChangeSpeed), crouchCenter);
+        CrouchUncrouch(h, c);
     }
 
+    [Command]
     private void CmdUncrouch()
     {
-        CrouchUncrouch(Mathf.Lerp(height, 2.2f, Time.deltaTime * 5), Mathf.Lerp(center, 0.1f, Time.deltaTime * 5));
+        float h = Mathf.Min(Mathf.Max(Mathf.Lerp(height, normalHeight, Time.deltaTime * 5), height + minHeightChangeSpeed), normalHeight);
+        float c = Mathf.Max(Mathf.Min(Mathf.Lerp(center, normalCenter, Time.deltaTime * 5), center - minCenterChangeSpeed), normalCenter);
+        CrouchUncrouch(h, c);
     }
 
     [Server]
@@ -288,7 +298,7 @@ public class CharacterControl : NetworkBehaviour {
     {
         height = h;
         center = c;
-    }
+     }
 
     void OnHeightChanged(float value)
     {
