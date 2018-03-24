@@ -29,11 +29,17 @@ public class Health : NetworkBehaviour {
         else stamina = maxStamina;
     }
 
+    [Command]
+    public void CmdTakeDamage(int amount)
+    {
+        TakeDamage(amount);
+    }
+
     [Server]
     public bool TakeDamage(int amount)
     {
         health = health - amount;
-        if (dependOnHealth && stamina > health) ChangeStamina(health - stamina);
+        if (dependOnHealth && stamina > health) ChangeStamina(0);
         if (health <= 0)
         {
             OnHealthChanged(0);
@@ -45,24 +51,33 @@ public class Health : NetworkBehaviour {
         return false;
     }
 
-    [Server]
-    public bool ChangeStamina(int value)
-    {
-        stamina = stamina + value;
-        if (dependOnHealth && stamina > health) stamina = health;
-        if (!dependOnHealth && stamina > maxStamina) stamina = maxStamina;
-        if (stamina < 0)
-        {
-            stamina = stamina - value;
-            return true;
-        }
-        else return false;
-    }
-
     [ClientRpc]
     void RpcTakeDamage(bool died)
     {
         if (died) pr.Die();
+    }
+
+    public bool isStaminaMax()
+    {
+        if (dependOnHealth && stamina >= health || !dependOnHealth && stamina >= maxHealth) return true;
+        else return false;
+    }
+
+    public bool isStaminaZero()
+    {
+        if (stamina <= 0) return true;
+        else return false;
+    }
+
+    public bool isStaminaZero(int value)
+    {
+        if (stamina + value <= 0) return true;
+        else return false;
+    }
+
+    public void ChangeStamina(int value)
+    {
+        stamina = stamina + value;
     }
 
     public int CurrentHealth()
@@ -79,6 +94,9 @@ public class Health : NetworkBehaviour {
     void OnStaminaChanged(int value)
     {
         stamina = value;
+        if (dependOnHealth && stamina > health) stamina = health;
+        if (!dependOnHealth && stamina > maxStamina) stamina = maxStamina;
+        if (stamina < 0) stamina = 0;
         if (isLocalPlayer) staminaText.text = "Stamina: " + stamina;
     }
 }
