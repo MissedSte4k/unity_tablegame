@@ -29,6 +29,12 @@ public class Health : NetworkBehaviour {
         else stamina = maxStamina;
     }
 
+    [Command]
+    public void CmdTakeDamage(int amount)
+    {
+        TakeDamage(amount);
+    }
+
     [Server]
     public bool TakeDamage(int amount)
     {
@@ -43,6 +49,12 @@ public class Health : NetworkBehaviour {
         }
 
         return false;
+    }
+
+    [ClientRpc]
+    void RpcTakeDamage(bool died)
+    {
+        if (died) pr.Die();
     }
 
     public bool isStaminaMax()
@@ -63,19 +75,9 @@ public class Health : NetworkBehaviour {
         else return false;
     }
 
-    [Server]
     public void ChangeStamina(int value)
     {
         stamina = stamina + value;
-        if (dependOnHealth && stamina > health) stamina = health;
-        if (!dependOnHealth && stamina > maxStamina) stamina = maxStamina;
-        if (stamina < 0) stamina = 0;
-    }
-
-    [ClientRpc]
-    void RpcTakeDamage(bool died)
-    {
-        if (died) pr.Die();
     }
 
     public int CurrentHealth()
@@ -92,6 +94,9 @@ public class Health : NetworkBehaviour {
     void OnStaminaChanged(int value)
     {
         stamina = value;
+        if (dependOnHealth && stamina > health) stamina = health;
+        if (!dependOnHealth && stamina > maxStamina) stamina = maxStamina;
+        if (stamina < 0) stamina = 0;
         if (isLocalPlayer) staminaText.text = "Stamina: " + stamina;
     }
 }

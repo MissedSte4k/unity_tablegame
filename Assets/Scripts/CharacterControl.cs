@@ -95,7 +95,7 @@ public class CharacterControl : NetworkBehaviour {
 
             /*if (Input.GetButtonDown("Fire1"))
             {
-                if (!health.ChangeStamina(-shootStaminaUse)) CmdFire();
+                if (!health.isStaminaZero(-shootStaminaUse)) CmdFire();
             }*/
 
             if (Input.GetButtonDown("Sprint") && !isStanding() && onGround && !isCrouched)
@@ -112,8 +112,7 @@ public class CharacterControl : NetworkBehaviour {
             {
                 if (currentDecreaseTime < 1)
                 {
-                    //if (health.ChangeStamina(-sprintStaminaUse)) onSprint = false;
-                    health.ChangeStamina(-sprintStaminaUse);
+                    CmdChangeStamina(-sprintStaminaUse);
                     if (health.isStaminaZero()) onSprint = false;
                     currentDecreaseTime = decreaseTime;
                 }
@@ -121,9 +120,12 @@ public class CharacterControl : NetworkBehaviour {
             }
 
             // ataka vyksta kol laikomas nuspaustas mygtukas
-            if (Input.GetButton("Fire1")) {
+            if (Input.GetButton("Fire1"))
+            {
                 anim.animator.SetBool("Attack1", true);
-            } else {
+            }
+            else
+            {
                 anim.animator.SetBool("Attack1", false);
             }
 
@@ -149,9 +151,12 @@ public class CharacterControl : NetworkBehaviour {
             }
 
             // blokas vykdomas tol, kol laikomas nuspaustas mygtukas
-            if (Input.GetButton("Block")) {
+            if (Input.GetButton("Block"))
+            {
                 anim.animator.SetBool("Block", true);
-            } else {
+            }
+            else
+            {
                 anim.animator.SetBool("Block", false);
             }
 
@@ -159,8 +164,7 @@ public class CharacterControl : NetworkBehaviour {
             {
                 if (currentIncreaseTime < 1 && !health.isStaminaMax())
                 {
-                    //health.ChangeStamina(1);
-                    health.ChangeStamina(1);
+                    CmdChangeStamina(1);
                     currentIncreaseTime = increaseTime;
                 }
                 else currentIncreaseTime--;
@@ -169,14 +173,12 @@ public class CharacterControl : NetworkBehaviour {
             if (Input.GetButtonDown("Jump") && onGround)
             {
                 //rb.AddForce(Vector3.up * jumpHeight, ForceMode.Impulse);
-                //if (!health.ChangeStamina(-jumpStaminaUse))
                 if (!health.isStaminaZero(-jumpStaminaUse))
                 {
-                    health.ChangeStamina(-jumpStaminaUse);
+                    CmdChangeStamina(-jumpStaminaUse);
                     rb.velocity = new Vector3(rb.velocity.x, jumpHeight, rb.velocity.z);
                 }
             }
-
             Physics.SyncTransforms();
         }
         else playerCamera.enabled = false;
@@ -270,12 +272,18 @@ public class CharacterControl : NetworkBehaviour {
         Destroy(bullet, 2.0f);
     }
 
-    /*[Command]
+    [Command]
     private void CmdChangeStamina(int value)
     {
-        //health.GetComponent<Health>();
+        ChangeStamina(value);
+    }
+
+    [Server]
+    private void ChangeStamina(int value)
+    {
+        health = GetComponent<Health>();
         health.ChangeStamina(value);
-    }*/
+    }
 
     [Command]
     private void CmdCrouch()
