@@ -3,36 +3,46 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using UnityEngine.Audio;
 
 public class MenuSettings : MonoBehaviour
 {
     public Toggle[] resolutionToggles;
     public int[] screenWidths;
-    int activeScreenResolutionIndex;
 
     public Dropdown graphicsDropdown;
+
+    public AudioMixer menuAudioMixer;
+    public Slider menuVolumeSlider;
 
 
     //Loads saved user settings
     public void Start()
     {
-        //Resolutiom
-        activeScreenResolutionIndex = PlayerPrefs.GetInt("screen res index");
-
-        for (int i = 0; i < resolutionToggles.Length; i++)
+        //Resolutiom       
+        if (PlayerPrefs.HasKey("screen res index"))
         {
-            resolutionToggles[i].isOn = i == activeScreenResolutionIndex;
+            int activeScreenResolutionIndex = PlayerPrefs.GetInt("screen res index");
+            for (int i = 0; i < resolutionToggles.Length; i++)
+            {
+                resolutionToggles[i].isOn = i == activeScreenResolutionIndex;
+            }
         }
 
-        //Graphics                      
-        int activeGraphicsIndex = PlayerPrefs.GetInt("graphics index");        
-                                    
-        if (activeGraphicsIndex == 0 || activeGraphicsIndex == 1 || activeGraphicsIndex == 2)
+        //Graphics                                                                          
+        if (PlayerPrefs.HasKey("graphics index"))
         {
+            int activeGraphicsIndex = PlayerPrefs.GetInt("graphics index");
             QualitySettings.SetQualityLevel(activeGraphicsIndex);
             graphicsDropdown.value = activeGraphicsIndex;          
             graphicsDropdown.RefreshShownValue();
-        }       
+        }
+
+        //Menu music
+        if (PlayerPrefs.HasKey("menu volume"))
+        {
+            menuVolumeSlider.value = PlayerPrefs.GetFloat("menu volume");
+        }
     }
 
 
@@ -64,8 +74,7 @@ public class MenuSettings : MonoBehaviour
                 Screen.SetResolution(screenWidths[i], (int)(screenWidths[i] / aspectRatio), false);              
             }
         }
-        activeScreenResolutionIndex = i;
-        PlayerPrefs.SetInt("screen res index", activeScreenResolutionIndex);
+        PlayerPrefs.SetInt("screen res index", i);
         PlayerPrefs.Save();
     }
 
@@ -75,6 +84,14 @@ public class MenuSettings : MonoBehaviour
     {
         QualitySettings.SetQualityLevel(qualityIndex);
         PlayerPrefs.SetInt("graphics index", qualityIndex);
+        PlayerPrefs.Save();
+    }
+
+    //Menu music settings
+    public void SetMenuVolume(float volume)
+    {      
+        menuAudioMixer.SetFloat("MenuVolume", volume);
+        PlayerPrefs.SetFloat("menu volume", volume);
         PlayerPrefs.Save();
     }
 }
