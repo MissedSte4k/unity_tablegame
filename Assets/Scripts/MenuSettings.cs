@@ -15,10 +15,17 @@ public class MenuSettings : MonoBehaviour
     public AudioMixer menuAudioMixer;
     public Slider menuVolumeSlider;
 
+    public Slider mouseSensitivitySlider;
+    public InputField mouseSensitivityField;
+    public float mouseSensitivity;
+
+    public static MenuSettings instance;
 
     //Loads saved user settings
     public void Start()
     {
+        instance = this;
+
         //Resolutiom       
         if (PlayerPrefs.HasKey("screen res index"))
         {
@@ -38,11 +45,18 @@ public class MenuSettings : MonoBehaviour
             graphicsDropdown.RefreshShownValue();
         }
 
-        //Menu music
+        //Menu music slider
         if (PlayerPrefs.HasKey("menu volume"))
         {
             menuVolumeSlider.value = PlayerPrefs.GetFloat("menu volume");
         }
+
+        //Mouse sensitivity slider & input field
+        if (PlayerPrefs.HasKey("mouse sensitivity"))
+        {
+            mouseSensitivitySlider.value = PlayerPrefs.GetFloat("mouse sensitivity");
+            mouseSensitivityField.text = PlayerPrefs.GetFloat("mouse sensitivity").ToString();
+        }        
     }
 
 
@@ -92,6 +106,41 @@ public class MenuSettings : MonoBehaviour
     {      
         menuAudioMixer.SetFloat("MenuVolume", volume);
         PlayerPrefs.SetFloat("menu volume", volume);
+        PlayerPrefs.Save();
+    }
+
+
+    //Mouse sensitivity
+    //gets sensitivity value from slider (will be used in character control)
+    public void SetMouseSensitivity(float sensitivity)
+    {
+        mouseSensitivity = sensitivity;
+        if (mouseSensitivitySlider)
+        {
+            mouseSensitivitySlider.value = sensitivity;
+        }
+        if (mouseSensitivityField)
+        {
+            mouseSensitivityField.text = sensitivity.ToString();
+        }
+        PlayerPrefs.SetFloat("mouse sensitivity", sensitivity);
+        PlayerPrefs.Save();
+    }
+
+    //Mouse sensitivity
+    //gets sensitivity value from Input Field (will be used in character control)
+    public void SetMouseSensitivityFromInputField(string sensitivity)
+    {
+        mouseSensitivity = float.Parse(sensitivity);
+        if (mouseSensitivitySlider)
+        {
+            mouseSensitivitySlider.value = float.Parse(sensitivity);
+        }
+        if(mouseSensitivityField)
+        {
+            mouseSensitivityField.text = sensitivity;
+        }
+        PlayerPrefs.SetFloat("mouse sensitivity", float.Parse(sensitivity));
         PlayerPrefs.Save();
     }
 }

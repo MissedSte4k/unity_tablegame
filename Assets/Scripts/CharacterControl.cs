@@ -24,8 +24,7 @@ public class CharacterControl : NetworkBehaviour {
     public Transform bulletSpawn;
     public int bulletSpeed;
     private float mouseH = 0.0f;
-    private float mouseV = 0.0f;
-    public float mouseSensitivity;
+    private float mouseV = 0.0f;   
     public Camera playerCamera;
     private int currentIncreaseTime;
     private int currentDecreaseTime;
@@ -55,9 +54,9 @@ public class CharacterControl : NetworkBehaviour {
 			anim.animator.SetFloat ("Strafe", Input.GetAxis ("Horizontal"));
 
             transform.rotation = Quaternion.Euler(0, playerCamera.transform.rotation.eulerAngles.y, 0);
-
-            mouseH += Input.GetAxis("Mouse X") * mouseSensitivity;
-            mouseV -= Input.GetAxis("Mouse Y") * mouseSensitivity;
+            
+            mouseH += Input.GetAxis("Mouse X") * MenuSettings.instance.mouseSensitivity;
+            mouseV -= Input.GetAxis("Mouse Y") * MenuSettings.instance.mouseSensitivity;
 
             playerCamera.transform.rotation = Quaternion.Euler(Mathf.Clamp(mouseV, -60, 60), mouseH, 0);
 
