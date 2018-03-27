@@ -14,7 +14,7 @@ public class MenuSettings : MonoBehaviour
 
     public AudioMixer menuAudioMixer;
     public Slider menuVolumeSlider;
-
+   
     public Slider mouseSensitivitySlider;
     public InputField mouseSensitivityField;
     public float mouseSensitivity;
@@ -49,7 +49,7 @@ public class MenuSettings : MonoBehaviour
         if (PlayerPrefs.HasKey("menu volume"))
         {
             menuVolumeSlider.value = PlayerPrefs.GetFloat("menu volume");
-        }
+        }        
 
         //Mouse sensitivity slider & input field
         if (PlayerPrefs.HasKey("mouse sensitivity"))
@@ -108,7 +108,7 @@ public class MenuSettings : MonoBehaviour
         PlayerPrefs.SetFloat("menu volume", volume);
         PlayerPrefs.Save();
     }
-
+   
 
     //Mouse sensitivity
     //gets sensitivity value from slider (will be used in character control)
@@ -127,7 +127,6 @@ public class MenuSettings : MonoBehaviour
         PlayerPrefs.Save();
     }
 
-    //Mouse sensitivity
     //gets sensitivity value from Input Field (will be used in character control)
     public void SetMouseSensitivityFromInputField(string sensitivity)
     {
