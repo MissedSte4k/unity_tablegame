@@ -34,8 +34,8 @@ public class CharacterControl : NetworkBehaviour {
     private float crouchHeight = 1.5f;
     private float normalCenter = 0.1f;
     private float crouchCenter = 0.25f;
-    private float minHeightChangeSpeed = 0.01f;
-    private float minCenterChangeSpeed = 0.01f;
+    private float minHeightChangeSpeed = 0.001f;
+    private float minCenterChangeSpeed = 0.0001f;
     NetworkAnimator anim;
     // dvi apatinės skeleto stuburo dalys, naudojamos žiūrėt aukštyn/žemyn
     public Transform spine;
@@ -50,6 +50,12 @@ public class CharacterControl : NetworkBehaviour {
         currentDecreaseTime = decreaseTime;
         anim = GetComponent<NetworkAnimator>();
         health = GetComponent<Health>();
+        normalHeight = 2.2f;
+        crouchHeight = 1.5f;
+        normalCenter = 0.1f;
+        crouchCenter = 0.25f;
+        minHeightChangeSpeed = 0.001f;
+        minCenterChangeSpeed = 0.0001f;
     }
 
     void Update() {
@@ -216,7 +222,7 @@ public class CharacterControl : NetworkBehaviour {
 
     private bool isStanding()
     {
-        if (rb.velocity.x == 0 && rb.velocity.z == 0) return true;
+        if (Mathf.Abs(rb.velocity.x) < 0.5 && Mathf.Abs(rb.velocity.z) < 0.5) return true;
         else return false;
     }
 
@@ -285,16 +291,16 @@ public class CharacterControl : NetworkBehaviour {
     [Command]
     private void CmdCrouch()
     {
-        float h = Mathf.Max(Mathf.Min(Mathf.Lerp(height, crouchHeight, Time.deltaTime * 5), height - minHeightChangeSpeed), crouchHeight);
-        float c = Mathf.Min(Mathf.Max(Mathf.Lerp(center, crouchCenter, Time.deltaTime * 5), center + minCenterChangeSpeed), crouchCenter);
+        float h = Mathf.Max(Mathf.Min(Mathf.Lerp(height, crouchHeight, Time.deltaTime * 5), height - minHeightChangeSpeed/Time.deltaTime), crouchHeight);
+        float c = Mathf.Min(Mathf.Max(Mathf.Lerp(center, crouchCenter, Time.deltaTime * 5), center + minCenterChangeSpeed/Time.deltaTime), crouchCenter);
         CrouchUncrouch(h, c);
     }
 
     [Command]
     private void CmdUncrouch()
     {
-        float h = Mathf.Min(Mathf.Max(Mathf.Lerp(height, normalHeight, Time.deltaTime * 5), height + minHeightChangeSpeed), normalHeight);
-        float c = Mathf.Max(Mathf.Min(Mathf.Lerp(center, normalCenter, Time.deltaTime * 5), center - minCenterChangeSpeed), normalCenter);
+        float h = Mathf.Min(Mathf.Max(Mathf.Lerp(height, normalHeight, Time.deltaTime * 5), height + minHeightChangeSpeed/(Time.deltaTime*1.5f)), normalHeight);
+        float c = Mathf.Max(Mathf.Min(Mathf.Lerp(center, normalCenter, Time.deltaTime * 5), center - minCenterChangeSpeed/(Time.deltaTime*1.5f)), normalCenter);
         CrouchUncrouch(h, c);
     }
 
