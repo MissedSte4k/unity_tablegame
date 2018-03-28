@@ -36,6 +36,9 @@ public class CharacterControl : NetworkBehaviour {
     private float crouchCenter = 0.25f;
     private float minHeightChangeSpeed = 0.001f;
     private float minCenterChangeSpeed = 0.0001f;
+    private TeamControl tc;
+    private int team;
+
     NetworkAnimator anim;
     // dvi apatinės skeleto stuburo dalys, naudojamos žiūrėt aukštyn/žemyn
     public Transform spine;
@@ -56,6 +59,11 @@ public class CharacterControl : NetworkBehaviour {
         crouchCenter = 0.25f;
         minHeightChangeSpeed = 0.001f;
         minCenterChangeSpeed = 0.0001f;
+
+        tc = FindObjectOfType<TeamControl>();
+        team = tc.Team();
+        if (team == 0) team = Random.Range(1, 3);
+        health.SetTeamText(team);
     }
 
     void Update() {
@@ -323,5 +331,10 @@ public class CharacterControl : NetworkBehaviour {
         center = value;
         hitBox = GetComponent<CapsuleCollider>();
         hitBox.center = new Vector3(0, value, 0);
+    }
+
+    public int Team()
+    {
+        return team;
     }
 }

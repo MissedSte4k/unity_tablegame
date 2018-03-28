@@ -11,6 +11,7 @@ public class Health : NetworkBehaviour {
     [SerializeField] bool dependOnHealth = false;
     public Text healthText;
     public Text staminaText;
+    public Text teamText;
 
     PlayerRespawn pr;
     [SyncVar (hook = "OnHealthChanged")] int health;
@@ -19,6 +20,25 @@ public class Health : NetworkBehaviour {
     void Awake()
     {
         pr = GetComponent<PlayerRespawn>();
+    }
+
+    public void SetTeamText(int team)
+    {
+        switch (team)
+        {
+            case 1:
+                teamText.text = "Team Blue";
+                teamText.color = Color.blue;
+                break;
+            case 2:
+                teamText.text = "Team Red";
+                teamText.color = Color.red;
+                break;
+            default:
+                teamText.text = "Spectator";
+                teamText.color = Color.gray;
+                break;
+        }
     }
 
     [ServerCallback]
