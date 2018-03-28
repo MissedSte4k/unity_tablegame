@@ -6,6 +6,7 @@ using UnityEngine.UI;
 
 public class CharacterControl : NetworkBehaviour {
 
+	public float mouseSensitivity = MenuSettings.instance.mouseSensitivity;
     public float moveSpeed;
     public float crouchSpeedReduction;
     public float sprintSpeedBoost;
@@ -38,7 +39,6 @@ public class CharacterControl : NetworkBehaviour {
     NetworkAnimator anim;
     // dvi apatinės skeleto stuburo dalys, naudojamos žiūrėt aukštyn/žemyn
     public Transform spine;
-    public Transform spine1;
 
     [SyncVar(hook = "OnHeightChanged")] float height = 2.2f;
     [SyncVar(hook = "OnCenterChanged")] float center = 0.1f;
@@ -63,8 +63,8 @@ public class CharacterControl : NetworkBehaviour {
 
             transform.rotation = Quaternion.Euler(0, playerCamera.transform.rotation.eulerAngles.y, 0);
             
-            mouseH += Input.GetAxis("Mouse X") * MenuSettings.instance.mouseSensitivity;
-            mouseV -= Input.GetAxis("Mouse Y") * MenuSettings.instance.mouseSensitivity;
+			mouseH += Input.GetAxis("Mouse X") * mouseSensitivity;
+			mouseV -= Input.GetAxis("Mouse Y") * mouseSensitivity;
 
             playerCamera.transform.rotation = Quaternion.Euler(Mathf.Clamp(mouseV, -60, 60), mouseH, 0);
 
@@ -174,6 +174,8 @@ public class CharacterControl : NetworkBehaviour {
                 //rb.AddForce(Vector3.up * jumpHeight, ForceMode.Impulse);
                 if (!health.isStaminaZero(-jumpStaminaUse))
                 {
+					anim.animator.SetBool("Jump", true);
+					anim.animator.SetBool("Falling", true);
                     CmdChangeStamina(-jumpStaminaUse);
                     rb.velocity = new Vector3(rb.velocity.x, jumpHeight, rb.velocity.z);
                 }
@@ -186,10 +188,9 @@ public class CharacterControl : NetworkBehaviour {
     void LateUpdate() {
         if (isLocalPlayer) {
             // vykdoma modelio stuburo rotacija aukštyn/žemyn, kad atrodytu lyg veikėjas ten žiūri
-            spine.rotation = Quaternion.Euler(spine.rotation.eulerAngles.x, spine.rotation.eulerAngles.y, spine.rotation.eulerAngles.z - Mathf.Clamp(mouseV, -60, 60) / 2);
-            spine1.rotation = Quaternion.Euler(spine.rotation.eulerAngles.x, spine.rotation.eulerAngles.y, spine.rotation.eulerAngles.z - Mathf.Clamp(mouseV, -60, 60) / 2);
-        }
-    }
+			spine.localRotation = Quaternion.Euler(spine.localRotation.eulerAngles.x, spine.localRotation.eulerAngles.y, spine.localRotation.eulerAngles.z - Mathf.Clamp(mouseV, -60, 60));
+		}
+	}
 
     // Update is called once per frame
     void FixedUpdate() {
@@ -237,9 +238,6 @@ public class CharacterControl : NetworkBehaviour {
             if (collision.gameObject.CompareTag("Ground"))
             {
                 onGround = false;
-                if (Input.GetButtonDown("Jump")) {
-                    anim.animator.SetBool("Jump", true);
-                }
                 anim.animator.SetBool("Falling", true);
             }
         }
