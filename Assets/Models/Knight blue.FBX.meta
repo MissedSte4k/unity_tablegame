@@ -54,6 +54,32 @@ ModelImporter:
     100092: Box006
     100094: Cylinder001
     100096: Shield003
+    100098: Banner
+    100100: Cherry bomb
+    100102: Coin
+    100104: Credit card
+    100106: Halberd
+    100108: Key
+    100110: Large shield
+    100112: Match
+    100114: Matchbox
+    100116: One-handed weapons
+    100118: Paper
+    100120: Pencil
+    100122: Pin01
+    100124: Pin02
+    100126: Pin03
+    100128: Pin04
+    100130: Pin05
+    100132: Pin06
+    100134: Razor
+    100136: Shield tape001
+    100138: Small shield
+    100140: Sword
+    100142: Tape
+    100144: Tape004
+    100146: Two-handed weapons
+    100148: Weapons
     400000: Bip001
     400002: Bip001 Footsteps
     400004: Bip001 Head
@@ -103,6 +129,32 @@ ModelImporter:
     400092: Box006
     400094: Cylinder001
     400096: Shield003
+    400098: Banner
+    400100: Cherry bomb
+    400102: Coin
+    400104: Credit card
+    400106: Halberd
+    400108: Key
+    400110: Large shield
+    400112: Match
+    400114: Matchbox
+    400116: One-handed weapons
+    400118: Paper
+    400120: Pencil
+    400122: Pin01
+    400124: Pin02
+    400126: Pin03
+    400128: Pin04
+    400130: Pin05
+    400132: Pin06
+    400134: Razor
+    400136: Shield tape001
+    400138: Small shield
+    400140: Sword
+    400142: Tape
+    400144: Tape004
+    400146: Two-handed weapons
+    400148: Weapons
     2100000: No Name
     2100002: Skin
     2100004: Metal
@@ -111,18 +163,82 @@ ModelImporter:
     2100010: 13 - Default
     2100012: Tape
     2100014: Armor
+    2100016: Coin
+    2100018: Match
+    2100020: Credit card
+    2100022: Pin
+    2100024: Key
+    2100026: Sword
+    2100028: Fuse
+    2100030: Cherry bomb
+    2100032: Chopstick
+    2100034: Razor
+    2100036: Poster
+    2100038: Pencil
+    2100040: Matchbox
+    2100042: Coin 2
     2300000: Screw
     2300002: Shield001
     2300004: Box004
     2300006: Box006
     2300008: Cylinder001
     2300010: Shield003
+    2300012: Banner
+    2300014: Cherry bomb
+    2300016: Coin
+    2300018: Credit card
+    2300020: Halberd
+    2300022: Key
+    2300024: Large shield
+    2300026: Match
+    2300028: Matchbox
+    2300030: One-handed weapons
+    2300032: Paper
+    2300034: Pencil
+    2300036: Pin01
+    2300038: Pin02
+    2300040: Pin03
+    2300042: Pin04
+    2300044: Pin05
+    2300046: Pin06
+    2300048: Razor
+    2300050: Shield tape001
+    2300052: Small shield
+    2300054: Sword
+    2300056: Tape
+    2300058: Tape004
+    2300060: Two-handed weapons
     3300000: Screw
     3300002: Shield001
     3300004: Box004
     3300006: Box006
     3300008: Cylinder001
     3300010: Shield003
+    3300012: Banner
+    3300014: Cherry bomb
+    3300016: Coin
+    3300018: Credit card
+    3300020: Halberd
+    3300022: Key
+    3300024: Large shield
+    3300026: Match
+    3300028: Matchbox
+    3300030: One-handed weapons
+    3300032: Paper
+    3300034: Pencil
+    3300036: Pin01
+    3300038: Pin02
+    3300040: Pin03
+    3300042: Pin04
+    3300044: Pin05
+    3300046: Pin06
+    3300048: Razor
+    3300050: Shield tape001
+    3300052: Small shield
+    3300054: Sword
+    3300056: Tape
+    3300058: Tape004
+    3300060: Two-handed weapons
     4300000: Shield001
     4300002: Screw
     4300004: Knight
@@ -130,6 +246,31 @@ ModelImporter:
     4300008: Shield003
     4300010: Box006
     4300012: Cylinder001
+    4300014: Match
+    4300016: Large shield
+    4300018: Credit card
+    4300020: Pin01
+    4300022: Pin02
+    4300024: Pin03
+    4300026: Pin04
+    4300028: Pin05
+    4300030: Pin06
+    4300032: Shield tape001
+    4300034: Small shield
+    4300036: One-handed weapons
+    4300038: Key
+    4300040: Sword
+    4300042: Cherry bomb
+    4300044: Two-handed weapons
+    4300046: Halberd
+    4300048: Razor
+    4300050: Tape004
+    4300052: Banner
+    4300054: Paper
+    4300056: Tape
+    4300058: Pencil
+    4300060: Matchbox
+    4300062: Coin
     7400000: Idle
     7400002: Run_forward
     7400004: Run_right
@@ -167,8 +308,53 @@ ModelImporter:
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
+      name: Cherry bomb
+    second: {fileID: 2100000, guid: 28e3fb422ec16bc4a89036f86353f491, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Chopstick
+    second: {fileID: 2100000, guid: 004dc8d5da906cf44acbe943d23acf8b, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Coin
+    second: {fileID: 2100000, guid: b79cf76a4d2fc684b898e54b0fc9780e, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Coin 2
+    second: {fileID: 2100000, guid: f4907a7b219c92a44ba4b55cb2e014fc, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
       name: Coins
     second: {fileID: 2100000, guid: b79cf76a4d2fc684b898e54b0fc9780e, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Credit card
+    second: {fileID: 2100000, guid: ad5c0b6a626945048805ee8e98203b53, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Fuse
+    second: {fileID: 2100000, guid: 01e04b1699768144ab256d4d89dd3dcf, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Key
+    second: {fileID: 2100000, guid: 597cb207ba06ef946a533ccac6510bac, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Match
+    second: {fileID: 2100000, guid: 7dc26e3783434ab4da74e0425af8aa69, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Matchbox
+    second: {fileID: 2100000, guid: a078402b4ba300b43a4981bb2a1ad3cf, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
@@ -177,8 +363,33 @@ ModelImporter:
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
+      name: Pencil
+    second: {fileID: 2100000, guid: 5ea4c4c021c4f5c47ac874947b8dfb27, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Pin
+    second: {fileID: 2100000, guid: b61681b54fcaae247a83d4dd6b4f57ee, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Poster
+    second: {fileID: 2100000, guid: f5bd2dc00b6d0014fbd830375c8ee9c2, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Razor
+    second: {fileID: 2100000, guid: d483eaaa09adf9c4195ca6cdd3bf9881, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
       name: Skin
     second: {fileID: 2100000, guid: b7be3e18b4b9c634f9cc84152ef72ef3, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Sword
+    second: {fileID: 2100000, guid: a5b1c0fb384e3a44f8a1c807ffc4c443, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
