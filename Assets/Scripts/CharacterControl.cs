@@ -47,12 +47,24 @@ public class CharacterControl : NetworkBehaviour {
     void Update() {
         if (isLocalPlayer)
         {
-			anim.animator.ResetTrigger ("Attack2");
+    		anim.animator.ResetTrigger ("Attack2");
 			anim.animator.ResetTrigger ("Attack3");
 
-			anim.animator.SetFloat ("Speed", Input.GetAxis ("Vertical"));
-			anim.animator.SetFloat ("Strafe", Input.GetAxis ("Horizontal"));
 
+            //float moveVertical = 0;
+            //if (Input.GetKey(KeybindManager.MyInstance.Keybinds["Button(MoveForward)"]) == true)
+            //{
+            //    moveVertical = 1;
+            //}
+            //if (Input.GetKey(KeybindManager.MyInstance.Keybinds["Button(MoveBackward)"]) == true)
+            //{
+            //    moveVertical = -1;
+            //}
+            //anim.animator.SetFloat("Speed", moveVertical);
+
+            anim.animator.SetFloat("Speed", Input.GetAxis("Vertical"));
+            anim.animator.SetFloat("Strafe", Input.GetAxis("Horizontal"));
+                        
             transform.rotation = Quaternion.Euler(0, playerCamera.transform.rotation.eulerAngles.y, 0);
             
             mouseH += Input.GetAxis("Mouse X") * MenuSettings.instance.mouseSensitivity;
@@ -161,8 +173,18 @@ public class CharacterControl : NetworkBehaviour {
 	void FixedUpdate () {
         if (isLocalPlayer)
         {
-            float moveHorizontal = Input.GetAxis("Horizontal");
+            //float moveVertical = 0;           
+            //if (Input.GetKey(KeybindManager.MyInstance.Keybinds["Button(MoveForward)"]) == true)
+            //{
+            //    moveVertical = 1;
+            //}
+            //if(Input.GetKey(KeybindManager.MyInstance.Keybinds["Button(MoveBackward)"]) == true)
+            //{
+            //    moveVertical = -1;
+            //}
+
             float moveVertical = Input.GetAxis("Vertical");
+            float moveHorizontal = Input.GetAxis("Horizontal");            
             float speed = moveSpeed;
             if (onSprint) speed = moveSpeed + sprintSpeedBoost;
             Vector3 forward = new Vector3(transform.forward.x, 0, transform.forward.z).normalized * speed * moveVertical;

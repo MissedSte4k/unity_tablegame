@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using UnityEngine.Audio;
+using System;
 
 public class MenuSettings : MonoBehaviour
 {
@@ -18,6 +19,9 @@ public class MenuSettings : MonoBehaviour
     public Slider mouseSensitivitySlider;
     public InputField mouseSensitivityField;
     public float mouseSensitivity;
+
+    private GameObject[] keybindButtons;
+
 
     public static MenuSettings instance;
 
@@ -56,7 +60,15 @@ public class MenuSettings : MonoBehaviour
         {
             mouseSensitivitySlider.value = PlayerPrefs.GetFloat("mouse sensitivity");
             mouseSensitivityField.text = PlayerPrefs.GetFloat("mouse sensitivity").ToString();
-        }        
+        }         
+        
+             
+    }
+
+
+    public void Awake()
+    {
+        keybindButtons = GameObject.FindGameObjectsWithTag("Keybind");
     }
 
 
@@ -141,6 +153,13 @@ public class MenuSettings : MonoBehaviour
         }
         PlayerPrefs.SetFloat("mouse sensitivity", float.Parse(sensitivity));
         PlayerPrefs.Save();
+    }
+
+    //Keybinds
+    public void UpdateKeyText(string key, KeyCode code)
+    {
+        Text tmp = Array.Find(keybindButtons, x => x.name == key).GetComponentInChildren<Text>();
+        tmp.text = code.ToString();
     }
 }
 
