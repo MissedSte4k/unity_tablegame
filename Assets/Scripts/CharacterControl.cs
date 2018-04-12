@@ -30,10 +30,10 @@ public class CharacterControl : NetworkBehaviour {
 	public Camera playerCamera;
 	private int currentIncreaseTime;
 	private int currentDecreaseTime;
-	private float normalHeight = 2.2f;
-	private float crouchHeight = 1.5f;
-	private float normalCenter = 0.1f;
-	private float crouchCenter = 0.25f;
+	public float normalHeight = 2.2f;
+	public float crouchHeight = 1.5f;
+	public float normalCenter = 0.1f;
+	public float crouchCenter = 0.25f;
 	private float minHeightChangeSpeed = 0.001f;
 	private float minCenterChangeSpeed = 0.0001f;
 	private TeamControl tc;
@@ -43,8 +43,8 @@ public class CharacterControl : NetworkBehaviour {
 	// dvi apatinės skeleto stuburo dalys, naudojamos žiūrėt aukštyn/žemyn
 	public Transform spine;
 
-	[SyncVar(hook = "OnHeightChanged")] float height = 2.2f;
-	[SyncVar(hook = "OnCenterChanged")] float center = 0.1f;
+	[SyncVar(hook = "OnHeightChanged")] public float height = 2.2f;
+	[SyncVar(hook = "OnCenterChanged")] public float center = 0.1f;
 
 	// Use this for initialization
 	void Start() {
@@ -53,10 +53,6 @@ public class CharacterControl : NetworkBehaviour {
 		currentDecreaseTime = decreaseTime;
 		anim = GetComponent<NetworkAnimator>();
 		health = GetComponent<Health>();
-		normalHeight = 2.2f;
-		crouchHeight = 1.5f;
-		normalCenter = 0.1f;
-		crouchCenter = 0.25f;
 		minHeightChangeSpeed = 0.001f;
 		minCenterChangeSpeed = 0.0001f;
 
@@ -69,9 +65,6 @@ public class CharacterControl : NetworkBehaviour {
 	void Update() {
 		if (isLocalPlayer)
 		{
-			anim.animator.ResetTrigger("Attack2");
-			anim.animator.ResetTrigger("Attack3");
-
 			anim.animator.SetFloat("Speed", Input.GetAxis("Vertical"));
 			anim.animator.SetFloat("Strafe", Input.GetAxis("Horizontal"));
 
@@ -80,7 +73,13 @@ public class CharacterControl : NetworkBehaviour {
 			mouseH += Input.GetAxis("Mouse X") * mouseSensitivity;
 			mouseV -= Input.GetAxis("Mouse Y") * mouseSensitivity;
 
-			playerCamera.transform.rotation = Quaternion.Euler(Mathf.Clamp(mouseV, -60, 60), mouseH, 0);
+			if (mouseV > 60) {
+				mouseV = 60;
+			} else if (mouseV < -60) {
+				mouseV = -60;
+			}
+
+			playerCamera.transform.rotation = Quaternion.Euler (mouseV, mouseH, 0);
 
 			if (Input.GetButtonDown("Crouch"))
 			{
@@ -161,7 +160,7 @@ public class CharacterControl : NetworkBehaviour {
 	void LateUpdate() {
 		if (isLocalPlayer) {
 			// vykdoma modelio stuburo rotacija aukštyn/žemyn, kad atrodytu lyg veikėjas ten žiūri
-			spine.localRotation = Quaternion.Euler(spine.localRotation.eulerAngles.x, spine.localRotation.eulerAngles.y, spine.localRotation.eulerAngles.z - Mathf.Clamp(mouseV, -60, 60));
+			spine.localRotation = Quaternion.Euler(spine.localRotation.eulerAngles.x, spine.localRotation.eulerAngles.y, spine.localRotation.eulerAngles.z - mouseV);
 		}
 	}
 
