@@ -26,6 +26,7 @@ public class KeybindManager : MonoBehaviour {
 	// Use this for initialization
 	void Start ()
     {
+        DontDestroyOnLoad(gameObject);
         Keybinds = new Dictionary<string, KeyCode>();
 
         BindKey("Button(MoveForward)", (KeyCode)System.Enum.Parse(typeof(KeyCode), PlayerPrefs.GetString("Button(MoveForward)", "W")));
