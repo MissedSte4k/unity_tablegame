@@ -1,9 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Networking;
 
-public class KillOnTouch : NetworkBehaviour {
+public class KillOnTouch : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
@@ -21,11 +20,12 @@ public class KillOnTouch : NetworkBehaviour {
         var health = hit.GetComponent<Health>();
         if (health != null)
         {
-            health.CmdTakeDamage(health.CurrentHealth());
+            health.TakeDamage(10000);
         }
         else
         {
             Destroy(collision.gameObject);
         }
+
     }
 }
