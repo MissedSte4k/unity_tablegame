@@ -18,24 +18,35 @@ public class PlayerRespawn : NetworkBehaviour {
 
     void Start()
     {
+        //mainCamera = Camera.main.gameObject;
+
         EnablePlayer();
     }
 
     void DisablePlayer()
     {
+        //if (isLocalPlayer)
+        //    mainCamera.SetActive(true);
+
         onToggleShared.Invoke(false);
 
-        if (isLocalPlayer) onToggleLocal.Invoke(false);
-
-        else onToggleRemote.Invoke(false);
+        if (isLocalPlayer)
+            onToggleLocal.Invoke(false);
+        else
+            onToggleRemote.Invoke(false);
     }
 
     void EnablePlayer()
     {
+        //if (isLocalPlayer)
+        //    mainCamera.SetActive(false);
+
         onToggleShared.Invoke(true);
 
-        if (isLocalPlayer) onToggleLocal.Invoke(true);
-        else onToggleRemote.Invoke(true);
+        if (isLocalPlayer)
+            onToggleLocal.Invoke(true);
+        else
+            onToggleRemote.Invoke(true);
     }
 
     public void Die()

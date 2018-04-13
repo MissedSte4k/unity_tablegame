@@ -21,7 +21,7 @@ public class Bullet : NetworkBehaviour {
         var health = hit.GetComponent<Health>();
         if (health != null)
         {
-            health.CmdTakeDamage(10);
+            health.TakeDamage(10);
         }
 
         Destroy(gameObject);
