@@ -49,19 +49,7 @@ public class CharacterControl : NetworkBehaviour {
         {
     		anim.animator.ResetTrigger ("Attack2");
 			anim.animator.ResetTrigger ("Attack3");
-
-
-            //float moveVertical = 0;
-            //if (Input.GetKey(KeybindManager.MyInstance.Keybinds["Button(MoveForward)"]) == true)
-            //{
-            //    moveVertical = 1;
-            //}
-            //if (Input.GetKey(KeybindManager.MyInstance.Keybinds["Button(MoveBackward)"]) == true)
-            //{
-            //    moveVertical = -1;
-            //}
-            //anim.animator.SetFloat("Speed", moveVertical);
-
+          
             anim.animator.SetFloat("Speed", Input.GetAxis("Vertical"));
             anim.animator.SetFloat("Strafe", Input.GetAxis("Horizontal"));
                         
@@ -172,17 +160,7 @@ public class CharacterControl : NetworkBehaviour {
 	// Update is called once per frame
 	void FixedUpdate () {
         if (isLocalPlayer)
-        {
-            //float moveVertical = 0;           
-            //if (Input.GetKey(KeybindManager.MyInstance.Keybinds["Button(MoveForward)"]) == true)
-            //{
-            //    moveVertical = 1;
-            //}
-            //if(Input.GetKey(KeybindManager.MyInstance.Keybinds["Button(MoveBackward)"]) == true)
-            //{
-            //    moveVertical = -1;
-            //}
-
+        {          
             float moveVertical = Input.GetAxis("Vertical");
             float moveHorizontal = Input.GetAxis("Horizontal");            
             float speed = moveSpeed;
