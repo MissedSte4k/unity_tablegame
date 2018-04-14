@@ -3,18 +3,18 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 
-public class KeybindManager : MonoBehaviour
+public class KeyBindManager : MonoBehaviour
 {
 
-    private static KeybindManager instance;
+    private static KeyBindManager instance;
 
-    public static KeybindManager MyInstance
+    public static KeyBindManager MyInstance
     {
         get
         {
             if (instance == null)
             {
-                instance = FindObjectOfType<KeybindManager>();
+                instance = FindObjectOfType<KeyBindManager>();
             }
             return instance;
         }
