@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using UnityEngine.Audio;
+using System;
 
 public class MenuSettings : MonoBehaviour
 {
@@ -18,6 +19,9 @@ public class MenuSettings : MonoBehaviour
     public Slider mouseSensitivitySlider;
     public InputField mouseSensitivityField;
     public float mouseSensitivity;
+
+    private GameObject[] keybindButtons;
+
 
     public static MenuSettings instance;
 
@@ -41,7 +45,7 @@ public class MenuSettings : MonoBehaviour
         {
             int activeGraphicsIndex = PlayerPrefs.GetInt("graphics index");
             QualitySettings.SetQualityLevel(activeGraphicsIndex);
-            graphicsDropdown.value = activeGraphicsIndex;          
+            graphicsDropdown.value = activeGraphicsIndex;
             graphicsDropdown.RefreshShownValue();
         }
 
@@ -56,7 +60,15 @@ public class MenuSettings : MonoBehaviour
         {
             mouseSensitivitySlider.value = PlayerPrefs.GetFloat("mouse sensitivity");
             mouseSensitivityField.text = PlayerPrefs.GetFloat("mouse sensitivity").ToString();
-        }        
+        }
+
+
+    }
+
+
+    public void Awake()
+    {
+        keybindButtons = GameObject.FindGameObjectsWithTag("Keybind");
     }
 
 
@@ -70,11 +82,11 @@ public class MenuSettings : MonoBehaviour
         Application.Quit();
     }
 
- 
+
     //Resolution settings
     public void SetScreenResolution(int i)
     {
-        if(i == 3 && resolutionToggles[i].isOn)
+        if (i == 3 && resolutionToggles[i].isOn)
         {
             Resolution[] allResolutions = Screen.resolutions;
             Resolution maxResolution = allResolutions[allResolutions.Length - 1];
@@ -83,9 +95,9 @@ public class MenuSettings : MonoBehaviour
         else
         {
             if (resolutionToggles[i].isOn)
-            {                
+            {
                 float aspectRatio = 16 / 9f;
-                Screen.SetResolution(screenWidths[i], (int)(screenWidths[i] / aspectRatio), false);              
+                Screen.SetResolution(screenWidths[i], (int)(screenWidths[i] / aspectRatio), false);
             }
         }
         PlayerPrefs.SetInt("screen res index", i);
@@ -103,7 +115,7 @@ public class MenuSettings : MonoBehaviour
 
     //Menu music settings
     public void SetMenuVolume(float volume)
-    {      
+    {
         menuAudioMixer.SetFloat("MenuVolume", volume);
         PlayerPrefs.SetFloat("menu volume", volume);
         PlayerPrefs.Save();
@@ -127,7 +139,6 @@ public class MenuSettings : MonoBehaviour
         PlayerPrefs.Save();
     }
 
-    //Mouse sensitivity
     //gets sensitivity value from Input Field (will be used in character control)
     public void SetMouseSensitivityFromInputField(string sensitivity)
     {
@@ -136,12 +147,18 @@ public class MenuSettings : MonoBehaviour
         {
             mouseSensitivitySlider.value = float.Parse(sensitivity);
         }
-        if(mouseSensitivityField)
+        if (mouseSensitivityField)
         {
             mouseSensitivityField.text = sensitivity;
         }
         PlayerPrefs.SetFloat("mouse sensitivity", float.Parse(sensitivity));
         PlayerPrefs.Save();
     }
-}
 
+    //Keybinds
+    public void UpdateKeyText(string key, KeyCode code)
+    {
+        Text tmp = Array.Find(keybindButtons, x => x.name == key).GetComponentInChildren<Text>();
+        tmp.text = code.ToString();
+    }
+}
