@@ -479,7 +479,7 @@ ModelImporter:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
       name: Razor
-    second: {fileID: 2100000, guid: d483eaaa09adf9c4195ca6cdd3bf9881, type: 2}
+    second: {fileID: 2100000, guid: 5a7525d57cd25104d89695017878a595, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
