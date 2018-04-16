@@ -9,9 +9,9 @@ public class Health : NetworkBehaviour {
     [SerializeField] int maxHealth = 100;
     [SerializeField] int maxStamina = 100;
     [SerializeField] bool dependOnHealth = false;
-    public Text healthText;
-    public Text staminaText;
     public Text teamText;
+    public Slider healthSlider;
+    public Slider staminaSlider;
 
     PlayerRespawn pr;
     [SyncVar (hook = "OnHealthChanged")] int health;
@@ -108,7 +108,7 @@ public class Health : NetworkBehaviour {
     void OnHealthChanged(int value)
     {
         health = value;
-        if(isLocalPlayer) healthText.text = "Health:    " + health;
+        if (isLocalPlayer) healthSlider.value = value;
     }
 
     void OnStaminaChanged(int value)
@@ -117,6 +117,6 @@ public class Health : NetworkBehaviour {
         if (dependOnHealth && stamina > health) stamina = health;
         if (!dependOnHealth && stamina > maxStamina) stamina = maxStamina;
         if (stamina < 0) stamina = 0;
-        if (isLocalPlayer) staminaText.text = "Stamina: " + stamina;
+        if (isLocalPlayer) staminaSlider.value = value;
     }
 }
