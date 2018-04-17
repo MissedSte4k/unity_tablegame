@@ -20,15 +20,29 @@ public class MenuSettings : MonoBehaviour
     public InputField mouseSensitivityField;
     public float mouseSensitivity;
 
-    private GameObject[] keybindButtons;
+    //private GameObject[] keybindButtons;
+    public GameObject[] keybindButtons;
 
 
-    public static MenuSettings instance;
+    private static MenuSettings instance;
+
+    public static MenuSettings MyInstance
+    {
+        get
+        {
+            if (instance == null)
+            {
+                instance = FindObjectOfType<MenuSettings>();
+            }
+            return instance;
+        }
+    }
+
 
     //Loads saved user settings
     public void Start()
     {
-        instance = this;
+        DontDestroyOnLoad(gameObject);
 
         //Resolutiom       
         if (PlayerPrefs.HasKey("screen res index"))
@@ -66,10 +80,10 @@ public class MenuSettings : MonoBehaviour
     }
 
 
-    public void Awake()
-    {
-        keybindButtons = GameObject.FindGameObjectsWithTag("Keybind");
-    }
+    //public void Awake()
+    //{
+    //    keybindButtons = GameObject.FindGameObjectsWithTag("Keybind");
+    //}
 
 
     //Main menu

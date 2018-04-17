@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 public class CharacterControl : NetworkBehaviour {
 
-	public float mouseSensitivity = MenuSettings.instance.mouseSensitivity;
+	public float mouseSensitivity = MenuSettings.MyInstance.mouseSensitivity;
 	public float moveSpeed;
 	public float crouchSpeedReduction;
 	public float sprintSpeedBoost;
