@@ -45,17 +45,17 @@ public class KeyBindManager : MonoBehaviour
         if (!currentDictionary.ContainsKey(key))
         {
             currentDictionary.Add(key, keyBind);
-            MenuSettings.MyInstance.UpdateKeyText(key, keyBind);
+            MenuSettings.Instance.UpdateKeyText(key, keyBind);
         }
         else if (currentDictionary.ContainsValue(keyBind))
         {
             string myKey = currentDictionary.FirstOrDefault(x => x.Value == keyBind).Key;
             currentDictionary[myKey] = KeyCode.None;
-            MenuSettings.MyInstance.UpdateKeyText(myKey, KeyCode.None);
+            MenuSettings.Instance.UpdateKeyText(myKey, KeyCode.None);
         }
 
         currentDictionary[key] = keyBind;
-        MenuSettings.MyInstance.UpdateKeyText(key, keyBind);
+        MenuSettings.Instance.UpdateKeyText(key, keyBind);
         bindName = string.Empty;
     }
 

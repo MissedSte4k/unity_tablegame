@@ -26,25 +26,12 @@ public class MenuSettings : MonoBehaviour
 
     public GameObject[] keybindButtons;
 
-
-    private static MenuSettings instance;
-
-    public static MenuSettings MyInstance
-    {
-        get
-        {
-            if (instance == null)
-            {
-                instance = FindObjectOfType<MenuSettings>();
-            }
-            return instance;
-        }
-    }
-
-
+    public static MenuSettings Instance;
+   
+    
     //Loads saved user settings
     public void Start()
-    {
+    {      
         DontDestroyOnLoad(gameObject);
 
         //Resolutiom       
@@ -84,6 +71,14 @@ public class MenuSettings : MonoBehaviour
         {
             FoVSlider.value = PlayerPrefs.GetFloat("field of view");
             FoVField.text = PlayerPrefs.GetFloat("field of view").ToString();
+        }
+    }
+
+    public void Awake()
+    {
+        if (Instance == null)
+        {
+            Instance = FindObjectOfType<MenuSettings>();
         }
     }
 

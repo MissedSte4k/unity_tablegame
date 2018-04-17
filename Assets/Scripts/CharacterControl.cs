@@ -6,8 +6,9 @@ using UnityEngine.UI;
 
 public class CharacterControl : NetworkBehaviour {
 
-	public float mouseSensitivity = MenuSettings.MyInstance.mouseSensitivity;
-	public float moveSpeed;
+    //public float mouseSensitivity = MenuSettings.Instance.mouseSensitivity;
+    public float mouseSensitivity;
+    public float moveSpeed;
 	public float crouchSpeedReduction;
 	public float sprintSpeedBoost;
 	public int increaseTime;
@@ -60,7 +61,7 @@ public class CharacterControl : NetworkBehaviour {
 		team = tc.Team();
 		if (team == 0) team = Random.Range(1, 3);
 		health.SetTeamText(team);
-        playerCamera.fieldOfView = MenuSettings.MyInstance.fieldOfView;
+        playerCamera.fieldOfView = MenuSettings.Instance.fieldOfView;
     }
 
 	void Update() {
@@ -71,7 +72,8 @@ public class CharacterControl : NetworkBehaviour {
 
 			transform.rotation = Quaternion.Euler(0, playerCamera.transform.rotation.eulerAngles.y, 0);
 
-			mouseH += Input.GetAxis("Mouse X") * mouseSensitivity;
+            mouseSensitivity = MenuSettings.Instance.mouseSensitivity;
+            mouseH += Input.GetAxis("Mouse X") * mouseSensitivity;
 			mouseV -= Input.GetAxis("Mouse Y") * mouseSensitivity;
 
 			if (mouseV > 60) {
