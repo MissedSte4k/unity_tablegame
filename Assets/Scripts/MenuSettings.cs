@@ -20,7 +20,10 @@ public class MenuSettings : MonoBehaviour
     public InputField mouseSensitivityField;
     public float mouseSensitivity;
 
-    //private GameObject[] keybindButtons;
+    public Slider FoVSlider;
+    public InputField FoVField;
+    public float fieldOfView;
+
     public GameObject[] keybindButtons;
 
 
@@ -76,14 +79,13 @@ public class MenuSettings : MonoBehaviour
             mouseSensitivityField.text = PlayerPrefs.GetFloat("mouse sensitivity").ToString();
         }
 
-
+        //FoV slider & input field
+        if (PlayerPrefs.HasKey("field of view"))
+        {
+            FoVSlider.value = PlayerPrefs.GetFloat("field of view");
+            FoVField.text = PlayerPrefs.GetFloat("field of view").ToString();
+        }
     }
-
-
-    //public void Awake()
-    //{
-    //    keybindButtons = GameObject.FindGameObjectsWithTag("Keybind");
-    //}
 
 
     //Main menu
@@ -174,5 +176,38 @@ public class MenuSettings : MonoBehaviour
     {
         Text tmp = Array.Find(keybindButtons, x => x.name == key).GetComponentInChildren<Text>();
         tmp.text = code.ToString();
+    }
+
+    //Field of View
+    //gets FoV value from slider (will be used in character control)
+    public void SetFoV(float fov)
+    {
+        fieldOfView = fov;
+        if (FoVSlider)
+        {
+            FoVSlider.value = fov;
+        }
+        if (FoVField)
+        {
+            FoVField.text = fov.ToString();
+        }
+        PlayerPrefs.SetFloat("field of view", fov);
+        PlayerPrefs.Save();
+    }
+
+    //gets FoV value from Input Field (will be used in character control)
+    public void SetFoVFromInputField(string fov)
+    {
+        fieldOfView = float.Parse(fov);
+        if (FoVSlider)
+        {
+            FoVSlider.value = float.Parse(fov);
+        }
+        if (FoVField)
+        {
+            FoVField.text = fov;
+        }
+        PlayerPrefs.SetFloat("field of view", float.Parse(fov));
+        PlayerPrefs.Save();
     }
 }

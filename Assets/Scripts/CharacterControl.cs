@@ -60,7 +60,8 @@ public class CharacterControl : NetworkBehaviour {
 		team = tc.Team();
 		if (team == 0) team = Random.Range(1, 3);
 		health.SetTeamText(team);
-	}
+        playerCamera.fieldOfView = MenuSettings.MyInstance.fieldOfView;
+    }
 
 	void Update() {
 		if (isLocalPlayer)
@@ -79,9 +80,9 @@ public class CharacterControl : NetworkBehaviour {
 				mouseV = -60;
 			}
 
-			playerCamera.transform.rotation = Quaternion.Euler (mouseV, mouseH, 0);
+            playerCamera.transform.rotation = Quaternion.Euler (mouseV, mouseH, 0);
 
-			if (Input.GetButtonDown("Crouch"))
+            if (Input.GetButtonDown("Crouch"))
 			{
 				if (!isCrouched)
 				{

@@ -34,6 +34,7 @@ public class KeyBindManager : MonoBehaviour
         BindKey("Button(MoveBackward)", (KeyCode)System.Enum.Parse(typeof(KeyCode), PlayerPrefs.GetString("Button(MoveBackward)", "S")));
         BindKey("Button(MoveLeft)", (KeyCode)System.Enum.Parse(typeof(KeyCode), PlayerPrefs.GetString("Button(MoveLeft)", "A")));
         BindKey("Button(MoveRight)", (KeyCode)System.Enum.Parse(typeof(KeyCode), PlayerPrefs.GetString("Button(MoveRight)", "D")));
+        BindKey("Button(Jump)", (KeyCode)System.Enum.Parse(typeof(KeyCode), PlayerPrefs.GetString("Button(Jump)", "Space")));
     }
 
 
