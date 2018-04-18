@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 public class CharacterControl : NetworkBehaviour {
 
-	public float mouseSensitivity = MenuSettings.Instance.mouseSensitivity;
+    public float mouseSensitivity;
     public float moveSpeed;
 	public float crouchSpeedReduction;
 	public float sprintSpeedBoost;
@@ -48,7 +48,8 @@ public class CharacterControl : NetworkBehaviour {
 
     // Use this for initialization
     void Start() {
-		rb = GetComponent<Rigidbody>();
+        mouseSensitivity = MenuSettings.Instance.mouseSensitivity;
+        rb = GetComponent<Rigidbody>();
 		currentIncreaseTime = increaseTime;
 		currentDecreaseTime = decreaseTime;
 		anim = GetComponent<NetworkAnimator>();
