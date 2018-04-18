@@ -46,8 +46,8 @@ public class CharacterControl : NetworkBehaviour {
 	[SyncVar(hook = "OnHeightChanged")] public float height = 2.2f;
 	[SyncVar(hook = "OnCenterChanged")] public float center = 0.1f;
 
-	// Use this for initialization
-	void Start() {
+    // Use this for initialization
+    void Start() {
 		rb = GetComponent<Rigidbody>();
 		currentIncreaseTime = increaseTime;
 		currentDecreaseTime = decreaseTime;
@@ -66,10 +66,43 @@ public class CharacterControl : NetworkBehaviour {
 	void Update() {
 		if (isLocalPlayer)
 		{
-			anim.animator.SetFloat("Speed", Input.GetAxis("Vertical"));
-			anim.animator.SetFloat("Strafe", Input.GetAxis("Horizontal"));
+            float moveVertical = 0;
+            if (Input.GetKey(KeyBindManager.MyInstance.Keybinds["Button(MoveForward)"]) == true)
+            {
+                moveVertical = 1;
+            }
+            if (Input.GetKey(KeyBindManager.MyInstance.Keybinds["Button(MoveBackward)"]) == true)
+            {
+                moveVertical = -1;
+            }
+            if (Input.GetKey(KeyBindManager.MyInstance.Keybinds["Button(MoveForward)"]) == true &&
+                Input.GetKey(KeyBindManager.MyInstance.Keybinds["Button(MoveBackward)"]) == true)
+            {
+                moveVertical = 0;
+            }
 
-			transform.rotation = Quaternion.Euler(0, playerCamera.transform.rotation.eulerAngles.y, 0);
+            float moveHorizontal = 0;
+            if (Input.GetKey(KeyBindManager.MyInstance.Keybinds["Button(MoveRight)"]) == true)
+            {
+                moveHorizontal = 1;
+            }
+            if (Input.GetKey(KeyBindManager.MyInstance.Keybinds["Button(MoveLeft)"]) == true)
+            {
+                moveHorizontal = -1;
+            }
+            if (Input.GetKey(KeyBindManager.MyInstance.Keybinds["Button(MoveRight)"]) == true &&
+                Input.GetKey(KeyBindManager.MyInstance.Keybinds["Button(MoveLeft)"]) == true)
+            {
+                moveHorizontal = 0;
+            }
+
+            anim.animator.SetFloat("Speed", moveVertical);
+            anim.animator.SetFloat("Strafe", moveHorizontal);
+
+            //anim.animator.SetFloat("Speed", Input.GetAxis("Vertical"));
+            //anim.animator.SetFloat("Strafe", Input.GetAxis("Horizontal"));
+
+            transform.rotation = Quaternion.Euler(0, playerCamera.transform.rotation.eulerAngles.y, 0);
 
             mouseH += Input.GetAxis("Mouse X") * mouseSensitivity;
 			mouseV -= Input.GetAxis("Mouse Y") * mouseSensitivity;
@@ -142,8 +175,8 @@ public class CharacterControl : NetworkBehaviour {
 				else currentIncreaseTime--;
 			}
 
-			if (Input.GetButtonDown("Jump") && onGround)
-			{
+            if (Input.GetButtonDown("Jump") && onGround)
+            {
 				//rb.AddForce(Vector3.up * jumpHeight, ForceMode.Impulse);
 				if (!health.isStaminaZero(-jumpStaminaUse))
 				{
@@ -169,9 +202,42 @@ public class CharacterControl : NetworkBehaviour {
 	void FixedUpdate() {
 		if (isLocalPlayer)
 		{
-			float moveHorizontal = Input.GetAxis("Horizontal");
-			float moveVertical = Input.GetAxis("Vertical");
-			float speed = moveSpeed;
+            float moveVertical = 0;
+            if (Input.GetKey(KeyBindManager.MyInstance.Keybinds["Button(MoveForward)"]) == true)
+            {
+                moveVertical = 1;
+            }
+            if (Input.GetKey(KeyBindManager.MyInstance.Keybinds["Button(MoveBackward)"]) == true)
+            {
+                moveVertical = -1;
+            }
+            if (Input.GetKey(KeyBindManager.MyInstance.Keybinds["Button(MoveForward)"]) == true && 
+                Input.GetKey(KeyBindManager.MyInstance.Keybinds["Button(MoveBackward)"]) == true)
+            {
+                moveVertical = 0;
+            }
+
+            float moveHorizontal = 0;
+            if (Input.GetKey(KeyBindManager.MyInstance.Keybinds["Button(MoveRight)"]) == true)
+            {
+                moveHorizontal = 1;
+            }
+            if (Input.GetKey(KeyBindManager.MyInstance.Keybinds["Button(MoveLeft)"]) == true)
+            {
+                moveHorizontal = -1;
+            }
+            if (Input.GetKey(KeyBindManager.MyInstance.Keybinds["Button(MoveRight)"]) == true &&
+                Input.GetKey(KeyBindManager.MyInstance.Keybinds["Button(MoveLeft)"]) == true)
+            {
+                moveHorizontal = 0;
+            }
+
+
+
+
+            //float moveHorizontal = Input.GetAxis("Horizontal");
+            //float moveVertical = Input.GetAxis("Vertical");
+            float speed = moveSpeed;
 			if (onSprint) speed = moveSpeed + sprintSpeedBoost;
 			Vector3 forward = new Vector3(transform.forward.x, 0, transform.forward.z).normalized * speed * moveVertical;
 			Vector3 horizontal = new Vector3(transform.right.x, 0, transform.right.z).normalized * speed * moveHorizontal;
