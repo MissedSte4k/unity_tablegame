@@ -6,8 +6,7 @@ using UnityEngine.UI;
 
 public class CharacterControl : NetworkBehaviour {
 
-    //public float mouseSensitivity = MenuSettings.Instance.mouseSensitivity;
-    public float mouseSensitivity;
+	public float mouseSensitivity = MenuSettings.Instance.mouseSensitivity;
     public float moveSpeed;
 	public float crouchSpeedReduction;
 	public float sprintSpeedBoost;
@@ -72,7 +71,6 @@ public class CharacterControl : NetworkBehaviour {
 
 			transform.rotation = Quaternion.Euler(0, playerCamera.transform.rotation.eulerAngles.y, 0);
 
-            mouseSensitivity = MenuSettings.Instance.mouseSensitivity;
             mouseH += Input.GetAxis("Mouse X") * mouseSensitivity;
 			mouseV -= Input.GetAxis("Mouse Y") * mouseSensitivity;
 
