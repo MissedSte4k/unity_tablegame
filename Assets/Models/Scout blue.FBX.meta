@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 0f47d216e37c20440943e48c97f85427
+guid: 2deeb1d03ddb82b4fa783dbd4ce51845
 timeCreated: 1522640720
 licenseType: Free
 ModelImporter:
@@ -87,6 +87,19 @@ ModelImporter:
     100158: Smoke bomb
     100160: Stick
     100162: Box002
+    100164: Band
+    100166: Band bone
+    100168: Crossbow bolt
+    100170: Hand crossbow
+    100172: Pin
+    100174: Stick end
+    100176: Stick end001
+    100178: Tape
+    100180: Toothpick bottom
+    100182: Toothpick top
+    100184: Wire middle
+    100186: Wire top left
+    100188: Wire top right
     400000: Bip002
     400002: Bip002 Footsteps
     400004: Bip002 Head
@@ -169,6 +182,19 @@ ModelImporter:
     400158: Smoke bomb
     400160: Stick
     400162: Box002
+    400164: Band
+    400166: Band bone
+    400168: Crossbow bolt
+    400170: Hand crossbow
+    400172: Pin
+    400174: Stick end
+    400176: Stick end001
+    400178: Tape
+    400180: Toothpick bottom
+    400182: Toothpick top
+    400184: Wire middle
+    400186: Wire top left
+    400188: Wire top right
     2100000: 13 - Default
     2100002: Cape
     2100004: Wristband
@@ -193,6 +219,9 @@ ModelImporter:
     2100042: No Name
     2100044: Box
     2100046: Staff
+    2100048: 'Material #81'
+    2100050: Toothpick
+    2100052: wire
     2300000: Shortsword
     2300002: Shortsword001
     2300004: Headband
@@ -213,6 +242,16 @@ ModelImporter:
     2300034: Smoke bomb
     2300036: Stick
     2300038: Box002
+    2300040: Crossbow bolt
+    2300042: Pin
+    2300044: Stick end
+    2300046: Stick end001
+    2300048: Tape
+    2300050: Toothpick bottom
+    2300052: Toothpick top
+    2300054: Wire middle
+    2300056: Wire top left
+    2300058: Wire top right
     3300000: Shortsword
     3300002: Shortsword001
     3300004: Headband
@@ -233,6 +272,16 @@ ModelImporter:
     3300034: Smoke bomb
     3300036: Stick
     3300038: Box002
+    3300040: Crossbow bolt
+    3300042: Pin
+    3300044: Stick end
+    3300046: Stick end001
+    3300048: Tape
+    3300050: Toothpick bottom
+    3300052: Toothpick top
+    3300054: Wire middle
+    3300056: Wire top left
+    3300058: Wire top right
     4300000: Scout
     4300002: Cape
     4300004: Rubber_band
@@ -257,6 +306,17 @@ ModelImporter:
     4300042: Cylinder001
     4300044: Box001
     4300046: Box002
+    4300048: Crossbow bolt
+    4300050: Pin
+    4300052: Band
+    4300054: Stick end
+    4300056: Stick end001
+    4300058: Tape
+    4300060: Toothpick bottom
+    4300062: Wire middle
+    4300064: Wire top left
+    4300066: Wire top right
+    4300068: Toothpick top
     7400000: DW_run_forward
     7400002: DW_run_right
     7400004: DW_run_left
@@ -368,11 +428,28 @@ ModelImporter:
     7400216: Staff_block_hurt
     7400218: Staff_hurt
     7400220: Staff_draw
+    7400222: Crossbow_run_forward
+    7400224: Crossbow_run_right
+    7400226: Crossbow_run_left
+    7400228: Crossbow_run_back
+    7400230: Crossbow_jump
+    7400232: Crossbow_fall
+    7400234: Crossbow_land
+    7400236: Crossbow_crouch_forward
+    7400238: Crossbow_crouch_right
+    7400240: Crossbow_crouch_left
+    7400242: Crossbow_crouch_back
+    7400244: Crossbow_crouch_idle
+    7400246: Crossbow_idle
+    7400248: Crossbow_shoot
+    7400250: Crossbow_reload
+    7400252: Crossbow_draw
     9500000: //RootNode
     13700000: Cape
     13700002: Rubber_band
     13700004: Scout
     13700006: Cardboard box
+    13700008: Band
   externalObjects:
   - first:
       type: UnityEngine:Material
@@ -422,6 +499,11 @@ ModelImporter:
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
+      name: 'Material #81'
+    second: {fileID: 2100000, guid: 9b0deb547c859eb4b9b26b22f70df0c1, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
       name: Pin
     second: {fileID: 2100000, guid: b1def13f1cea8b84b81ae5251ee25276, type: 2}
   - first:
@@ -462,8 +544,18 @@ ModelImporter:
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
+      name: Toothpick
+    second: {fileID: 2100000, guid: f27ddb4352b425e40ad294ba83a86663, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
       name: Wristband
     second: {fileID: 2100000, guid: 14b4913d4e9e2d341a91097d8e76372f, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: wire
+    second: {fileID: 2100000, guid: a1732880fd6ce52438e94e0d450d6c85, type: 2}
   materials:
     importMaterials: 1
     materialName: 0
@@ -3491,6 +3583,454 @@ ModelImporter:
       takeName: Take 001
       firstFrame: 11365
       lastFrame: 11395
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: Crossbow_run_forward
+      takeName: Take 001
+      firstFrame: 12005
+      lastFrame: 12085
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 1
+      loopBlend: 1
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: Crossbow_run_left
+      takeName: Take 001
+      firstFrame: 12095
+      lastFrame: 12175
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 1
+      loopBlend: 1
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: Crossbow_run_right
+      takeName: Take 001
+      firstFrame: 12185
+      lastFrame: 12265
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 1
+      loopBlend: 1
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: Crossbow_run_back
+      takeName: Take 001
+      firstFrame: 12275
+      lastFrame: 12355
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 1
+      loopBlend: 1
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: Crossbow_jump
+      takeName: Take 001
+      firstFrame: 12360
+      lastFrame: 12410
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: Crossbow_fall
+      takeName: Take 001
+      firstFrame: 12415
+      lastFrame: 12455
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: Crossbow_land
+      takeName: Take 001
+      firstFrame: 12455
+      lastFrame: 12475
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: Crossbow_crouch_forward
+      takeName: Take 001
+      firstFrame: 12485
+      lastFrame: 12565
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 1
+      loopBlend: 1
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: Crossbow_crouch_right
+      takeName: Take 001
+      firstFrame: 12575
+      lastFrame: 12655
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 1
+      loopBlend: 1
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: Crossbow_crouch_left
+      takeName: Take 001
+      firstFrame: 12665
+      lastFrame: 12745
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 1
+      loopBlend: 1
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: Crossbow_crouch_back
+      takeName: Take 001
+      firstFrame: 12755
+      lastFrame: 12835
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 1
+      loopBlend: 1
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: Crossbow_crouch_idle
+      takeName: Take 001
+      firstFrame: 12840
+      lastFrame: 12880
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 1
+      loopBlend: 1
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: Crossbow_idle
+      takeName: Take 001
+      firstFrame: 12885
+      lastFrame: 12925
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: Crossbow_shoot
+      takeName: Take 001
+      firstFrame: 12930
+      lastFrame: 12965
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: Crossbow_reload
+      takeName: Take 001
+      firstFrame: 12965
+      lastFrame: 13050
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: Crossbow_draw
+      takeName: Take 001
+      firstFrame: 13365
+      lastFrame: 13385
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
