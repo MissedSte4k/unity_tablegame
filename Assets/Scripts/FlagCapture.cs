@@ -35,8 +35,3 @@ public class FlagRed {
     }
 }
 
-public class FlagCapture : Flag
-{
-
-
-}
