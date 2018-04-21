@@ -61,7 +61,12 @@ public class CharacterControl : NetworkBehaviour {
         CmdTeam();
     }
 
-	void Update() {
+    private void OnEnable()
+    {
+        Spawn();
+    }
+
+    void Update() {
 		if (isLocalPlayer)
 		{
             float moveVertical = 0;
@@ -378,10 +383,19 @@ public class CharacterControl : NetworkBehaviour {
     {
         this.team = team;
         health.SetTeamText(this.team);
+        Spawn();
     }
 
     public int Team()
     {
         return team;
+    }
+
+    private void Spawn()
+    {
+        GameObject spawnpointA = GameObject.Find("Spawn Point A1");
+        GameObject spawnpointB = GameObject.Find("Spawn Point B1");
+        if (team == 1) transform.position = spawnpointA.transform.position;
+        else if (team == 2) transform.position = spawnpointB.transform.position;
     }
 }
