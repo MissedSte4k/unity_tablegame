@@ -36,7 +36,6 @@ public class CharacterControl : NetworkBehaviour {
 	public float crouchCenter = 0.25f;
 	private float minHeightChangeSpeed = 0.001f;
 	private float minCenterChangeSpeed = 0.0001f;
-	private TeamControl tc;
 	private int team;
 
 	NetworkAnimator anim;
@@ -57,11 +56,9 @@ public class CharacterControl : NetworkBehaviour {
 		minHeightChangeSpeed = 0.001f;
 		minCenterChangeSpeed = 0.0001f;
 
-		tc = FindObjectOfType<TeamControl>();
-		team = tc.Team();
-		if (team == 0) team = Random.Range(1, 3);
-		health.SetTeamText(team);
         playerCamera.fieldOfView = MenuSettings.Instance.fieldOfView;
+
+        CmdTeam();
     }
 
 	void Update() {
@@ -359,8 +356,32 @@ public class CharacterControl : NetworkBehaviour {
 		hitBox.center = new Vector3(0, value, 0);
 	}
 
-	public int Team()
-	{
-		return team;
-	}
+    [Command]
+    private void CmdTeam()
+    {
+        SetTeam();
+    }
+
+    [Server]
+    private void SetTeam()
+    {
+        RpcSetTeam(FindObjectOfType<TeamControl>().Team());
+    }
+
+    [ClientRpc]
+    private void RpcSetTeam(int team)
+    {
+        Team(team);
+    }
+
+    private void Team(int team)
+    {
+        this.team = team;
+        health.SetTeamText(this.team);
+    }
+
+    public int Team()
+    {
+        return team;
+    }
 }
