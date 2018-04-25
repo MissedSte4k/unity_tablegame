@@ -118,8 +118,8 @@ public class CharacterControl : NetworkBehaviour {
 
             playerCamera.transform.rotation = Quaternion.Euler (mouseV, mouseH, 0);
 
-            if (Input.GetButtonDown("Crouch"))
-			{
+            if (Input.GetKeyDown(KeyBindManager.MyInstance.Keybinds["Button(Crouch)"]))
+            {
 				if (!isCrouched)
 				{
 					isCrouched = true;
@@ -147,12 +147,12 @@ public class CharacterControl : NetworkBehaviour {
                 if (!health.isStaminaZero(-shootStaminaUse)) CmdFire();
             }*/
 
-			if (Input.GetButtonDown("Sprint") && !isStanding() && onGround && !isCrouched)
+			if (Input.GetKey(KeyBindManager.MyInstance.Keybinds["Button(Sprint)"]) && !isStanding() && onGround && !isCrouched)
 			{
 				onSprint = true;
 			}
 
-			if (Input.GetButtonUp("Sprint") || isStanding() || !onGround || isCrouched)
+			if (Input.GetKeyUp(KeyBindManager.MyInstance.Keybinds["Button(Sprint)"]) || isStanding() || !onGround || isCrouched)
 			{
 				onSprint = false;
 			}
@@ -178,7 +178,7 @@ public class CharacterControl : NetworkBehaviour {
 				else currentIncreaseTime--;
 			}
 
-            if (Input.GetButtonDown("Jump") && onGround)
+            if (Input.GetKey(KeyBindManager.MyInstance.Keybinds["Button(Jump)"]) && onGround)
             {
 				//rb.AddForce(Vector3.up * jumpHeight, ForceMode.Impulse);
 				if (!health.isStaminaZero(-jumpStaminaUse))
