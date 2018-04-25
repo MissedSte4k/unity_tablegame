@@ -142,6 +142,7 @@ public class KeyBindManager : MonoBehaviour
                     BindKey(bindName, (KeyCode)System.Enum.Parse(typeof(KeyCode), "Mouse6"));
                     buttonIndex = -1;
                 }
+                SaveKeys();
             }
         }
     }
