@@ -698,7 +698,7 @@ ModelImporter:
       name: OH_slash_swing
       takeName: Take 001
       firstFrame: 485
-      lastFrame: 525
+      lastFrame: 535
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
@@ -725,7 +725,7 @@ ModelImporter:
     - serializedVersion: 16
       name: OH_slash_swing2
       takeName: Take 001
-      firstFrame: 525
+      firstFrame: 535
       lastFrame: 595
       wrapMode: 0
       orientationOffsetY: 0
@@ -1314,7 +1314,7 @@ ModelImporter:
       name: TH_slash_swing
       takeName: Take 001
       firstFrame: 2085
-      lastFrame: 2125
+      lastFrame: 2135
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
@@ -1341,7 +1341,7 @@ ModelImporter:
     - serializedVersion: 16
       name: TH_slash_swing2
       takeName: Take 001
-      firstFrame: 2125
+      firstFrame: 2135
       lastFrame: 2195
       wrapMode: 0
       orientationOffsetY: 0

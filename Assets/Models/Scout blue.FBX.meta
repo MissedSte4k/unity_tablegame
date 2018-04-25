@@ -978,7 +978,7 @@ ModelImporter:
       name: DW_slash_swing
       takeName: Take 001
       firstFrame: 950
-      lastFrame: 990
+      lastFrame: 1000
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
@@ -1005,7 +1005,7 @@ ModelImporter:
     - serializedVersion: 16
       name: DW_slash_swing2
       takeName: Take 001
-      firstFrame: 990
+      firstFrame: 1000
       lastFrame: 1070
       wrapMode: 0
       orientationOffsetY: 0
@@ -1594,7 +1594,7 @@ ModelImporter:
       name: OH_slash_swing
       takeName: Take 001
       firstFrame: 2950
-      lastFrame: 2990
+      lastFrame: 3000
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
@@ -1621,7 +1621,7 @@ ModelImporter:
     - serializedVersion: 16
       name: OH_slash_swing2
       takeName: Take 001
-      firstFrame: 2990
+      firstFrame: 3000
       lastFrame: 3070
       wrapMode: 0
       orientationOffsetY: 0
@@ -3386,7 +3386,7 @@ ModelImporter:
       name: Staff_slash_swing
       takeName: Take 001
       firstFrame: 10950
-      lastFrame: 10990
+      lastFrame: 11000
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
@@ -3413,7 +3413,7 @@ ModelImporter:
     - serializedVersion: 16
       name: Staff_slash_swing2
       takeName: Take 001
-      firstFrame: 10990
+      firstFrame: 11000
       lastFrame: 11070
       wrapMode: 0
       orientationOffsetY: 0

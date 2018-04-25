@@ -491,7 +491,7 @@ ModelImporter:
       name: TH_slash_swing
       takeName: Take 001
       firstFrame: 10
-      lastFrame: 25
+      lastFrame: 35
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
@@ -518,7 +518,7 @@ ModelImporter:
     - serializedVersion: 16
       name: TH_slash_swing2
       takeName: Take 001
-      firstFrame: 25
+      firstFrame: 35
       lastFrame: 60
       wrapMode: 0
       orientationOffsetY: 0
@@ -1079,7 +1079,7 @@ ModelImporter:
       name: TW_slash_swing
       takeName: Take 001
       firstFrame: 1010
-      lastFrame: 1025
+      lastFrame: 1035
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
@@ -1106,7 +1106,7 @@ ModelImporter:
     - serializedVersion: 16
       name: TW_slash_swing2
       takeName: Take 001
-      firstFrame: 1025
+      firstFrame: 1035
       lastFrame: 1060
       wrapMode: 0
       orientationOffsetY: 0
