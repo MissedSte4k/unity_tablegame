@@ -12,14 +12,24 @@ public class Health : NetworkBehaviour {
     public Text teamText;
     public Slider healthSlider;
     public Slider staminaSlider;
+    public Text redTeamKillsText;
+    public Text blueTeamKillsText;
+    public Text TargetInfoText;
+    public Text winText;
 
     PlayerRespawn pr;
     [SyncVar (hook = "OnHealthChanged")] int health;
     [SyncVar (hook = "OnStaminaChanged")] int stamina;
 
+    void Start()
+    {
+        CmdCurrentScore();
+    }
+
     void Awake()
     {
         pr = GetComponent<PlayerRespawn>();
+        CmdCurrentScore();
     }
 
     public void SetTeamText(int team)
@@ -52,16 +62,35 @@ public class Health : NetworkBehaviour {
     [Command]
     public void CmdTakeDamage(int amount)
     {
-        TakeDamage(amount);
+        TakeDamage(amount, GetComponent<CharacterControl>().Team());
+    }
+
+    [Command]
+    private void CmdCurrentScore()
+    {
+        CurrentScore();
     }
 
     [Server]
-    public bool TakeDamage(int amount)
+    private void CurrentScore()
+    {
+        RpcCurrentScore(FindObjectOfType<TeamControl>().CurrentScore());
+    }
+
+    public bool isFatal(int amount)
+    {
+        if (health - amount > 0) return false;
+        else return true;
+    }
+
+    [Server]
+    private bool TakeDamage(int amount, int team)
     {
         health = health - amount;
         if (dependOnHealth && stamina > health) ChangeStamina(0);
         if (health <= 0)
         {
+            FindObjectOfType<TeamControl>().IncreaseByOne(team);
             OnHealthChanged(0);
             OnStaminaChanged(0);
             RpcTakeDamage(true);
@@ -69,6 +98,12 @@ public class Health : NetworkBehaviour {
         }
 
         return false;
+    }
+
+    [ClientRpc]
+    public void RpcCurrentScore(int[] C)
+    {
+        UpdateKillText(C[0], C[1], C[2], C[3]);
     }
 
     [ClientRpc]
@@ -118,5 +153,23 @@ public class Health : NetworkBehaviour {
         if (!dependOnHealth && stamina > maxStamina) stamina = maxStamina;
         if (stamina < 0) stamina = 0;
         if (isLocalPlayer) staminaSlider.value = value;
+    }
+
+    public void UpdateKillText(int target, int blue, int red, int won)
+    {
+        TargetInfoText.text = "TARGET\n" + target;
+        blueTeamKillsText.text = blue.ToString();
+        redTeamKillsText.text = red.ToString();
+
+        if (won == 1)
+        {
+            winText.color = Color.blue;
+            winText.text = "TEAM BLUE WINS!";
+        }
+        if (won == 2)
+        {
+            winText.color = Color.red;
+            winText.text = "TEAM RED WINS!";
+        }
     }
 }

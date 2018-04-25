@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 public class CharacterControl : NetworkBehaviour {
 
-	public float mouseSensitivity = MenuSettings.Instance.mouseSensitivity;
+    public float mouseSensitivity;
     public float moveSpeed;
 	public float crouchSpeedReduction;
 	public float sprintSpeedBoost;
@@ -36,7 +36,6 @@ public class CharacterControl : NetworkBehaviour {
 	public float crouchCenter = 0.25f;
 	private float minHeightChangeSpeed = 0.001f;
 	private float minCenterChangeSpeed = 0.0001f;
-	private TeamControl tc;
 	private int team;
 
 	NetworkAnimator anim;
@@ -48,7 +47,8 @@ public class CharacterControl : NetworkBehaviour {
 
     // Use this for initialization
     void Start() {
-		rb = GetComponent<Rigidbody>();
+        mouseSensitivity = MenuSettings.Instance.mouseSensitivity;
+        rb = GetComponent<Rigidbody>();
 		currentIncreaseTime = increaseTime;
 		currentDecreaseTime = decreaseTime;
 		anim = GetComponent<NetworkAnimator>();
@@ -56,14 +56,17 @@ public class CharacterControl : NetworkBehaviour {
 		minHeightChangeSpeed = 0.001f;
 		minCenterChangeSpeed = 0.0001f;
 
-		tc = FindObjectOfType<TeamControl>();
-		team = tc.Team();
-		if (team == 0) team = Random.Range(1, 3);
-		health.SetTeamText(team);
         playerCamera.fieldOfView = MenuSettings.Instance.fieldOfView;
+
+        CmdTeam();
     }
 
-	void Update() {
+    private void OnEnable()
+    {
+        Spawn();
+    }
+
+    void Update() {
 		if (isLocalPlayer)
 		{
             float moveVertical = 0;
@@ -358,8 +361,41 @@ public class CharacterControl : NetworkBehaviour {
 		hitBox.center = new Vector3(0, value, 0);
 	}
 
-	public int Team()
-	{
-		return team;
-	}
+    [Command]
+    private void CmdTeam()
+    {
+        SetTeam();
+    }
+
+    [Server]
+    private void SetTeam()
+    {
+        RpcSetTeam(FindObjectOfType<TeamControl>().Team());
+    }
+
+    [ClientRpc]
+    private void RpcSetTeam(int team)
+    {
+        Team(team);
+    }
+
+    private void Team(int team)
+    {
+        this.team = team;
+        health.SetTeamText(this.team);
+        Spawn();
+    }
+
+    public int Team()
+    {
+        return team;
+    }
+
+    private void Spawn()
+    {
+        GameObject spawnpointA = GameObject.Find("Spawn Point A1");
+        GameObject spawnpointB = GameObject.Find("Spawn Point B1");
+        if (team == 1) transform.position = spawnpointA.transform.position;
+        else if (team == 2) transform.position = spawnpointB.transform.position;
+    }
 }
