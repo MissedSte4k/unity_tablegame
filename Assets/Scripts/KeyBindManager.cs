@@ -35,6 +35,8 @@ public class KeyBindManager : MonoBehaviour
         BindKey("Button(MoveLeft)", (KeyCode)System.Enum.Parse(typeof(KeyCode), PlayerPrefs.GetString("Button(MoveLeft)", "A")));
         BindKey("Button(MoveRight)", (KeyCode)System.Enum.Parse(typeof(KeyCode), PlayerPrefs.GetString("Button(MoveRight)", "D")));
         BindKey("Button(Jump)", (KeyCode)System.Enum.Parse(typeof(KeyCode), PlayerPrefs.GetString("Button(Jump)", "Space")));
+        BindKey("Button(Crouch)", (KeyCode)System.Enum.Parse(typeof(KeyCode), PlayerPrefs.GetString("Button(Crouch)", "C")));
+        BindKey("Button(Sprint)", (KeyCode)System.Enum.Parse(typeof(KeyCode), PlayerPrefs.GetString("Button(Sprint)", "LeftShift")));
     }
 
 
@@ -72,7 +74,23 @@ public class KeyBindManager : MonoBehaviour
 
             if (e.isKey)
             {
-                BindKey(bindName, e.keyCode);
+                BindKey(bindName, e.keyCode);                
+                SaveKeys();
+            }
+            if (e.isMouse)
+            {
+                if(e.button == 0)
+                {
+                    BindKey(bindName, (KeyCode)System.Enum.Parse(typeof(KeyCode), "Mouse0"));
+                }
+                if (e.button == 1)
+                {
+                    BindKey(bindName, (KeyCode)System.Enum.Parse(typeof(KeyCode), "Mouse1"));
+                }
+                if (e.button == 2)
+                {
+                    BindKey(bindName, (KeyCode)System.Enum.Parse(typeof(KeyCode), "Mouse2"));
+                }
                 SaveKeys();
             }
         }
