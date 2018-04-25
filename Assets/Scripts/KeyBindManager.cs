@@ -61,6 +61,33 @@ public class KeyBindManager : MonoBehaviour
         bindName = string.Empty;
     }
 
+    private int buttonIndex = -1;
+
+    public void Update()
+    {
+        if (bindName != string.Empty)
+        {
+            if (Input.GetMouseButtonDown(3))
+            {
+                buttonIndex = 3;
+            }
+            if (Input.GetMouseButtonDown(4))
+            {
+                buttonIndex = 4;
+            }
+            if (Input.GetMouseButtonDown(5))
+            {
+                buttonIndex = 5;
+            }
+            if (Input.GetMouseButtonDown(6))
+            {
+                buttonIndex = 6;
+            }
+        }
+        
+
+    }
+
     public void KeyBindOnClick(string bindName)
     {
         this.bindName = bindName;
@@ -69,7 +96,7 @@ public class KeyBindManager : MonoBehaviour
     private void OnGUI()
     {
         if (bindName != string.Empty)
-        {
+        {           
             Event e = Event.current;
 
             if (e.isKey)
@@ -78,8 +105,8 @@ public class KeyBindManager : MonoBehaviour
                 SaveKeys();
             }
             if (e.isMouse)
-            {
-                if(e.button == 0)
+            {              
+                if (e.button == 0)
                 {
                     BindKey(bindName, (KeyCode)System.Enum.Parse(typeof(KeyCode), "Mouse0"));
                 }
@@ -90,6 +117,30 @@ public class KeyBindManager : MonoBehaviour
                 if (e.button == 2)
                 {
                     BindKey(bindName, (KeyCode)System.Enum.Parse(typeof(KeyCode), "Mouse2"));
+                }                
+                SaveKeys();
+            }
+            if(buttonIndex != -1)
+            {
+                if(buttonIndex == 3)
+                {
+                    BindKey(bindName, (KeyCode)System.Enum.Parse(typeof(KeyCode), "Mouse3"));
+                    buttonIndex = -1;
+                }
+                else if(buttonIndex == 4)
+                {
+                    BindKey(bindName, (KeyCode)System.Enum.Parse(typeof(KeyCode), "Mouse4"));
+                    buttonIndex = -1;
+                }
+                else if (buttonIndex == 5)
+                {
+                    BindKey(bindName, (KeyCode)System.Enum.Parse(typeof(KeyCode), "Mouse5"));
+                    buttonIndex = -1;
+                }
+                else if (buttonIndex == 6)
+                {
+                    BindKey(bindName, (KeyCode)System.Enum.Parse(typeof(KeyCode), "Mouse6"));
+                    buttonIndex = -1;
                 }
                 SaveKeys();
             }
