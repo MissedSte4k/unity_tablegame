@@ -38,6 +38,7 @@ public class CharacterControl : NetworkBehaviour {
 	private float minCenterChangeSpeed = 0.0001f;
 	private TeamControl tc;
 	private int team;
+    private bool hasFlag = false;
 
 	NetworkAnimator anim;
 	// dvi apatinės skeleto stuburo dalys, naudojamos žiūrėt aukštyn/žemyn
@@ -291,7 +292,22 @@ public class CharacterControl : NetworkBehaviour {
 		hitBox.center = new Vector3(0, value, 0);
 	}
 
-	public int Team()
+    public void FlagGot()
+    {
+        hasFlag = true;
+    }
+
+    public void FlagLost()
+    {
+        hasFlag = false;
+    }
+    public bool FlagStatus()
+    {
+        return hasFlag;
+    }
+    
+
+    public int Team()
 	{
 		return team;
 	}

@@ -119,4 +119,8 @@ public class Health : NetworkBehaviour {
         if (stamina < 0) stamina = 0;
         if (isLocalPlayer) staminaSlider.value = value;
     }
+    public int GetHealth()
+    {
+        return health;
+    }
 }
