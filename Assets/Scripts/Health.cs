@@ -77,7 +77,7 @@ public class Health : NetworkBehaviour {
         RpcCurrentScore(FindObjectOfType<TeamControl>().CurrentScore());
     }
 
-    public bool isFatal(int amount)
+    public bool IsFatal(int amount)
     {
         if (health - amount > 0) return false;
         else return true;
@@ -112,19 +112,19 @@ public class Health : NetworkBehaviour {
         if (died) pr.Die();
     }
 
-    public bool isStaminaMax()
+    public bool IsStaminaMax()
     {
         if (dependOnHealth && stamina >= health || !dependOnHealth && stamina >= maxHealth) return true;
         else return false;
     }
 
-    public bool isStaminaZero()
+    public bool IsStaminaZero()
     {
         if (stamina <= 0) return true;
         else return false;
     }
 
-    public bool isStaminaZero(int value)
+    public bool IsStaminaZero(int value)
     {
         if (stamina + value <= 0) return true;
         else return false;
