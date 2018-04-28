@@ -37,8 +37,9 @@ public class CharacterControl : NetworkBehaviour {
 	private float minHeightChangeSpeed = 0.001f;
 	private float minCenterChangeSpeed = 0.0001f;
 	private int team;
+    private int hasFlag = 0;
 
-	NetworkAnimator anim;
+    NetworkAnimator anim;
 	// dvi apatinės skeleto stuburo dalys, naudojamos žiūrėt aukštyn/žemyn
 	public Transform spine;
 
@@ -147,12 +148,12 @@ public class CharacterControl : NetworkBehaviour {
                 if (!health.isStaminaZero(-shootStaminaUse)) CmdFire();
             }*/
 
-			if (Input.GetKey(KeyBindManager.MyInstance.Keybinds["Button(Sprint)"]) && !isStanding() && onGround && !isCrouched)
+			if (Input.GetKey(KeyBindManager.MyInstance.Keybinds["Button(Sprint)"]) && !IsStanding() && onGround && !isCrouched)
 			{
 				onSprint = true;
 			}
 
-			if (Input.GetKeyUp(KeyBindManager.MyInstance.Keybinds["Button(Sprint)"]) || isStanding() || !onGround || isCrouched)
+			if (Input.GetKeyUp(KeyBindManager.MyInstance.Keybinds["Button(Sprint)"]) || IsStanding() || !onGround || isCrouched)
 			{
 				onSprint = false;
 			}
@@ -162,7 +163,7 @@ public class CharacterControl : NetworkBehaviour {
 				if (currentDecreaseTime < 1)
 				{
 					CmdChangeStamina(-sprintStaminaUse);
-					if (health.isStaminaZero()) onSprint = false;
+					if (health.IsStaminaZero()) onSprint = false;
 					currentDecreaseTime = decreaseTime;
 				}
 				else currentDecreaseTime--;
@@ -170,7 +171,7 @@ public class CharacterControl : NetworkBehaviour {
 				
 			if (!onSprint)
 			{
-				if (currentIncreaseTime < 1 && !health.isStaminaMax())
+				if (currentIncreaseTime < 1 && !health.IsStaminaMax())
 				{
 					CmdChangeStamina(1);
 					currentIncreaseTime = increaseTime;
@@ -181,7 +182,7 @@ public class CharacterControl : NetworkBehaviour {
             if (Input.GetKey(KeyBindManager.MyInstance.Keybinds["Button(Jump)"]) && onGround)
             {
 				//rb.AddForce(Vector3.up * jumpHeight, ForceMode.Impulse);
-				if (!health.isStaminaZero(-jumpStaminaUse))
+				if (!health.IsStaminaZero(-jumpStaminaUse))
 				{
 					anim.animator.SetBool("Jump", true);
 					anim.animator.SetBool("Falling", true);
@@ -256,7 +257,7 @@ public class CharacterControl : NetworkBehaviour {
 		}
 	}
 
-	private bool isStanding()
+	private bool IsStanding()
 	{
 		if (Mathf.Abs(rb.velocity.x) < 0.5 && Mathf.Abs(rb.velocity.z) < 0.5) return true;
 		else return false;
@@ -395,7 +396,24 @@ public class CharacterControl : NetworkBehaviour {
     {
         GameObject spawnpointA = GameObject.Find("Spawn Point A1");
         GameObject spawnpointB = GameObject.Find("Spawn Point B1");
-        if (team == 1) transform.position = spawnpointA.transform.position;
-        else if (team == 2) transform.position = spawnpointB.transform.position;
+        if (team == 1) transform.position = spawnpointB.transform.position;
+        else if (team == 2) transform.position = spawnpointA.transform.position;
+    }
+    public void FlagGot()
+    {
+        hasFlag = 1;
+    }
+
+    public void FlagLost()
+    {
+        hasFlag = 0;
+    }
+    public void FlagCaptured()
+    {
+        hasFlag = 2;
+    }
+    public int FlagStatus()
+    {
+        return hasFlag;
     }
 }
