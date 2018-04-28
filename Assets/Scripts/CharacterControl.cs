@@ -121,7 +121,9 @@ public class CharacterControl : NetworkBehaviour {
 
             if (Input.GetKeyDown(KeyBindManager.MyInstance.Keybinds["Button(Crouch)"]))
             {
-				if (!isCrouched)
+                CmdFire();
+
+                if (!isCrouched)
 				{
 					isCrouched = true;
 					moveSpeed -= crouchSpeedReduction;
