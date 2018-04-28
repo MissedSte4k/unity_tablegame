@@ -12,6 +12,7 @@ public class PlayOptions : MonoBehaviour
     public Button[] teamButtons;
     public Sprite[] teamBlueImages;
     public Sprite[] teamRedImages;
+    public Text[] teamTitles;
     public Button teamNextButton;
     public GameObject teamLayer, blueCharacterLayer, redCharacterLayer;
     public int characterIndex;
@@ -75,6 +76,9 @@ public class PlayOptions : MonoBehaviour
         teamIndex = -1;       
         teamButtons[0].image.sprite = teamBlueImages[0];
         teamButtons[1].image.sprite = teamRedImages[0];
+        teamTitles[0].enabled = false;
+        teamTitles[1].enabled = false;
+
 
         characterIndex = -1;
         blueCharacterButtons[0].image.sprite = blueKnightImages[0];
@@ -177,6 +181,7 @@ public class PlayOptions : MonoBehaviour
             {
                 teamButtons[0].image.sprite = teamBlueImages[4];
             }
+            teamTitles[0].enabled = true;
         } 
         else if(i == 1)
         {
@@ -188,6 +193,7 @@ public class PlayOptions : MonoBehaviour
             {
                 teamButtons[1].image.sprite = teamRedImages[4];
             }
+            teamTitles[1].enabled = true;
         }
     }
     public void TeamButtonPointerExit(int i)
@@ -202,6 +208,7 @@ public class PlayOptions : MonoBehaviour
             {
                 teamButtons[0].image.sprite = teamBlueImages[3];
             }
+            teamTitles[0].enabled = false;
         }
         else if (i == 1)
         {
@@ -213,6 +220,7 @@ public class PlayOptions : MonoBehaviour
             {
                 teamButtons[1].image.sprite = teamRedImages[3];
             }
+            teamTitles[1].enabled = false;
         }
     }
     public void TeamButtonPointerDown(int i)
@@ -231,6 +239,7 @@ public class PlayOptions : MonoBehaviour
             {
                 teamButtons[0].image.sprite = teamBlueImages[2];
             }
+            teamTitles[0].enabled = true;
         }
         if (i == 1)
         {
@@ -246,6 +255,7 @@ public class PlayOptions : MonoBehaviour
             {
                 teamButtons[1].image.sprite = teamRedImages[5];
             }
+            teamTitles[1].enabled = true;
         }
     }
 
