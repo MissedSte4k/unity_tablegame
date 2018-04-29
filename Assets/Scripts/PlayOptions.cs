@@ -15,6 +15,7 @@ public class PlayOptions : MonoBehaviour
     public Text[] teamTitles;
     public Button teamNextButton;
     public GameObject teamLayer, blueCharacterLayer, redCharacterLayer;
+
     public int characterIndex;
     public Sprite[] blueKnightImages;
     public Sprite[] blueScoutImages;
@@ -29,18 +30,27 @@ public class PlayOptions : MonoBehaviour
     public Text[] blueCharacterTitles;
     public Text[] redCharacterTitles;
     public Button[] characterNextButtons;
-   
-    public int primaryWeaponIndex = 0;
-    public int secondaryWeaponIndex = 0;
-    public Button[] primaryBlueKnightWeaponButtons;
-    public Button[] secondaryBlueKnightWeaponButtons;
-    public Button[] primaryBlueScoutWeaponButtons;
-    public Button[] secondaryBlueScoutWeaponButtons;
-    public Button[] primaryBlueBerserkerWeaponButtons;
-    public Button[] secondaryBlueBerserkerWeaponButtons;
-    public Button[] primaryBlueArcherWeaponButtons;
-    public Button[] secondaryBlueArcherWeaponButtons;
-    public GameObject blueKnightWeaponsLayer, blueScoutWeaponsLayer, blueBerserkerWeaponsLayer, blueArcherWeaponsLayer;
+    public GameObject KnightWeaponsLayer, ScoutWeaponsLayer, BerserkerWeaponsLayer, ArcherWeaponsLayer;
+
+    public int primaryWeaponIndex;
+    public int secondaryWeaponIndex;
+    public Button[] primaryKnightWeaponButtons;
+    public Button[] secondaryKnightWeaponButtons;
+    public Button[] primaryScoutWeaponButtons;
+    public Button[] secondaryScoutWeaponButtons;
+    public Button[] primaryBerserkerWeaponButtons;
+    public Button[] secondaryBerserkerWeaponButtons;
+    public Button[] primaryArcherWeaponButtons;
+    public Button[] secondaryArcherWeaponButtons;
+    public Sprite[] primaryKnightWeaponImages;
+    public Sprite[] secondaryKnightWeaponImages;
+    public Sprite[] primaryScoutWeaponImages;
+    public Sprite[] secondaryScoutWeaponImages;
+    public Sprite[] primaryBerserkerWeaponImages;
+    public Sprite[] secondaryBerserkerWeaponImages;
+    public Sprite[] primaryArcherWeaponImages;
+    public Sprite[] secondaryArcherWeaponImages;
+    
 
 
     public static PlayOptions Instance;
@@ -69,7 +79,28 @@ public class PlayOptions : MonoBehaviour
         {
             blueCharacterTitles[i].enabled = false;
             redCharacterTitles[i].enabled = false;
-        }               
+        }
+
+        primaryWeaponIndex = -1;
+        secondaryWeaponIndex = -1;
+        int k = 0;
+        for(int i = 0; i < 5; i++)
+        {
+            k = i * 5;
+            primaryKnightWeaponButtons[i].image.sprite = primaryKnightWeaponImages[k];
+            secondaryKnightWeaponButtons[i].image.sprite = secondaryKnightWeaponImages[k];
+            primaryScoutWeaponButtons[i].image.sprite = primaryScoutWeaponImages[k];
+            secondaryScoutWeaponButtons[i].image.sprite = secondaryScoutWeaponImages[k];
+            primaryBerserkerWeaponButtons[i].image.sprite = primaryBerserkerWeaponImages[k];           
+            primaryArcherWeaponButtons[i].image.sprite = primaryArcherWeaponImages[k];
+            secondaryArcherWeaponButtons[i].image.sprite = secondaryArcherWeaponImages[k];
+        }
+        //berserker has 4 available secondary weapons
+        for (int i = 0; i < 4; i++)
+        {
+            k = i * 5;
+            secondaryBerserkerWeaponButtons[i].image.sprite = secondaryBerserkerWeaponImages[k];
+        }
     }
 
     public void Awake()
@@ -129,6 +160,8 @@ public class PlayOptions : MonoBehaviour
             }
         }
     }
+
+    //----------------------------------------------------------------------------------------------------------------------------------------
 
     //changes button icon when highlighted
     public void TeamButtonPointerEnter(int i)
@@ -262,7 +295,6 @@ public class PlayOptions : MonoBehaviour
                 teamIndex = -1;
             }
         }
-        characterIndex = -1;
         TeamButtonPointerEnter(i);
     }    
 
@@ -281,6 +313,7 @@ public class PlayOptions : MonoBehaviour
         }
     }
 
+    //----------------------------------------------------------------------------------------------------------------------------------------
 
     //changes button icon when highlighted
     public void CharacterButtonPointerEnter(int i)
@@ -937,5 +970,1933 @@ public class PlayOptions : MonoBehaviour
         }
       
         CharacterButtonPointerEnter(i);      
+    }
+
+    //Button Next in Choose character layer
+    public void ClickNextCharacter()
+    {
+        if (teamIndex == 0)
+        {
+            if (characterIndex == 0)
+            {
+                KnightWeaponsLayer.gameObject.SetActive(true);
+                blueCharacterLayer.gameObject.SetActive(false);
+            }
+            else if (characterIndex == 1)
+            {
+                ScoutWeaponsLayer.gameObject.SetActive(true);
+                blueCharacterLayer.gameObject.SetActive(false);
+            }
+            else if (characterIndex == 2)
+            {
+                BerserkerWeaponsLayer.gameObject.SetActive(true);
+                blueCharacterLayer.gameObject.SetActive(false);
+            }
+            else if (characterIndex == 3)
+            {
+                ArcherWeaponsLayer.gameObject.SetActive(true);
+                blueCharacterLayer.gameObject.SetActive(false);
+            }
+        }
+        else if (teamIndex == 1)
+        {
+            if (characterIndex == 0)
+            {
+                KnightWeaponsLayer.gameObject.SetActive(true);
+                redCharacterLayer.gameObject.SetActive(false);
+            }
+            else if (characterIndex == 1)
+            {
+                ScoutWeaponsLayer.gameObject.SetActive(true);
+                redCharacterLayer.gameObject.SetActive(false);
+            }
+            else if (characterIndex == 2)
+            {
+                BerserkerWeaponsLayer.gameObject.SetActive(true);
+                redCharacterLayer.gameObject.SetActive(false);
+            }
+            else if (characterIndex == 3)
+            {
+                ArcherWeaponsLayer.gameObject.SetActive(true);
+                redCharacterLayer.gameObject.SetActive(false);
+            }
+        }
+    }
+
+    //----------------------------------------------------------------------------------------------------------------------------------------
+
+    public void PrimaryWeaponButtonPointerEnter(int i)
+    {
+        //Knight
+        if(characterIndex == 0)
+        {
+            if(i == 0)
+            {
+                if(primaryWeaponIndex != 0)
+                {
+                    primaryKnightWeaponButtons[0].image.sprite = primaryKnightWeaponImages[1];
+                }
+                else
+                {
+                    primaryKnightWeaponButtons[0].image.sprite = primaryKnightWeaponImages[3];
+                }
+            }
+            else if (i == 1)
+            {
+                if (primaryWeaponIndex != 1)
+                {
+                    primaryKnightWeaponButtons[1].image.sprite = primaryKnightWeaponImages[6];
+                }
+                else
+                {
+                    primaryKnightWeaponButtons[1].image.sprite = primaryKnightWeaponImages[8];
+                }
+            }
+            else if (i == 2)
+            {
+                if (primaryWeaponIndex != 2)
+                {
+                    primaryKnightWeaponButtons[2].image.sprite = primaryKnightWeaponImages[11];
+                }
+                else
+                {
+                    primaryKnightWeaponButtons[2].image.sprite = primaryKnightWeaponImages[13];
+                }
+            }
+            else if (i == 3)
+            {
+                if (primaryWeaponIndex != 3)
+                {
+                    primaryKnightWeaponButtons[3].image.sprite = primaryKnightWeaponImages[16];
+                }
+                else
+                {
+                    primaryKnightWeaponButtons[3].image.sprite = primaryKnightWeaponImages[18];
+                }
+            }
+            else if (i == 4)
+            {
+                if (primaryWeaponIndex != 4)
+                {
+                    primaryKnightWeaponButtons[4].image.sprite = primaryKnightWeaponImages[21];
+                }
+                else
+                {
+                    primaryKnightWeaponButtons[4].image.sprite = primaryKnightWeaponImages[23];
+                }
+            }
+        } //Scout
+        else if (characterIndex == 1)
+        {
+            if (i == 0)
+            {
+                if (primaryWeaponIndex != 0)
+                {
+                    primaryScoutWeaponButtons[0].image.sprite = primaryScoutWeaponImages[1];
+                }
+                else
+                {
+                    primaryScoutWeaponButtons[0].image.sprite = primaryScoutWeaponImages[3];
+                }
+            }
+            else if (i == 1)
+            {
+                if (primaryWeaponIndex != 1)
+                {
+                    primaryScoutWeaponButtons[1].image.sprite = primaryScoutWeaponImages[6];
+                }
+                else
+                {
+                    primaryScoutWeaponButtons[1].image.sprite = primaryScoutWeaponImages[8];
+                }
+            }
+            else if (i == 2)
+            {
+                if (primaryWeaponIndex != 2)
+                {
+                    primaryScoutWeaponButtons[2].image.sprite = primaryScoutWeaponImages[11];
+                }
+                else
+                {
+                    primaryScoutWeaponButtons[2].image.sprite = primaryScoutWeaponImages[13];
+                }
+            }
+            else if (i == 3)
+            {
+                if (primaryWeaponIndex != 3)
+                {
+                    primaryScoutWeaponButtons[3].image.sprite = primaryScoutWeaponImages[16];
+                }
+                else
+                {
+                    primaryScoutWeaponButtons[3].image.sprite = primaryScoutWeaponImages[18];
+                }
+            }
+            else if (i == 4)
+            {
+                if (primaryWeaponIndex != 4)
+                {
+                    primaryScoutWeaponButtons[4].image.sprite = primaryScoutWeaponImages[21];
+                }
+                else
+                {
+                    primaryScoutWeaponButtons[4].image.sprite = primaryScoutWeaponImages[23];
+                }
+            }
+        } //Berserker
+        else if (characterIndex == 2)
+        {
+            if (i == 0)
+            {
+                if (primaryWeaponIndex != 0)
+                {
+                    primaryBerserkerWeaponButtons[0].image.sprite = primaryBerserkerWeaponImages[1];
+                }
+                else
+                {
+                    primaryBerserkerWeaponButtons[0].image.sprite = primaryBerserkerWeaponImages[3];
+                }
+            }
+            else if (i == 1)
+            {
+                if (primaryWeaponIndex != 1)
+                {
+                    primaryBerserkerWeaponButtons[1].image.sprite = primaryBerserkerWeaponImages[6];
+                }
+                else
+                {
+                    primaryBerserkerWeaponButtons[1].image.sprite = primaryBerserkerWeaponImages[8];
+                }
+            }
+            else if (i == 2)
+            {
+                if (primaryWeaponIndex != 2)
+                {
+                    primaryBerserkerWeaponButtons[2].image.sprite = primaryBerserkerWeaponImages[11];
+                }
+                else
+                {
+                    primaryBerserkerWeaponButtons[2].image.sprite = primaryBerserkerWeaponImages[13];
+                }
+            }
+            else if (i == 3)
+            {
+                if (primaryWeaponIndex != 3)
+                {
+                    primaryBerserkerWeaponButtons[3].image.sprite = primaryBerserkerWeaponImages[16];
+                }
+                else
+                {
+                    primaryBerserkerWeaponButtons[3].image.sprite = primaryBerserkerWeaponImages[18];
+                }
+            }
+            else if (i == 4)
+            {
+                if (primaryWeaponIndex != 4)
+                {
+                    primaryBerserkerWeaponButtons[4].image.sprite = primaryBerserkerWeaponImages[21];
+                }
+                else
+                {
+                    primaryBerserkerWeaponButtons[4].image.sprite = primaryBerserkerWeaponImages[23];
+                }
+            }
+        } // Archer
+        else if (characterIndex == 3)
+        {
+            if (i == 0)
+            {
+                if (primaryWeaponIndex != 0)
+                {
+                    primaryArcherWeaponButtons[0].image.sprite = primaryArcherWeaponImages[1];
+                }
+                else
+                {
+                    primaryArcherWeaponButtons[0].image.sprite = primaryArcherWeaponImages[3];
+                }
+            }
+            else if (i == 1)
+            {
+                if (primaryWeaponIndex != 1)
+                {
+                    primaryArcherWeaponButtons[1].image.sprite = primaryArcherWeaponImages[6];
+                }
+                else
+                {
+                    primaryArcherWeaponButtons[1].image.sprite = primaryArcherWeaponImages[8];
+                }
+            }
+            else if (i == 2)
+            {
+                if (primaryWeaponIndex != 2)
+                {
+                    primaryArcherWeaponButtons[2].image.sprite = primaryArcherWeaponImages[11];
+                }
+                else
+                {
+                    primaryArcherWeaponButtons[2].image.sprite = primaryArcherWeaponImages[13];
+                }
+            }
+            else if (i == 3)
+            {
+                if (primaryWeaponIndex != 3)
+                {
+                    primaryArcherWeaponButtons[3].image.sprite = primaryArcherWeaponImages[16];
+                }
+                else
+                {
+                    primaryArcherWeaponButtons[3].image.sprite = primaryArcherWeaponImages[18];
+                }
+            }
+            else if (i == 4)
+            {
+                if (primaryWeaponIndex != 4)
+                {
+                    primaryArcherWeaponButtons[4].image.sprite = primaryArcherWeaponImages[21];
+                }
+                else
+                {
+                    primaryArcherWeaponButtons[4].image.sprite = primaryArcherWeaponImages[23];
+                }
+            }
+        }
+    }
+
+    public void SecondaryWeaponButtonPointerEnter(int i)
+    {
+        //Knight
+        if (characterIndex == 0)
+        {
+            if (i == 0)
+            {
+                if (secondaryWeaponIndex != 0)
+                {
+                    secondaryKnightWeaponButtons[0].image.sprite = secondaryKnightWeaponImages[1];
+                }
+                else
+                {
+                    secondaryKnightWeaponButtons[0].image.sprite = secondaryKnightWeaponImages[3];
+                }
+            }
+            else if (i == 1)
+            {
+                if (secondaryWeaponIndex != 1)
+                {
+                    secondaryKnightWeaponButtons[1].image.sprite = secondaryKnightWeaponImages[6];
+                }
+                else
+                {
+                    secondaryKnightWeaponButtons[1].image.sprite = secondaryKnightWeaponImages[8];
+                }
+            }
+            else if (i == 2)
+            {
+                if (secondaryWeaponIndex != 2)
+                {
+                    secondaryKnightWeaponButtons[2].image.sprite = secondaryKnightWeaponImages[11];
+                }
+                else
+                {
+                    secondaryKnightWeaponButtons[2].image.sprite = secondaryKnightWeaponImages[13];
+                }
+            }
+            else if (i == 3)
+            {
+                if (secondaryWeaponIndex != 3)
+                {
+                    secondaryKnightWeaponButtons[3].image.sprite = secondaryKnightWeaponImages[16];
+                }
+                else
+                {
+                    secondaryKnightWeaponButtons[3].image.sprite = secondaryKnightWeaponImages[18];
+                }
+            }
+            else if (i == 4)
+            {
+                if (secondaryWeaponIndex != 4)
+                {
+                    secondaryKnightWeaponButtons[4].image.sprite = secondaryKnightWeaponImages[21];
+                }
+                else
+                {
+                    secondaryKnightWeaponButtons[4].image.sprite = secondaryKnightWeaponImages[23];
+                }
+            }
+        } //Scout
+        else if (characterIndex == 1)
+        {
+            if (i == 0)
+            {
+                if (secondaryWeaponIndex != 0)
+                {
+                    secondaryScoutWeaponButtons[0].image.sprite = secondaryScoutWeaponImages[1];
+                }
+                else
+                {
+                    secondaryScoutWeaponButtons[0].image.sprite = secondaryScoutWeaponImages[3];
+                }
+            }
+            else if (i == 1)
+            {
+                if (secondaryWeaponIndex != 1)
+                {
+                    secondaryScoutWeaponButtons[1].image.sprite = secondaryScoutWeaponImages[6];
+                }
+                else
+                {
+                    secondaryScoutWeaponButtons[1].image.sprite = secondaryScoutWeaponImages[8];
+                }
+            }
+            else if (i == 2)
+            {
+                if (secondaryWeaponIndex != 2)
+                {
+                    secondaryScoutWeaponButtons[2].image.sprite = secondaryScoutWeaponImages[11];
+                }
+                else
+                {
+                    secondaryScoutWeaponButtons[2].image.sprite = secondaryScoutWeaponImages[13];
+                }
+            }
+            else if (i == 3)
+            {
+                if (secondaryWeaponIndex != 3)
+                {
+                    secondaryScoutWeaponButtons[3].image.sprite = secondaryScoutWeaponImages[16];
+                }
+                else
+                {
+                    secondaryScoutWeaponButtons[3].image.sprite = secondaryScoutWeaponImages[18];
+                }
+            }
+            else if (i == 4)
+            {
+                if (secondaryWeaponIndex != 4)
+                {
+                    secondaryScoutWeaponButtons[4].image.sprite = secondaryScoutWeaponImages[21];
+                }
+                else
+                {
+                    secondaryScoutWeaponButtons[4].image.sprite = secondaryScoutWeaponImages[23];
+                }
+            }
+        } //Berserker
+        else if (characterIndex == 2)
+        {
+            if (i == 0)
+            {
+                if (secondaryWeaponIndex != 0)
+                {
+                    secondaryBerserkerWeaponButtons[0].image.sprite = secondaryBerserkerWeaponImages[1];
+                }
+                else
+                {
+                    secondaryBerserkerWeaponButtons[0].image.sprite = secondaryBerserkerWeaponImages[3];
+                }
+            }
+            else if (i == 1)
+            {
+                if (secondaryWeaponIndex != 1)
+                {
+                    secondaryBerserkerWeaponButtons[1].image.sprite = secondaryBerserkerWeaponImages[6];
+                }
+                else
+                {
+                    secondaryBerserkerWeaponButtons[1].image.sprite = secondaryBerserkerWeaponImages[8];
+                }
+            }
+            else if (i == 2)
+            {
+                if (secondaryWeaponIndex != 2)
+                {
+                    secondaryBerserkerWeaponButtons[2].image.sprite = secondaryBerserkerWeaponImages[11];
+                }
+                else
+                {
+                    secondaryBerserkerWeaponButtons[2].image.sprite = secondaryBerserkerWeaponImages[13];
+                }
+            }
+            else if (i == 3)
+            {
+                if (secondaryWeaponIndex != 3)
+                {
+                    secondaryBerserkerWeaponButtons[3].image.sprite = secondaryBerserkerWeaponImages[16];
+                }
+                else
+                {
+                    secondaryBerserkerWeaponButtons[3].image.sprite = secondaryBerserkerWeaponImages[18];
+                }
+            }
+        } // Archer
+        else if (characterIndex == 3)
+        {
+            if (i == 0)
+            {
+                if (secondaryWeaponIndex != 0)
+                {
+                    secondaryArcherWeaponButtons[0].image.sprite = secondaryArcherWeaponImages[1];
+                }
+                else
+                {
+                    secondaryArcherWeaponButtons[0].image.sprite = secondaryArcherWeaponImages[3];
+                }
+            }
+            else if (i == 1)
+            {
+                if (secondaryWeaponIndex != 1)
+                {
+                    secondaryArcherWeaponButtons[1].image.sprite = secondaryArcherWeaponImages[6];
+                }
+                else
+                {
+                    secondaryArcherWeaponButtons[1].image.sprite = secondaryArcherWeaponImages[8];
+                }
+            }
+            else if (i == 2)
+            {
+                if (secondaryWeaponIndex != 2)
+                {
+                    secondaryArcherWeaponButtons[2].image.sprite = secondaryArcherWeaponImages[11];
+                }
+                else
+                {
+                    secondaryArcherWeaponButtons[2].image.sprite = secondaryArcherWeaponImages[13];
+                }
+            }
+            else if (i == 3)
+            {
+                if (secondaryWeaponIndex != 3)
+                {
+                    secondaryArcherWeaponButtons[3].image.sprite = secondaryArcherWeaponImages[16];
+                }
+                else
+                {
+                    secondaryArcherWeaponButtons[3].image.sprite = secondaryArcherWeaponImages[18];
+                }
+            }
+            else if (i == 4)
+            {
+                if (secondaryWeaponIndex != 4)
+                {
+                    secondaryArcherWeaponButtons[4].image.sprite = secondaryArcherWeaponImages[21];
+                }
+                else
+                {
+                    secondaryArcherWeaponButtons[4].image.sprite = secondaryArcherWeaponImages[23];
+                }
+            }
+        }
+    }
+
+    public void PrimaryWeaponButtonPointerExit(int i)
+    {
+        //Knight
+        if (characterIndex == 0)
+        {
+            if (i == 0)
+            {
+                if (primaryWeaponIndex != 0)
+                {
+                    primaryKnightWeaponButtons[0].image.sprite = primaryKnightWeaponImages[0];
+                }
+                else
+                {
+                    primaryKnightWeaponButtons[0].image.sprite = primaryKnightWeaponImages[2];
+                }
+            }
+            else if (i == 1)
+            {
+                if (primaryWeaponIndex != 1)
+                {
+                    primaryKnightWeaponButtons[1].image.sprite = primaryKnightWeaponImages[5];
+                }
+                else
+                {
+                    primaryKnightWeaponButtons[1].image.sprite = primaryKnightWeaponImages[7];
+                }
+            }
+            else if (i == 2)
+            {
+                if (primaryWeaponIndex != 2)
+                {
+                    primaryKnightWeaponButtons[2].image.sprite = primaryKnightWeaponImages[10];
+                }
+                else
+                {
+                    primaryKnightWeaponButtons[2].image.sprite = primaryKnightWeaponImages[12];
+                }
+            }
+            else if (i == 3)
+            {
+                if (primaryWeaponIndex != 3)
+                {
+                    primaryKnightWeaponButtons[3].image.sprite = primaryKnightWeaponImages[15];
+                }
+                else
+                {
+                    primaryKnightWeaponButtons[3].image.sprite = primaryKnightWeaponImages[17];
+                }
+            }
+            else if (i == 4)
+            {
+                if (primaryWeaponIndex != 4)
+                {
+                    primaryKnightWeaponButtons[4].image.sprite = primaryKnightWeaponImages[20];
+                }
+                else
+                {
+                    primaryKnightWeaponButtons[4].image.sprite = primaryKnightWeaponImages[22];
+                }
+            }
+        } //Scout
+        else if (characterIndex == 1)
+        {
+            if (i == 0)
+            {
+                if (primaryWeaponIndex != 0)
+                {
+                    primaryScoutWeaponButtons[0].image.sprite = primaryScoutWeaponImages[0];
+                }
+                else
+                {
+                    primaryScoutWeaponButtons[0].image.sprite = primaryScoutWeaponImages[2];
+                }
+            }
+            else if (i == 1)
+            {
+                if (primaryWeaponIndex != 1)
+                {
+                    primaryScoutWeaponButtons[1].image.sprite = primaryScoutWeaponImages[5];
+                }
+                else
+                {
+                    primaryScoutWeaponButtons[1].image.sprite = primaryScoutWeaponImages[7];
+                }
+            }
+            else if (i == 2)
+            {
+                if (primaryWeaponIndex != 2)
+                {
+                    primaryScoutWeaponButtons[2].image.sprite = primaryScoutWeaponImages[10];
+                }
+                else
+                {
+                    primaryScoutWeaponButtons[2].image.sprite = primaryScoutWeaponImages[12];
+                }
+            }
+            else if (i == 3)
+            {
+                if (primaryWeaponIndex != 3)
+                {
+                    primaryScoutWeaponButtons[3].image.sprite = primaryScoutWeaponImages[15];
+                }
+                else
+                {
+                    primaryScoutWeaponButtons[3].image.sprite = primaryScoutWeaponImages[17];
+                }
+            }
+            else if (i == 4)
+            {
+                if (primaryWeaponIndex != 4)
+                {
+                    primaryScoutWeaponButtons[4].image.sprite = primaryScoutWeaponImages[20];
+                }
+                else
+                {
+                    primaryScoutWeaponButtons[4].image.sprite = primaryScoutWeaponImages[22];
+                }
+            }
+        } //Berserker
+        else if (characterIndex == 2)
+        {
+            if (i == 0)
+            {
+                if (primaryWeaponIndex != 0)
+                {
+                    primaryBerserkerWeaponButtons[0].image.sprite = primaryBerserkerWeaponImages[0];
+                }
+                else
+                {
+                    primaryBerserkerWeaponButtons[0].image.sprite = primaryBerserkerWeaponImages[2];
+                }
+            }
+            else if (i == 1)
+            {
+                if (primaryWeaponIndex != 1)
+                {
+                    primaryBerserkerWeaponButtons[1].image.sprite = primaryBerserkerWeaponImages[5];
+                }
+                else
+                {
+                    primaryBerserkerWeaponButtons[1].image.sprite = primaryBerserkerWeaponImages[7];
+                }
+            }
+            else if (i == 2)
+            {
+                if (primaryWeaponIndex != 2)
+                {
+                    primaryBerserkerWeaponButtons[2].image.sprite = primaryBerserkerWeaponImages[10];
+                }
+                else
+                {
+                    primaryBerserkerWeaponButtons[2].image.sprite = primaryBerserkerWeaponImages[12];
+                }
+            }
+            else if (i == 3)
+            {
+                if (primaryWeaponIndex != 3)
+                {
+                    primaryBerserkerWeaponButtons[3].image.sprite = primaryBerserkerWeaponImages[15];
+                }
+                else
+                {
+                    primaryBerserkerWeaponButtons[3].image.sprite = primaryBerserkerWeaponImages[17];
+                }
+            }
+            else if (i == 4)
+            {
+                if (primaryWeaponIndex != 4)
+                {
+                    primaryBerserkerWeaponButtons[4].image.sprite = primaryBerserkerWeaponImages[20];
+                }
+                else
+                {
+                    primaryBerserkerWeaponButtons[4].image.sprite = primaryBerserkerWeaponImages[22];
+                }
+            }
+        } // Archer
+        else if (characterIndex == 3)
+        {
+            if (i == 0)
+            {
+                if (primaryWeaponIndex != 0)
+                {
+                    primaryArcherWeaponButtons[0].image.sprite = primaryArcherWeaponImages[0];
+                }
+                else
+                {
+                    primaryArcherWeaponButtons[0].image.sprite = primaryArcherWeaponImages[2];
+                }
+            }
+            else if (i == 1)
+            {
+                if (primaryWeaponIndex != 1)
+                {
+                    primaryArcherWeaponButtons[1].image.sprite = primaryArcherWeaponImages[5];
+                }
+                else
+                {
+                    primaryArcherWeaponButtons[1].image.sprite = primaryArcherWeaponImages[7];
+                }
+            }
+            else if (i == 2)
+            {
+                if (primaryWeaponIndex != 2)
+                {
+                    primaryArcherWeaponButtons[2].image.sprite = primaryArcherWeaponImages[10];
+                }
+                else
+                {
+                    primaryArcherWeaponButtons[2].image.sprite = primaryArcherWeaponImages[12];
+                }
+            }
+            else if (i == 3)
+            {
+                if (primaryWeaponIndex != 3)
+                {
+                    primaryArcherWeaponButtons[3].image.sprite = primaryArcherWeaponImages[15];
+                }
+                else
+                {
+                    primaryArcherWeaponButtons[3].image.sprite = primaryArcherWeaponImages[17];
+                }
+            }
+            else if (i == 4)
+            {
+                if (primaryWeaponIndex != 4)
+                {
+                    primaryArcherWeaponButtons[4].image.sprite = primaryArcherWeaponImages[20];
+                }
+                else
+                {
+                    primaryArcherWeaponButtons[4].image.sprite = primaryArcherWeaponImages[22];
+                }
+            }
+        }
+    }
+
+    public void SecondaryWeaponButtonPointerExit(int i)
+    {
+        //Knight
+        if (characterIndex == 0)
+        {
+            if (i == 0)
+            {
+                if (secondaryWeaponIndex != 0)
+                {
+                    secondaryKnightWeaponButtons[0].image.sprite = secondaryKnightWeaponImages[0];
+                }
+                else
+                {
+                    secondaryKnightWeaponButtons[0].image.sprite = secondaryKnightWeaponImages[2];
+                }
+            }
+            else if (i == 1)
+            {
+                if (secondaryWeaponIndex != 1)
+                {
+                    secondaryKnightWeaponButtons[1].image.sprite = secondaryKnightWeaponImages[5];
+                }
+                else
+                {
+                    secondaryKnightWeaponButtons[1].image.sprite = secondaryKnightWeaponImages[7];
+                }
+            }
+            else if (i == 2)
+            {
+                if (secondaryWeaponIndex != 2)
+                {
+                    secondaryKnightWeaponButtons[2].image.sprite = secondaryKnightWeaponImages[10];
+                }
+                else
+                {
+                    secondaryKnightWeaponButtons[2].image.sprite = secondaryKnightWeaponImages[12];
+                }
+            }
+            else if (i == 3)
+            {
+                if (secondaryWeaponIndex != 3)
+                {
+                    secondaryKnightWeaponButtons[3].image.sprite = secondaryKnightWeaponImages[15];
+                }
+                else
+                {
+                    secondaryKnightWeaponButtons[3].image.sprite = secondaryKnightWeaponImages[17];
+                }
+            }
+            else if (i == 4)
+            {
+                if (secondaryWeaponIndex != 4)
+                {
+                    secondaryKnightWeaponButtons[4].image.sprite = secondaryKnightWeaponImages[20];
+                }
+                else
+                {
+                    secondaryKnightWeaponButtons[4].image.sprite = secondaryKnightWeaponImages[22];
+                }
+            }
+        } //Scout
+        else if (characterIndex == 1)
+        {
+            if (i == 0)
+            {
+                if (secondaryWeaponIndex != 0)
+                {
+                    secondaryScoutWeaponButtons[0].image.sprite = secondaryScoutWeaponImages[0];
+                }
+                else
+                {
+                    secondaryScoutWeaponButtons[0].image.sprite = secondaryScoutWeaponImages[2];
+                }
+            }
+            else if (i == 1)
+            {
+                if (secondaryWeaponIndex != 1)
+                {
+                    secondaryScoutWeaponButtons[1].image.sprite = secondaryScoutWeaponImages[5];
+                }
+                else
+                {
+                    secondaryScoutWeaponButtons[1].image.sprite = secondaryScoutWeaponImages[7];
+                }
+            }
+            else if (i == 2)
+            {
+                if (secondaryWeaponIndex != 2)
+                {
+                    secondaryScoutWeaponButtons[2].image.sprite = secondaryScoutWeaponImages[10];
+                }
+                else
+                {
+                    secondaryScoutWeaponButtons[2].image.sprite = secondaryScoutWeaponImages[12];
+                }
+            }
+            else if (i == 3)
+            {
+                if (secondaryWeaponIndex != 3)
+                {
+                    secondaryScoutWeaponButtons[3].image.sprite = secondaryScoutWeaponImages[15];
+                }
+                else
+                {
+                    secondaryScoutWeaponButtons[3].image.sprite = secondaryScoutWeaponImages[17];
+                }
+            }
+            else if (i == 4)
+            {
+                if (secondaryWeaponIndex != 4)
+                {
+                    secondaryScoutWeaponButtons[4].image.sprite = secondaryScoutWeaponImages[20];
+                }
+                else
+                {
+                    secondaryScoutWeaponButtons[4].image.sprite = secondaryScoutWeaponImages[22];
+                }
+            }
+        } //Berserker
+        else if (characterIndex == 2)
+        {
+            if (i == 0)
+            {
+                if (secondaryWeaponIndex != 0)
+                {
+                    secondaryBerserkerWeaponButtons[0].image.sprite = secondaryBerserkerWeaponImages[0];
+                }
+                else
+                {
+                    secondaryBerserkerWeaponButtons[0].image.sprite = secondaryBerserkerWeaponImages[2];
+                }
+            }
+            else if (i == 1)
+            {
+                if (secondaryWeaponIndex != 1)
+                {
+                    secondaryBerserkerWeaponButtons[1].image.sprite = secondaryBerserkerWeaponImages[5];
+                }
+                else
+                {
+                    secondaryBerserkerWeaponButtons[1].image.sprite = secondaryBerserkerWeaponImages[7];
+                }
+            }
+            else if (i == 2)
+            {
+                if (secondaryWeaponIndex != 2)
+                {
+                    secondaryBerserkerWeaponButtons[2].image.sprite = secondaryBerserkerWeaponImages[10];
+                }
+                else
+                {
+                    secondaryBerserkerWeaponButtons[2].image.sprite = secondaryBerserkerWeaponImages[12];
+                }
+            }
+            else if (i == 3)
+            {
+                if (secondaryWeaponIndex != 3)
+                {
+                    secondaryBerserkerWeaponButtons[3].image.sprite = secondaryBerserkerWeaponImages[15];
+                }
+                else
+                {
+                    secondaryBerserkerWeaponButtons[3].image.sprite = secondaryBerserkerWeaponImages[17];
+                }
+            }
+        } // Archer
+        else if (characterIndex == 3)
+        {
+            if (i == 0)
+            {
+                if (secondaryWeaponIndex != 0)
+                {
+                    secondaryArcherWeaponButtons[0].image.sprite = secondaryArcherWeaponImages[0];
+                }
+                else
+                {
+                    secondaryArcherWeaponButtons[0].image.sprite = secondaryArcherWeaponImages[2];
+                }
+            }
+            else if (i == 1)
+            {
+                if (secondaryWeaponIndex != 1)
+                {
+                    secondaryArcherWeaponButtons[1].image.sprite = secondaryArcherWeaponImages[5];
+                }
+                else
+                {
+                    secondaryArcherWeaponButtons[1].image.sprite = secondaryArcherWeaponImages[7];
+                }
+            }
+            else if (i == 2)
+            {
+                if (secondaryWeaponIndex != 2)
+                {
+                    secondaryArcherWeaponButtons[2].image.sprite = secondaryArcherWeaponImages[10];
+                }
+                else
+                {
+                    secondaryArcherWeaponButtons[2].image.sprite = secondaryArcherWeaponImages[12];
+                }
+            }
+            else if (i == 3)
+            {
+                if (secondaryWeaponIndex != 3)
+                {
+                    secondaryArcherWeaponButtons[3].image.sprite = secondaryArcherWeaponImages[15];
+                }
+                else
+                {
+                    secondaryArcherWeaponButtons[3].image.sprite = secondaryArcherWeaponImages[17];
+                }
+            }
+            else if (i == 4)
+            {
+                if (secondaryWeaponIndex != 4)
+                {
+                    secondaryArcherWeaponButtons[4].image.sprite = secondaryArcherWeaponImages[20];
+                }
+                else
+                {
+                    secondaryArcherWeaponButtons[4].image.sprite = secondaryArcherWeaponImages[22];
+                }
+            }
+        }
+    }
+
+    public void primaryWeaponButtonPointerDown(int i)
+    {
+        if(characterIndex == 0)
+        {
+            if (i == 0)
+            {
+                primaryKnightWeaponButtons[0].image.sprite = primaryKnightWeaponImages[4];
+            }
+            else if(i == 1)
+            {
+                primaryKnightWeaponButtons[1].image.sprite = primaryKnightWeaponImages[9];
+            }
+            else if (i == 2)
+            {
+                primaryKnightWeaponButtons[2].image.sprite = primaryKnightWeaponImages[14];
+            }
+            else if (i == 3)
+            {
+                primaryKnightWeaponButtons[3].image.sprite = primaryKnightWeaponImages[19];
+            }
+            else if (i == 4)
+            {
+                primaryKnightWeaponButtons[4].image.sprite = primaryKnightWeaponImages[24];
+            }
+        }
+        else if (characterIndex == 1)
+        {
+            if (i == 0)
+            {
+                primaryScoutWeaponButtons[0].image.sprite = primaryScoutWeaponImages[4];
+            }
+            else if (i == 1)
+            {
+                primaryScoutWeaponButtons[1].image.sprite = primaryScoutWeaponImages[9];
+            }
+            else if (i == 2)
+            {
+                primaryScoutWeaponButtons[2].image.sprite = primaryScoutWeaponImages[14];
+            }
+            else if (i == 3)
+            {
+                primaryScoutWeaponButtons[3].image.sprite = primaryScoutWeaponImages[19];
+            }
+            else if (i == 4)
+            {
+                primaryScoutWeaponButtons[4].image.sprite = primaryScoutWeaponImages[24];
+            }
+        }
+        else if (characterIndex == 2)
+        {
+            if (i == 0)
+            {
+                primaryBerserkerWeaponButtons[0].image.sprite = primaryBerserkerWeaponImages[4];
+            }
+            else if (i == 1)
+            {
+                primaryBerserkerWeaponButtons[1].image.sprite = primaryBerserkerWeaponImages[9];
+            }
+            else if (i == 2)
+            {
+                primaryBerserkerWeaponButtons[2].image.sprite = primaryBerserkerWeaponImages[14];
+            }
+            else if (i == 3)
+            {
+                primaryBerserkerWeaponButtons[3].image.sprite = primaryBerserkerWeaponImages[19];
+            }
+            else if (i == 4)
+            {
+                primaryBerserkerWeaponButtons[4].image.sprite = primaryBerserkerWeaponImages[24];
+            }
+        }
+        else if (characterIndex == 3)
+        {
+            if (i == 0)
+            {
+                primaryArcherWeaponButtons[0].image.sprite = primaryArcherWeaponImages[4];
+            }
+            else if (i == 1)
+            {
+                primaryArcherWeaponButtons[1].image.sprite = primaryArcherWeaponImages[9];
+            }
+            else if (i == 2)
+            {
+                primaryArcherWeaponButtons[2].image.sprite = primaryArcherWeaponImages[14];
+            }
+            else if (i == 3)
+            {
+                primaryArcherWeaponButtons[3].image.sprite = primaryArcherWeaponImages[19];
+            }
+            else if (i == 4)
+            {
+                primaryArcherWeaponButtons[4].image.sprite = primaryArcherWeaponImages[24];
+            }
+        }
+    }
+
+    public void secondaryWeaponButtonPointerDown(int i)
+    {
+        if (characterIndex == 0)
+        {
+            if (i == 0)
+            {
+                secondaryKnightWeaponButtons[0].image.sprite = secondaryKnightWeaponImages[4];
+            }
+            else if (i == 1)
+            {
+                secondaryKnightWeaponButtons[1].image.sprite = secondaryKnightWeaponImages[9];
+            }
+            else if (i == 2)
+            {
+                secondaryKnightWeaponButtons[2].image.sprite = secondaryKnightWeaponImages[14];
+            }
+            else if (i == 3)
+            {
+                secondaryKnightWeaponButtons[3].image.sprite = secondaryKnightWeaponImages[19];
+            }
+            else if (i == 4)
+            {
+                secondaryKnightWeaponButtons[4].image.sprite = secondaryKnightWeaponImages[24];
+            }
+        }
+        else if (characterIndex == 1)
+        {
+            if (i == 0)
+            {
+                secondaryScoutWeaponButtons[0].image.sprite = secondaryScoutWeaponImages[4];
+            }
+            else if (i == 1)
+            {
+                secondaryScoutWeaponButtons[1].image.sprite = secondaryScoutWeaponImages[9];
+            }
+            else if (i == 2)
+            {
+                secondaryScoutWeaponButtons[2].image.sprite = secondaryScoutWeaponImages[14];
+            }
+            else if (i == 3)
+            {
+                secondaryScoutWeaponButtons[3].image.sprite = secondaryScoutWeaponImages[19];
+            }
+            else if (i == 4)
+            {
+                secondaryScoutWeaponButtons[4].image.sprite = secondaryScoutWeaponImages[24];
+            }
+        }
+        else if (characterIndex == 2)
+        {
+            if (i == 0)
+            {
+                secondaryBerserkerWeaponButtons[0].image.sprite = secondaryBerserkerWeaponImages[4];
+            }
+            else if (i == 1)
+            {
+                secondaryBerserkerWeaponButtons[1].image.sprite = secondaryBerserkerWeaponImages[9];
+            }
+            else if (i == 2)
+            {
+                secondaryBerserkerWeaponButtons[2].image.sprite = secondaryBerserkerWeaponImages[14];
+            }
+            else if (i == 3)
+            {
+                secondaryBerserkerWeaponButtons[3].image.sprite = secondaryBerserkerWeaponImages[19];
+            }
+            else if (i == 4)
+            {
+                secondaryBerserkerWeaponButtons[4].image.sprite = secondaryBerserkerWeaponImages[24];
+            }
+        }
+        else if (characterIndex == 3)
+        {
+            if (i == 0)
+            {
+                secondaryArcherWeaponButtons[0].image.sprite = secondaryArcherWeaponImages[4];
+            }
+            else if (i == 1)
+            {
+                secondaryArcherWeaponButtons[1].image.sprite = secondaryArcherWeaponImages[9];
+            }
+            else if (i == 2)
+            {
+                secondaryArcherWeaponButtons[2].image.sprite = secondaryArcherWeaponImages[14];
+            }
+            else if (i == 3)
+            {
+                secondaryArcherWeaponButtons[3].image.sprite = secondaryArcherWeaponImages[19];
+            }
+            else if (i == 4)
+            {
+                secondaryArcherWeaponButtons[4].image.sprite = secondaryArcherWeaponImages[24];
+            }
+        }
+    }
+
+    public void ClickPrimaryWeaponButton(int i)
+    {
+        if(characterIndex == 0)
+        {
+            if(i == 0)
+            {
+                if(primaryWeaponIndex == -1)
+                {
+                    primaryKnightWeaponButtons[0].image.sprite = primaryKnightWeaponImages[2];
+                    primaryWeaponIndex = i;
+                }
+                else if (primaryWeaponIndex == 0)
+                {
+                    primaryKnightWeaponButtons[1].image.sprite = primaryKnightWeaponImages[0];
+                    primaryWeaponIndex = -1;
+                }
+                else if (primaryWeaponIndex == 1)
+                {
+                    primaryKnightWeaponButtons[0].image.sprite = primaryKnightWeaponImages[2];
+                    primaryKnightWeaponButtons[1].image.sprite = primaryKnightWeaponImages[5];
+                    primaryWeaponIndex = i;
+                }
+                else if (primaryWeaponIndex == 2)
+                {
+                    primaryKnightWeaponButtons[0].image.sprite = primaryKnightWeaponImages[2];
+                    primaryKnightWeaponButtons[2].image.sprite = primaryKnightWeaponImages[10];
+                    primaryWeaponIndex = i;
+                }
+                else if (primaryWeaponIndex == 3)
+                {
+                    primaryKnightWeaponButtons[0].image.sprite = primaryKnightWeaponImages[2];
+                    primaryKnightWeaponButtons[3].image.sprite = primaryKnightWeaponImages[15];
+                    primaryWeaponIndex = i;
+                }
+                else if (primaryWeaponIndex == 4)
+                {
+                    primaryKnightWeaponButtons[0].image.sprite = primaryKnightWeaponImages[2];
+                    primaryKnightWeaponButtons[4].image.sprite = primaryKnightWeaponImages[20];
+                    primaryWeaponIndex = i;
+                }
+            }
+            else if (i == 1)
+            {
+                if (primaryWeaponIndex == -1)
+                {
+                    primaryKnightWeaponButtons[1].image.sprite = primaryKnightWeaponImages[7];
+                    primaryWeaponIndex = i;
+                }
+                else if (primaryWeaponIndex == 0)
+                {
+                    primaryKnightWeaponButtons[1].image.sprite = primaryKnightWeaponImages[7];
+                    primaryKnightWeaponButtons[0].image.sprite = primaryKnightWeaponImages[0];
+                    primaryWeaponIndex = i;
+                }
+                else if (primaryWeaponIndex == 1)
+                {                   
+                    primaryKnightWeaponButtons[1].image.sprite = primaryKnightWeaponImages[5];
+                    primaryWeaponIndex = -1;
+                }
+                else if (primaryWeaponIndex == 2)
+                {
+                    primaryKnightWeaponButtons[1].image.sprite = primaryKnightWeaponImages[7];
+                    primaryKnightWeaponButtons[2].image.sprite = primaryKnightWeaponImages[10];
+                    primaryWeaponIndex = i;
+                }
+                else if (primaryWeaponIndex == 3)
+                {
+                    primaryKnightWeaponButtons[1].image.sprite = primaryKnightWeaponImages[7];
+                    primaryKnightWeaponButtons[3].image.sprite = primaryKnightWeaponImages[15];
+                    primaryWeaponIndex = i;
+                }
+                else if (primaryWeaponIndex == 4)
+                {
+                    primaryKnightWeaponButtons[0].image.sprite = primaryKnightWeaponImages[2];
+                    primaryKnightWeaponButtons[4].image.sprite = primaryKnightWeaponImages[20];
+                    primaryWeaponIndex = i;
+                }
+            }
+            else if (i == 2)
+            {
+                if (primaryWeaponIndex == -1)
+                {
+                    primaryKnightWeaponButtons[2].image.sprite = primaryKnightWeaponImages[12];
+                    primaryWeaponIndex = i;
+                }
+                else if (primaryWeaponIndex == 0)
+                {
+                    primaryKnightWeaponButtons[2].image.sprite = primaryKnightWeaponImages[12];
+                    primaryKnightWeaponButtons[0].image.sprite = primaryKnightWeaponImages[0];
+                    primaryWeaponIndex = i;
+                }
+                else if (primaryWeaponIndex == 1)
+                {
+                    primaryKnightWeaponButtons[2].image.sprite = primaryKnightWeaponImages[12];
+                    primaryKnightWeaponButtons[1].image.sprite = primaryKnightWeaponImages[5];
+                    primaryWeaponIndex = i;
+                }
+                else if (primaryWeaponIndex == 2)
+                {                   
+                    primaryKnightWeaponButtons[2].image.sprite = primaryKnightWeaponImages[10];
+                    primaryWeaponIndex = -1;
+                }
+                else if (primaryWeaponIndex == 3)
+                {
+                    primaryKnightWeaponButtons[2].image.sprite = primaryKnightWeaponImages[12];
+                    primaryKnightWeaponButtons[3].image.sprite = primaryKnightWeaponImages[15];
+                    primaryWeaponIndex = i;
+                }
+                else if (primaryWeaponIndex == 4)
+                {
+                    primaryKnightWeaponButtons[2].image.sprite = primaryKnightWeaponImages[12];
+                    primaryKnightWeaponButtons[4].image.sprite = primaryKnightWeaponImages[20];
+                    primaryWeaponIndex = i;
+                }
+            }
+            else if (i == 3)
+            {
+                if (primaryWeaponIndex == -1)
+                {
+                    primaryKnightWeaponButtons[3].image.sprite = primaryKnightWeaponImages[17];
+                    primaryWeaponIndex = i;
+                }
+                else if (primaryWeaponIndex == 0)
+                {
+                    primaryKnightWeaponButtons[3].image.sprite = primaryKnightWeaponImages[17];
+                    primaryKnightWeaponButtons[0].image.sprite = primaryKnightWeaponImages[0];
+                    primaryWeaponIndex = i;
+                }
+                else if (primaryWeaponIndex == 1)
+                {
+                    primaryKnightWeaponButtons[3].image.sprite = primaryKnightWeaponImages[17];
+                    primaryKnightWeaponButtons[1].image.sprite = primaryKnightWeaponImages[5];
+                    primaryWeaponIndex = i;
+                }
+                else if (primaryWeaponIndex == 2)
+                {
+                    primaryKnightWeaponButtons[3].image.sprite = primaryKnightWeaponImages[17];
+                    primaryKnightWeaponButtons[2].image.sprite = primaryKnightWeaponImages[10];
+                    primaryWeaponIndex = i;
+                }
+                else if (primaryWeaponIndex == 3)
+                {
+                    primaryKnightWeaponButtons[3].image.sprite = primaryKnightWeaponImages[15];
+                    primaryWeaponIndex = -1;
+                }
+                else if (primaryWeaponIndex == 4)
+                {
+                    primaryKnightWeaponButtons[3].image.sprite = primaryKnightWeaponImages[17];
+                    primaryKnightWeaponButtons[4].image.sprite = primaryKnightWeaponImages[20];
+                    primaryWeaponIndex = i;
+                }
+            }
+            else if (i == 4)
+            {
+                if (primaryWeaponIndex == -1)
+                {
+                    primaryKnightWeaponButtons[4].image.sprite = primaryKnightWeaponImages[22];
+                    primaryWeaponIndex = i;
+                }
+                else if (primaryWeaponIndex == 0)
+                {
+                    primaryKnightWeaponButtons[4].image.sprite = primaryKnightWeaponImages[22];
+                    primaryKnightWeaponButtons[0].image.sprite = primaryKnightWeaponImages[0];
+                    primaryWeaponIndex = i;
+                }
+                else if (primaryWeaponIndex == 1)
+                {
+                    primaryKnightWeaponButtons[4].image.sprite = primaryKnightWeaponImages[22];
+                    primaryKnightWeaponButtons[1].image.sprite = primaryKnightWeaponImages[5];
+                    primaryWeaponIndex = i;
+                }
+                else if (primaryWeaponIndex == 2)
+                {
+                    primaryKnightWeaponButtons[4].image.sprite = primaryKnightWeaponImages[22];
+                    primaryKnightWeaponButtons[2].image.sprite = primaryKnightWeaponImages[10];
+                    primaryWeaponIndex = i;
+                }
+                else if (primaryWeaponIndex == 3)
+                {
+                    primaryKnightWeaponButtons[4].image.sprite = primaryKnightWeaponImages[22];
+                    primaryKnightWeaponButtons[3].image.sprite = primaryKnightWeaponImages[15];
+                    primaryWeaponIndex = i;
+                }
+                else if (primaryWeaponIndex == 4)
+                {
+                    primaryKnightWeaponButtons[4].image.sprite = primaryKnightWeaponImages[20];
+                    primaryWeaponIndex = -1;
+                }
+            }
+        }
+        else if (characterIndex == 1)
+        {
+            if (i == 0)
+            {
+                if (primaryWeaponIndex == -1)
+                {
+                    primaryScoutWeaponButtons[0].image.sprite = primaryScoutWeaponImages[2];
+                    primaryWeaponIndex = i;
+                }
+                else if (primaryWeaponIndex == 0)
+                {
+                    primaryScoutWeaponButtons[1].image.sprite = primaryScoutWeaponImages[0];
+                    primaryWeaponIndex = -1;
+                }
+                else if (primaryWeaponIndex == 1)
+                {
+                    primaryScoutWeaponButtons[0].image.sprite = primaryScoutWeaponImages[2];
+                    primaryScoutWeaponButtons[1].image.sprite = primaryScoutWeaponImages[5];
+                    primaryWeaponIndex = i;
+                }
+                else if (primaryWeaponIndex == 2)
+                {
+                    primaryScoutWeaponButtons[0].image.sprite = primaryScoutWeaponImages[2];
+                    primaryScoutWeaponButtons[2].image.sprite = primaryScoutWeaponImages[10];
+                    primaryWeaponIndex = i;
+                }
+                else if (primaryWeaponIndex == 3)
+                {
+                    primaryScoutWeaponButtons[0].image.sprite = primaryScoutWeaponImages[2];
+                    primaryScoutWeaponButtons[3].image.sprite = primaryScoutWeaponImages[15];
+                    primaryWeaponIndex = i;
+                }
+                else if (primaryWeaponIndex == 4)
+                {
+                    primaryScoutWeaponButtons[0].image.sprite = primaryScoutWeaponImages[2];
+                    primaryScoutWeaponButtons[4].image.sprite = primaryScoutWeaponImages[20];
+                    primaryWeaponIndex = i;
+                }
+            }
+            else if (i == 1)
+            {
+                if (primaryWeaponIndex == -1)
+                {
+                    primaryScoutWeaponButtons[1].image.sprite = primaryScoutWeaponImages[7];
+                    primaryWeaponIndex = i;
+                }
+                else if (primaryWeaponIndex == 0)
+                {
+                    primaryScoutWeaponButtons[1].image.sprite = primaryScoutWeaponImages[7];
+                    primaryScoutWeaponButtons[0].image.sprite = primaryScoutWeaponImages[0];
+                    primaryWeaponIndex = i;
+                }
+                else if (primaryWeaponIndex == 1)
+                {
+                    primaryScoutWeaponButtons[1].image.sprite = primaryScoutWeaponImages[5];
+                    primaryWeaponIndex = -1;
+                }
+                else if (primaryWeaponIndex == 2)
+                {
+                    primaryScoutWeaponButtons[1].image.sprite = primaryScoutWeaponImages[7];
+                    primaryScoutWeaponButtons[2].image.sprite = primaryScoutWeaponImages[10];
+                    primaryWeaponIndex = i;
+                }
+                else if (primaryWeaponIndex == 3)
+                {
+                    primaryScoutWeaponButtons[1].image.sprite = primaryScoutWeaponImages[7];
+                    primaryScoutWeaponButtons[3].image.sprite = primaryScoutWeaponImages[15];
+                    primaryWeaponIndex = i;
+                }
+                else if (primaryWeaponIndex == 4)
+                {
+                    primaryScoutWeaponButtons[0].image.sprite = primaryScoutWeaponImages[2];
+                    primaryScoutWeaponButtons[4].image.sprite = primaryScoutWeaponImages[20];
+                    primaryWeaponIndex = i;
+                }
+            }
+            else if (i == 2)
+            {
+                if (primaryWeaponIndex == -1)
+                {
+                    primaryScoutWeaponButtons[2].image.sprite = primaryScoutWeaponImages[12];
+                    primaryWeaponIndex = i;
+                }
+                else if (primaryWeaponIndex == 0)
+                {
+                    primaryScoutWeaponButtons[2].image.sprite = primaryScoutWeaponImages[12];
+                    primaryScoutWeaponButtons[0].image.sprite = primaryScoutWeaponImages[0];
+                    primaryWeaponIndex = i;
+                }
+                else if (primaryWeaponIndex == 1)
+                {
+                    primaryScoutWeaponButtons[2].image.sprite = primaryScoutWeaponImages[12];
+                    primaryScoutWeaponButtons[1].image.sprite = primaryScoutWeaponImages[5];
+                    primaryWeaponIndex = i;
+                }
+                else if (primaryWeaponIndex == 2)
+                {
+                    primaryScoutWeaponButtons[2].image.sprite = primaryScoutWeaponImages[10];
+                    primaryWeaponIndex = -1;
+                }
+                else if (primaryWeaponIndex == 3)
+                {
+                    primaryScoutWeaponButtons[2].image.sprite = primaryScoutWeaponImages[12];
+                    primaryScoutWeaponButtons[3].image.sprite = primaryScoutWeaponImages[15];
+                    primaryWeaponIndex = i;
+                }
+                else if (primaryWeaponIndex == 4)
+                {
+                    primaryScoutWeaponButtons[2].image.sprite = primaryScoutWeaponImages[12];
+                    primaryScoutWeaponButtons[4].image.sprite = primaryScoutWeaponImages[20];
+                    primaryWeaponIndex = i;
+                }
+            }
+            else if (i == 3)
+            {
+                if (primaryWeaponIndex == -1)
+                {
+                    primaryScoutWeaponButtons[3].image.sprite = primaryScoutWeaponImages[17];
+                    primaryWeaponIndex = i;
+                }
+                else if (primaryWeaponIndex == 0)
+                {
+                    primaryScoutWeaponButtons[3].image.sprite = primaryScoutWeaponImages[17];
+                    primaryScoutWeaponButtons[0].image.sprite = primaryScoutWeaponImages[0];
+                    primaryWeaponIndex = i;
+                }
+                else if (primaryWeaponIndex == 1)
+                {
+                    primaryScoutWeaponButtons[3].image.sprite = primaryScoutWeaponImages[17];
+                    primaryScoutWeaponButtons[1].image.sprite = primaryScoutWeaponImages[5];
+                    primaryWeaponIndex = i;
+                }
+                else if (primaryWeaponIndex == 2)
+                {
+                    primaryScoutWeaponButtons[3].image.sprite = primaryScoutWeaponImages[17];
+                    primaryScoutWeaponButtons[2].image.sprite = primaryScoutWeaponImages[10];
+                    primaryWeaponIndex = i;
+                }
+                else if (primaryWeaponIndex == 3)
+                {
+                    primaryScoutWeaponButtons[3].image.sprite = primaryScoutWeaponImages[15];
+                    primaryWeaponIndex = -1;
+                }
+                else if (primaryWeaponIndex == 4)
+                {
+                    primaryScoutWeaponButtons[3].image.sprite = primaryScoutWeaponImages[17];
+                    primaryScoutWeaponButtons[4].image.sprite = primaryScoutWeaponImages[20];
+                    primaryWeaponIndex = i;
+                }
+            }
+            else if (i == 4)
+            {
+                if (primaryWeaponIndex == -1)
+                {
+                    primaryScoutWeaponButtons[4].image.sprite = primaryScoutWeaponImages[22];
+                    primaryWeaponIndex = i;
+                }
+                else if (primaryWeaponIndex == 0)
+                {
+                    primaryScoutWeaponButtons[4].image.sprite = primaryScoutWeaponImages[22];
+                    primaryScoutWeaponButtons[0].image.sprite = primaryScoutWeaponImages[0];
+                    primaryWeaponIndex = i;
+                }
+                else if (primaryWeaponIndex == 1)
+                {
+                    primaryScoutWeaponButtons[4].image.sprite = primaryScoutWeaponImages[22];
+                    primaryScoutWeaponButtons[1].image.sprite = primaryScoutWeaponImages[5];
+                    primaryWeaponIndex = i;
+                }
+                else if (primaryWeaponIndex == 2)
+                {
+                    primaryScoutWeaponButtons[4].image.sprite = primaryScoutWeaponImages[22];
+                    primaryScoutWeaponButtons[2].image.sprite = primaryScoutWeaponImages[10];
+                    primaryWeaponIndex = i;
+                }
+                else if (primaryWeaponIndex == 3)
+                {
+                    primaryScoutWeaponButtons[4].image.sprite = primaryScoutWeaponImages[22];
+                    primaryScoutWeaponButtons[3].image.sprite = primaryScoutWeaponImages[15];
+                    primaryWeaponIndex = i;
+                }
+                else if (primaryWeaponIndex == 4)
+                {
+                    primaryScoutWeaponButtons[4].image.sprite = primaryScoutWeaponImages[20];
+                    primaryWeaponIndex = -1;
+                }
+            }
+        }
+        else if (characterIndex == 2)
+        {
+            if (i == 0)
+            {
+                if (primaryWeaponIndex == -1)
+                {
+                    primaryBerserkerWeaponButtons[0].image.sprite = primaryBerserkerWeaponImages[2];
+                    primaryWeaponIndex = i;
+                }
+                else if (primaryWeaponIndex == 0)
+                {
+                    primaryBerserkerWeaponButtons[1].image.sprite = primaryBerserkerWeaponImages[0];
+                    primaryWeaponIndex = -1;
+                }
+                else if (primaryWeaponIndex == 1)
+                {
+                    primaryBerserkerWeaponButtons[0].image.sprite = primaryBerserkerWeaponImages[2];
+                    primaryBerserkerWeaponButtons[1].image.sprite = primaryBerserkerWeaponImages[5];
+                    primaryWeaponIndex = i;
+                }
+                else if (primaryWeaponIndex == 2)
+                {
+                    primaryBerserkerWeaponButtons[0].image.sprite = primaryBerserkerWeaponImages[2];
+                    primaryBerserkerWeaponButtons[2].image.sprite = primaryBerserkerWeaponImages[10];
+                    primaryWeaponIndex = i;
+                }
+                else if (primaryWeaponIndex == 3)
+                {
+                    primaryBerserkerWeaponButtons[0].image.sprite = primaryBerserkerWeaponImages[2];
+                    primaryBerserkerWeaponButtons[3].image.sprite = primaryBerserkerWeaponImages[15];
+                    primaryWeaponIndex = i;
+                }
+                else if (primaryWeaponIndex == 4)
+                {
+                    primaryBerserkerWeaponButtons[0].image.sprite = primaryBerserkerWeaponImages[2];
+                    primaryBerserkerWeaponButtons[4].image.sprite = primaryBerserkerWeaponImages[20];
+                    primaryWeaponIndex = i;
+                }
+            }
+            else if (i == 1)
+            {
+                if (primaryWeaponIndex == -1)
+                {
+                    primaryBerserkerWeaponButtons[1].image.sprite = primaryBerserkerWeaponImages[7];
+                    primaryWeaponIndex = i;
+                }
+                else if (primaryWeaponIndex == 0)
+                {
+                    primaryBerserkerWeaponButtons[1].image.sprite = primaryBerserkerWeaponImages[7];
+                    primaryBerserkerWeaponButtons[0].image.sprite = primaryBerserkerWeaponImages[0];
+                    primaryWeaponIndex = i;
+                }
+                else if (primaryWeaponIndex == 1)
+                {
+                    primaryBerserkerWeaponButtons[1].image.sprite = primaryBerserkerWeaponImages[5];
+                    primaryWeaponIndex = -1;
+                }
+                else if (primaryWeaponIndex == 2)
+                {
+                    primaryBerserkerWeaponButtons[1].image.sprite = primaryBerserkerWeaponImages[7];
+                    primaryBerserkerWeaponButtons[2].image.sprite = primaryBerserkerWeaponImages[10];
+                    primaryWeaponIndex = i;
+                }
+                else if (primaryWeaponIndex == 3)
+                {
+                    primaryBerserkerWeaponButtons[1].image.sprite = primaryBerserkerWeaponImages[7];
+                    primaryBerserkerWeaponButtons[3].image.sprite = primaryBerserkerWeaponImages[15];
+                    primaryWeaponIndex = i;
+                }
+                else if (primaryWeaponIndex == 4)
+                {
+                    primaryBerserkerWeaponButtons[0].image.sprite = primaryBerserkerWeaponImages[2];
+                    primaryBerserkerWeaponButtons[4].image.sprite = primaryBerserkerWeaponImages[20];
+                    primaryWeaponIndex = i;
+                }
+            }
+            else if (i == 2)
+            {
+                if (primaryWeaponIndex == -1)
+                {
+                    primaryBerserkerWeaponButtons[2].image.sprite = primaryBerserkerWeaponImages[12];
+                    primaryWeaponIndex = i;
+                }
+                else if (primaryWeaponIndex == 0)
+                {
+                    primaryBerserkerWeaponButtons[2].image.sprite = primaryBerserkerWeaponImages[12];
+                    primaryBerserkerWeaponButtons[0].image.sprite = primaryBerserkerWeaponImages[0];
+                    primaryWeaponIndex = i;
+                }
+                else if (primaryWeaponIndex == 1)
+                {
+                    primaryBerserkerWeaponButtons[2].image.sprite = primaryBerserkerWeaponImages[12];
+                    primaryBerserkerWeaponButtons[1].image.sprite = primaryBerserkerWeaponImages[5];
+                    primaryWeaponIndex = i;
+                }
+                else if (primaryWeaponIndex == 2)
+                {
+                    primaryBerserkerWeaponButtons[2].image.sprite = primaryBerserkerWeaponImages[10];
+                    primaryWeaponIndex = -1;
+                }
+                else if (primaryWeaponIndex == 3)
+                {
+                    primaryBerserkerWeaponButtons[2].image.sprite = primaryBerserkerWeaponImages[12];
+                    primaryBerserkerWeaponButtons[3].image.sprite = primaryBerserkerWeaponImages[15];
+                    primaryWeaponIndex = i;
+                }
+                else if (primaryWeaponIndex == 4)
+                {
+                    primaryBerserkerWeaponButtons[2].image.sprite = primaryBerserkerWeaponImages[12];
+                    primaryBerserkerWeaponButtons[4].image.sprite = primaryBerserkerWeaponImages[20];
+                    primaryWeaponIndex = i;
+                }
+            }
+            else if (i == 3)
+            {
+                if (primaryWeaponIndex == -1)
+                {
+                    primaryBerserkerWeaponButtons[3].image.sprite = primaryBerserkerWeaponImages[17];
+                    primaryWeaponIndex = i;
+                }
+                else if (primaryWeaponIndex == 0)
+                {
+                    primaryBerserkerWeaponButtons[3].image.sprite = primaryBerserkerWeaponImages[17];
+                    primaryBerserkerWeaponButtons[0].image.sprite = primaryBerserkerWeaponImages[0];
+                    primaryWeaponIndex = i;
+                }
+                else if (primaryWeaponIndex == 1)
+                {
+                    primaryBerserkerWeaponButtons[3].image.sprite = primaryBerserkerWeaponImages[17];
+                    primaryBerserkerWeaponButtons[1].image.sprite = primaryBerserkerWeaponImages[5];
+                    primaryWeaponIndex = i;
+                }
+                else if (primaryWeaponIndex == 2)
+                {
+                    primaryBerserkerWeaponButtons[3].image.sprite = primaryBerserkerWeaponImages[17];
+                    primaryBerserkerWeaponButtons[2].image.sprite = primaryBerserkerWeaponImages[10];
+                    primaryWeaponIndex = i;
+                }
+                else if (primaryWeaponIndex == 3)
+                {
+                    primaryBerserkerWeaponButtons[3].image.sprite = primaryBerserkerWeaponImages[15];
+                    primaryWeaponIndex = -1;
+                }
+                else if (primaryWeaponIndex == 4)
+                {
+                    primaryBerserkerWeaponButtons[3].image.sprite = primaryBerserkerWeaponImages[17];
+                    primaryBerserkerWeaponButtons[4].image.sprite = primaryBerserkerWeaponImages[20];
+                    primaryWeaponIndex = i;
+                }
+            }
+            else if (i == 4)
+            {
+                if (primaryWeaponIndex == -1)
+                {
+                    primaryBerserkerWeaponButtons[4].image.sprite = primaryBerserkerWeaponImages[22];
+                    primaryWeaponIndex = i;
+                }
+                else if (primaryWeaponIndex == 0)
+                {
+                    primaryBerserkerWeaponButtons[4].image.sprite = primaryBerserkerWeaponImages[22];
+                    primaryBerserkerWeaponButtons[0].image.sprite = primaryBerserkerWeaponImages[0];
+                    primaryWeaponIndex = i;
+                }
+                else if (primaryWeaponIndex == 1)
+                {
+                    primaryBerserkerWeaponButtons[4].image.sprite = primaryBerserkerWeaponImages[22];
+                    primaryBerserkerWeaponButtons[1].image.sprite = primaryBerserkerWeaponImages[5];
+                    primaryWeaponIndex = i;
+                }
+                else if (primaryWeaponIndex == 2)
+                {
+                    primaryBerserkerWeaponButtons[4].image.sprite = primaryBerserkerWeaponImages[22];
+                    primaryBerserkerWeaponButtons[2].image.sprite = primaryBerserkerWeaponImages[10];
+                    primaryWeaponIndex = i;
+                }
+                else if (primaryWeaponIndex == 3)
+                {
+                    primaryBerserkerWeaponButtons[4].image.sprite = primaryBerserkerWeaponImages[22];
+                    primaryBerserkerWeaponButtons[3].image.sprite = primaryBerserkerWeaponImages[15];
+                    primaryWeaponIndex = i;
+                }
+                else if (primaryWeaponIndex == 4)
+                {
+                    primaryBerserkerWeaponButtons[4].image.sprite = primaryBerserkerWeaponImages[20];
+                    primaryWeaponIndex = -1;
+                }
+            }
+        }
+        else if (characterIndex == 3)
+        {
+            if (i == 0)
+            {
+                if (primaryWeaponIndex == -1)
+                {
+                    primaryArcherWeaponButtons[0].image.sprite = primaryArcherWeaponImages[2];
+                    primaryWeaponIndex = i;
+                }
+                else if (primaryWeaponIndex == 0)
+                {
+                    primaryArcherWeaponButtons[1].image.sprite = primaryArcherWeaponImages[0];
+                    primaryWeaponIndex = -1;
+                }
+                else if (primaryWeaponIndex == 1)
+                {
+                    primaryArcherWeaponButtons[0].image.sprite = primaryArcherWeaponImages[2];
+                    primaryArcherWeaponButtons[1].image.sprite = primaryArcherWeaponImages[5];
+                    primaryWeaponIndex = i;
+                }
+                else if (primaryWeaponIndex == 2)
+                {
+                    primaryArcherWeaponButtons[0].image.sprite = primaryArcherWeaponImages[2];
+                    primaryArcherWeaponButtons[2].image.sprite = primaryArcherWeaponImages[10];
+                    primaryWeaponIndex = i;
+                }
+                else if (primaryWeaponIndex == 3)
+                {
+                    primaryArcherWeaponButtons[0].image.sprite = primaryArcherWeaponImages[2];
+                    primaryArcherWeaponButtons[3].image.sprite = primaryArcherWeaponImages[15];
+                    primaryWeaponIndex = i;
+                }
+                else if (primaryWeaponIndex == 4)
+                {
+                    primaryArcherWeaponButtons[0].image.sprite = primaryArcherWeaponImages[2];
+                    primaryArcherWeaponButtons[4].image.sprite = primaryArcherWeaponImages[20];
+                    primaryWeaponIndex = i;
+                }
+            }
+            else if (i == 1)
+            {
+                if (primaryWeaponIndex == -1)
+                {
+                    primaryArcherWeaponButtons[1].image.sprite = primaryArcherWeaponImages[7];
+                    primaryWeaponIndex = i;
+                }
+                else if (primaryWeaponIndex == 0)
+                {
+                    primaryArcherWeaponButtons[1].image.sprite = primaryArcherWeaponImages[7];
+                    primaryArcherWeaponButtons[0].image.sprite = primaryArcherWeaponImages[0];
+                    primaryWeaponIndex = i;
+                }
+                else if (primaryWeaponIndex == 1)
+                {
+                    primaryArcherWeaponButtons[1].image.sprite = primaryArcherWeaponImages[5];
+                    primaryWeaponIndex = -1;
+                }
+                else if (primaryWeaponIndex == 2)
+                {
+                    primaryArcherWeaponButtons[1].image.sprite = primaryArcherWeaponImages[7];
+                    primaryArcherWeaponButtons[2].image.sprite = primaryArcherWeaponImages[10];
+                    primaryWeaponIndex = i;
+                }
+                else if (primaryWeaponIndex == 3)
+                {
+                    primaryArcherWeaponButtons[1].image.sprite = primaryArcherWeaponImages[7];
+                    primaryArcherWeaponButtons[3].image.sprite = primaryArcherWeaponImages[15];
+                    primaryWeaponIndex = i;
+                }
+                else if (primaryWeaponIndex == 4)
+                {
+                    primaryArcherWeaponButtons[0].image.sprite = primaryArcherWeaponImages[2];
+                    primaryArcherWeaponButtons[4].image.sprite = primaryArcherWeaponImages[20];
+                    primaryWeaponIndex = i;
+                }
+            }
+            else if (i == 2)
+            {
+                if (primaryWeaponIndex == -1)
+                {
+                    primaryArcherWeaponButtons[2].image.sprite = primaryArcherWeaponImages[12];
+                    primaryWeaponIndex = i;
+                }
+                else if (primaryWeaponIndex == 0)
+                {
+                    primaryArcherWeaponButtons[2].image.sprite = primaryArcherWeaponImages[12];
+                    primaryArcherWeaponButtons[0].image.sprite = primaryArcherWeaponImages[0];
+                    primaryWeaponIndex = i;
+                }
+                else if (primaryWeaponIndex == 1)
+                {
+                    primaryArcherWeaponButtons[2].image.sprite = primaryArcherWeaponImages[12];
+                    primaryArcherWeaponButtons[1].image.sprite = primaryArcherWeaponImages[5];
+                    primaryWeaponIndex = i;
+                }
+                else if (primaryWeaponIndex == 2)
+                {
+                    primaryArcherWeaponButtons[2].image.sprite = primaryArcherWeaponImages[10];
+                    primaryWeaponIndex = -1;
+                }
+                else if (primaryWeaponIndex == 3)
+                {
+                    primaryArcherWeaponButtons[2].image.sprite = primaryArcherWeaponImages[12];
+                    primaryArcherWeaponButtons[3].image.sprite = primaryArcherWeaponImages[15];
+                    primaryWeaponIndex = i;
+                }
+                else if (primaryWeaponIndex == 4)
+                {
+                    primaryArcherWeaponButtons[2].image.sprite = primaryArcherWeaponImages[12];
+                    primaryArcherWeaponButtons[4].image.sprite = primaryArcherWeaponImages[20];
+                    primaryWeaponIndex = i;
+                }
+            }
+            else if (i == 3)
+            {
+                if (primaryWeaponIndex == -1)
+                {
+                    primaryArcherWeaponButtons[3].image.sprite = primaryArcherWeaponImages[17];
+                    primaryWeaponIndex = i;
+                }
+                else if (primaryWeaponIndex == 0)
+                {
+                    primaryArcherWeaponButtons[3].image.sprite = primaryArcherWeaponImages[17];
+                    primaryArcherWeaponButtons[0].image.sprite = primaryArcherWeaponImages[0];
+                    primaryWeaponIndex = i;
+                }
+                else if (primaryWeaponIndex == 1)
+                {
+                    primaryArcherWeaponButtons[3].image.sprite = primaryArcherWeaponImages[17];
+                    primaryArcherWeaponButtons[1].image.sprite = primaryArcherWeaponImages[5];
+                    primaryWeaponIndex = i;
+                }
+                else if (primaryWeaponIndex == 2)
+                {
+                    primaryArcherWeaponButtons[3].image.sprite = primaryArcherWeaponImages[17];
+                    primaryArcherWeaponButtons[2].image.sprite = primaryArcherWeaponImages[10];
+                    primaryWeaponIndex = i;
+                }
+                else if (primaryWeaponIndex == 3)
+                {
+                    primaryArcherWeaponButtons[3].image.sprite = primaryArcherWeaponImages[15];
+                    primaryWeaponIndex = -1;
+                }
+                else if (primaryWeaponIndex == 4)
+                {
+                    primaryArcherWeaponButtons[3].image.sprite = primaryArcherWeaponImages[17];
+                    primaryArcherWeaponButtons[4].image.sprite = primaryArcherWeaponImages[20];
+                    primaryWeaponIndex = i;
+                }
+            }
+            else if (i == 4)
+            {
+                if (primaryWeaponIndex == -1)
+                {
+                    primaryArcherWeaponButtons[4].image.sprite = primaryArcherWeaponImages[22];
+                    primaryWeaponIndex = i;
+                }
+                else if (primaryWeaponIndex == 0)
+                {
+                    primaryArcherWeaponButtons[4].image.sprite = primaryArcherWeaponImages[22];
+                    primaryArcherWeaponButtons[0].image.sprite = primaryArcherWeaponImages[0];
+                    primaryWeaponIndex = i;
+                }
+                else if (primaryWeaponIndex == 1)
+                {
+                    primaryArcherWeaponButtons[4].image.sprite = primaryArcherWeaponImages[22];
+                    primaryArcherWeaponButtons[1].image.sprite = primaryArcherWeaponImages[5];
+                    primaryWeaponIndex = i;
+                }
+                else if (primaryWeaponIndex == 2)
+                {
+                    primaryArcherWeaponButtons[4].image.sprite = primaryArcherWeaponImages[22];
+                    primaryArcherWeaponButtons[2].image.sprite = primaryArcherWeaponImages[10];
+                    primaryWeaponIndex = i;
+                }
+                else if (primaryWeaponIndex == 3)
+                {
+                    primaryArcherWeaponButtons[4].image.sprite = primaryArcherWeaponImages[22];
+                    primaryArcherWeaponButtons[3].image.sprite = primaryArcherWeaponImages[15];
+                    primaryWeaponIndex = i;
+                }
+                else if (primaryWeaponIndex == 4)
+                {
+                    primaryArcherWeaponButtons[4].image.sprite = primaryArcherWeaponImages[20];
+                    primaryWeaponIndex = -1;
+                }
+            }
+        }
+        PrimaryWeaponButtonPointerEnter(i);
     }
 }
