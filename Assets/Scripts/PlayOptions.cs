@@ -725,95 +725,47 @@ public class PlayOptions : MonoBehaviour
         if(teamIndex == 0)
         {
             if (i == 0)
-            {
-                if(characterIndex == -1)
-                {
-                    blueCharacterButtons[0].image.sprite = blueKnightImages[2];
-                }
-                else if (characterIndex == 0)
+            {               
+                if (characterIndex == 0)
                 {
                     blueCharacterButtons[0].image.sprite = blueKnightImages[5];
                 }
-                else if (characterIndex == 1)
+                else
                 {
                     blueCharacterButtons[0].image.sprite = blueKnightImages[2];
-                }
-                else if (characterIndex == 2)
-                {
-                    blueCharacterButtons[0].image.sprite = blueKnightImages[2];
-                }
-                else if (characterIndex == 3)
-                {
-                    blueCharacterButtons[0].image.sprite = blueKnightImages[2];
-                }
+                }                
             }
             else if (i == 1)
-            {
-                if (characterIndex == -1)
-                {
-                    blueCharacterButtons[1].image.sprite = blueScoutImages[2];
-                }
-                else if (characterIndex == 0)
-                {
-                    blueCharacterButtons[1].image.sprite = blueScoutImages[2];
-                }
-                else if (characterIndex == 1)
+            {               
+                if (characterIndex == 1)
                 {
                     blueCharacterButtons[1].image.sprite = blueScoutImages[5];
                 }
-                else if (characterIndex == 2)
+                else 
                 {
                     blueCharacterButtons[1].image.sprite = blueScoutImages[2];
-                }
-                else if (characterIndex == 3)
-                {
-                    blueCharacterButtons[1].image.sprite = blueScoutImages[2];
-                }
+                }               
             }
             else if (i == 2)
-            {
-                if (characterIndex == -1)
-                {
-                    blueCharacterButtons[2].image.sprite = blueBerserkerImages[2];
-                }
-                else if (characterIndex == 0)
-                {
-                    blueCharacterButtons[2].image.sprite = blueBerserkerImages[2];
-                }
-                else if (characterIndex == 1)
-                {
-                    blueCharacterButtons[2].image.sprite = blueBerserkerImages[2];
-                }
-                else if (characterIndex == 2)
+            {               
+                if (characterIndex == 2)
                 {
                     blueCharacterButtons[2].image.sprite = blueBerserkerImages[5];
                 }
-                else if (characterIndex == 3)
+                else
                 {
                     blueCharacterButtons[2].image.sprite = blueBerserkerImages[2];
                 }
             }
             else if (i == 3)
-            {
-                if (characterIndex == -1)
-                {
-                    blueCharacterButtons[3].image.sprite = blueArcherImages[2];
-                }
-                else if (characterIndex == 0)
-                {
-                    blueCharacterButtons[3].image.sprite = blueArcherImages[2];
-                }
-                else if (characterIndex == 1)
-                {
-                    blueCharacterButtons[3].image.sprite = blueArcherImages[2];
-                }
-                else if (characterIndex == 2)
-                {
-                    blueCharacterButtons[3].image.sprite = blueArcherImages[2];
-                }
-                else if (characterIndex == 3)
+            {               
+                if (characterIndex == 3)
                 {
                     blueCharacterButtons[3].image.sprite = blueArcherImages[5];
+                }
+                else
+                {
+                    blueCharacterButtons[3].image.sprite = blueArcherImages[2];
                 }
             }
             blueCharacterTitles[i].enabled = true;
@@ -821,95 +773,47 @@ public class PlayOptions : MonoBehaviour
         else if (teamIndex == 1)
         {
             if (i == 0)
-            {
-                if (characterIndex == -1)
-                {
-                    redCharacterButtons[0].image.sprite = redKnightImages[2];
-                }
-                else if (characterIndex == 0)
+            {             
+                if (characterIndex == 0)
                 {
                     redCharacterButtons[0].image.sprite = redKnightImages[5];
                 }
-                else if (characterIndex == 1)
+                else
                 {
                     redCharacterButtons[0].image.sprite = redKnightImages[2];
-                }
-                else if (characterIndex == 2)
-                {
-                    redCharacterButtons[0].image.sprite = redKnightImages[2];
-                }
-                else if (characterIndex == 3)
-                {
-                    redCharacterButtons[0].image.sprite = redKnightImages[2];
-                }
+                }              
             }
             else if (i == 1)
-            {
-                if (characterIndex == -1)
-                {
-                    redCharacterButtons[1].image.sprite = redScoutImages[2];
-                }
-                else if (characterIndex == 0)
-                {
-                    redCharacterButtons[1].image.sprite = redScoutImages[2];
-                }
-                else if (characterIndex == 1)
+            {               
+                if (characterIndex == 1)
                 {
                     redCharacterButtons[1].image.sprite = redScoutImages[5];
                 }
-                else if (characterIndex == 2)
+                else
                 {
                     redCharacterButtons[1].image.sprite = redScoutImages[2];
-                }
-                else if (characterIndex == 3)
-                {
-                    redCharacterButtons[1].image.sprite = redScoutImages[2];
-                }
+                }                
             }
             else if (i == 2)
-            {
-                if (characterIndex == -1)
-                {
-                    redCharacterButtons[2].image.sprite = redBerserkerImages[2];
-                }
-                else if (characterIndex == 0)
-                {
-                    redCharacterButtons[2].image.sprite = redBerserkerImages[2];
-                }
-                else if (characterIndex == 1)
-                {
-                    redCharacterButtons[2].image.sprite = redBerserkerImages[2];
-                }
-                else if (characterIndex == 2)
+            {                
+                if (characterIndex == 2)
                 {
                     redCharacterButtons[2].image.sprite = redBerserkerImages[5];
                 }
-                else if (characterIndex == 3)
+                else
                 {
                     redCharacterButtons[2].image.sprite = redBerserkerImages[2];
                 }
             }
             else if (i == 3)
-            {
-                if (characterIndex == -1)
-                {
-                    redCharacterButtons[3].image.sprite = redArcherImages[2];
-                }
-                else if (characterIndex == 0)
-                {
-                    redCharacterButtons[3].image.sprite = redArcherImages[2];
-                }
-                else if (characterIndex == 1)
-                {
-                    redCharacterButtons[3].image.sprite = redArcherImages[2];
-                }
-                else if (characterIndex == 2)
-                {
-                    redCharacterButtons[3].image.sprite = redArcherImages[2];
-                }
-                else if (characterIndex == 3)
+            {                
+                if (characterIndex == 3)
                 {
                     redCharacterButtons[3].image.sprite = redArcherImages[5];
+                }
+                else
+                {
+                    redCharacterButtons[3].image.sprite = redArcherImages[2];
                 }
             }
             redCharacterTitles[i].enabled = true;
