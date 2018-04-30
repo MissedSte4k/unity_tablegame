@@ -10,6 +10,7 @@ public class Trap : NetworkBehaviour {
     public float explosionRadius;
     public float explosionPower;
     public int explosionDamage;
+    [SyncVar]
     public bool isExplosive;
 
     // Use this for initialization

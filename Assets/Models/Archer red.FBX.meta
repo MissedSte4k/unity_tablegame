@@ -927,7 +927,7 @@ ModelImporter:
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
       events:
-      - time: 0.21722388
+      - time: 0.21518722
         functionName: CmdArcherShoot
         data: 
         objectReferenceParameter: {fileID: 1624340318011626, guid: c2a9a7fb39e0e9844b3f4e17b997b1a6,
@@ -944,7 +944,7 @@ ModelImporter:
         intParameter: 0
         messageOptions: 0
       - time: 0.8699256
-        functionName: BowArrowPlace
+        functionName: CmdBowArrowPlace
         data: 
         objectReferenceParameter: {fileID: 1624340318011626, guid: c2a9a7fb39e0e9844b3f4e17b997b1a6,
           type: 2}
@@ -1379,7 +1379,7 @@ ModelImporter:
         intParameter: 0
         messageOptions: 0
       - time: 0.6684723
-        functionName: CmdBowArrowPlace
+        functionName: BowArrowPlace
         data: 
         objectReferenceParameter: {instanceID: 0}
         floatParameter: 0
@@ -1413,8 +1413,8 @@ ModelImporter:
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
       events:
-      - time: 0.38381743
-        functionName: CmdArcherShoot
+      - time: 0.3797441
+        functionName: ArcherShoot
         data: 
         objectReferenceParameter: {fileID: 1624340318011626, guid: c2a9a7fb39e0e9844b3f4e17b997b1a6,
           type: 2}
@@ -1715,7 +1715,7 @@ ModelImporter:
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
       events:
-      - time: 0.3762331
+      - time: 0.39481816
         functionName: CmdArcherShoot
         data: 
         objectReferenceParameter: {fileID: 1624340318011626, guid: c2a9a7fb39e0e9844b3f4e17b997b1a6,
@@ -1794,7 +1794,7 @@ ModelImporter:
       curves: []
       events:
       - time: 0.50987244
-        functionName: ArcherShoot
+        functionName: CmdArcherShoot
         data: 
         objectReferenceParameter: {fileID: 1296200151415094, guid: e6befcf18af1cd34b88646cf86d670ae,
           type: 2}
@@ -2082,7 +2082,7 @@ ModelImporter:
       curves: []
       events:
       - time: 0.35610765
-        functionName: TrapReset
+        functionName: CmdTrapReset
         data: 
         objectReferenceParameter: {instanceID: 0}
         floatParameter: 0
@@ -2145,14 +2145,14 @@ ModelImporter:
       curves: []
       events:
       - time: 0
-        functionName: CmdArcherSlashStart
+        functionName: ArcherSlashStart
         data: 
         objectReferenceParameter: {instanceID: 0}
         floatParameter: 0
         intParameter: 0
         messageOptions: 0
       - time: 0.8156866
-        functionName: CmdArcherSlashEnd
+        functionName: ArcherSlashEnd
         data: 
         objectReferenceParameter: {instanceID: 0}
         floatParameter: 0
@@ -2187,14 +2187,14 @@ ModelImporter:
       curves: []
       events:
       - time: 0
-        functionName: CmdArcherSlashStart
+        functionName: ArcherSlashStart
         data: 
         objectReferenceParameter: {instanceID: 0}
         floatParameter: 0
         intParameter: 0
         messageOptions: 0
       - time: 0.6716385
-        functionName: CmdArcherSlashEnd
+        functionName: ArcherSlashEnd
         data: 
         objectReferenceParameter: {instanceID: 0}
         floatParameter: 0
@@ -2453,14 +2453,14 @@ ModelImporter:
       curves: []
       events:
       - time: 0.29419035
-        functionName: CmdArcherOverheadStart
+        functionName: ArcherOverheadStart
         data: 
         objectReferenceParameter: {instanceID: 0}
         floatParameter: 0
         intParameter: 0
         messageOptions: 0
       - time: 0.72061497
-        functionName: CmdArcherOverheadEnd
+        functionName: ArcherOverheadEnd
         data: 
         objectReferenceParameter: {instanceID: 0}
         floatParameter: 0
@@ -2495,14 +2495,14 @@ ModelImporter:
       curves: []
       events:
       - time: 0.29561594
-        functionName: CmdArcherStabStart
+        functionName: ArcherStabStart
         data: 
         objectReferenceParameter: {instanceID: 0}
         floatParameter: 0
         intParameter: 0
         messageOptions: 0
       - time: 0.72182477
-        functionName: CmdArcherStabEnd
+        functionName: ArcherStabEnd
         data: 
         objectReferenceParameter: {instanceID: 0}
         floatParameter: 0
@@ -2565,7 +2565,7 @@ ModelImporter:
       curves: []
       events:
       - time: 0.5071182
-        functionName: CmdArcherShoot
+        functionName: ArcherShoot
         data: 
         objectReferenceParameter: {fileID: 1624340318011626, guid: 0076a49fc641f6a48aa5383a4f85546b,
           type: 2}
@@ -2573,7 +2573,7 @@ ModelImporter:
         intParameter: 0
         messageOptions: 0
       - time: 0.8031393
-        functionName: CmdJavelinTake
+        functionName: JavelinTake
         data: 
         objectReferenceParameter: {fileID: 1624340318011626, guid: 0076a49fc641f6a48aa5383a4f85546b,
           type: 2}
@@ -2581,7 +2581,7 @@ ModelImporter:
         intParameter: 0
         messageOptions: 0
       - time: 0.9944382
-        functionName: CmdJavelinReset
+        functionName: JavelinReset
         data: 
         objectReferenceParameter: {fileID: 1624340318011626, guid: 0076a49fc641f6a48aa5383a4f85546b,
           type: 2}
@@ -2671,7 +2671,21 @@ ModelImporter:
       mirror: 0
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
-      events: []
+      events:
+      - time: 0.29155827
+        functionName: CmdLightStart
+        data: 
+        objectReferenceParameter: {instanceID: 0}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
+      - time: 0.46332803
+        functionName: CmdLightEnd
+        data: 
+        objectReferenceParameter: {instanceID: 0}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
       transformMask: []
       maskType: 3
       maskSource: {instanceID: 0}
@@ -2701,14 +2715,14 @@ ModelImporter:
       curves: []
       events:
       - time: 0.5061454
-        functionName: CmdJavelinTake
+        functionName: JavelinTake
         data: 
         objectReferenceParameter: {instanceID: 0}
         floatParameter: 0
         intParameter: 0
         messageOptions: 0
       - time: 0.99837494
-        functionName: CmdJavelinReset
+        functionName: JavelinReset
         data: 
         objectReferenceParameter: {instanceID: 0}
         floatParameter: 0
@@ -2771,14 +2785,14 @@ ModelImporter:
       curves: []
       events:
       - time: 0
-        functionName: CmdArcherSlashStart
+        functionName: ArcherSlashStart
         data: 
         objectReferenceParameter: {instanceID: 0}
         floatParameter: 0
         intParameter: 0
         messageOptions: 0
       - time: 0.80581546
-        functionName: CmdArcherSlashEnd
+        functionName: ArcherSlashEnd
         data: 
         objectReferenceParameter: {instanceID: 0}
         floatParameter: 0
@@ -2813,14 +2827,14 @@ ModelImporter:
       curves: []
       events:
       - time: 0
-        functionName: CmdArcherSlashStart
+        functionName: ArcherSlashStart
         data: 
         objectReferenceParameter: {instanceID: 0}
         floatParameter: 0
         intParameter: 0
         messageOptions: 0
       - time: 0.67090607
-        functionName: CmdArcherSlashEnd
+        functionName: ArcherSlashEnd
         data: 
         objectReferenceParameter: {instanceID: 0}
         floatParameter: 0
@@ -3049,14 +3063,7 @@ ModelImporter:
       mirror: 0
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
-      events:
-      - time: 0
-        functionName: TrapReset
-        data: 
-        objectReferenceParameter: {instanceID: 0}
-        floatParameter: 0
-        intParameter: 0
-        messageOptions: 0
+      events: []
       transformMask: []
       maskType: 3
       maskSource: {instanceID: 0}
@@ -3086,14 +3093,14 @@ ModelImporter:
       curves: []
       events:
       - time: 0.2955852
-        functionName: CmdArcherOverheadStart
+        functionName: ArcherOverheadStart
         data: 
         objectReferenceParameter: {instanceID: 0}
         floatParameter: 0
         intParameter: 0
         messageOptions: 0
       - time: 0.71847475
-        functionName: CmdArcherOverheadEnd
+        functionName: ArcherOverheadEnd
         data: 
         objectReferenceParameter: {instanceID: 0}
         floatParameter: 0
@@ -3128,14 +3135,14 @@ ModelImporter:
       curves: []
       events:
       - time: 0.29451925
-        functionName: CmdArcherStabStart
+        functionName: ArcherStabStart
         data: 
         objectReferenceParameter: {instanceID: 0}
         floatParameter: 0
         intParameter: 0
         messageOptions: 0
       - time: 0.7246611
-        functionName: CmdArcherStabEnd
+        functionName: ArcherStabEnd
         data: 
         objectReferenceParameter: {instanceID: 0}
         floatParameter: 0
@@ -3196,7 +3203,21 @@ ModelImporter:
       mirror: 0
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
-      events: []
+      events:
+      - time: 0
+        functionName: CmdBlockStart
+        data: 
+        objectReferenceParameter: {instanceID: 0}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
+      - time: 1
+        functionName: CmdBlockEnd
+        data: 
+        objectReferenceParameter: {instanceID: 0}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
       transformMask: []
       maskType: 3
       maskSource: {instanceID: 0}

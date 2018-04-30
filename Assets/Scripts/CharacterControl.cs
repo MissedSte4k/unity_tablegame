@@ -121,8 +121,6 @@ public class CharacterControl : NetworkBehaviour {
 
             if (Input.GetKeyDown(KeyBindManager.MyInstance.Keybinds["Button(Crouch)"]))
             {
-                CmdFire();
-
                 if (!isCrouched)
 				{
 					isCrouched = true;
