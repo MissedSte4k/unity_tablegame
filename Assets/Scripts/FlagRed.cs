@@ -38,6 +38,13 @@ public class FlagRed : NetworkBehaviour {
                 FlagCaptured();
             }
         }
+        if (FlagMoved)
+        {
+            if (this.gameObject.transform.position.y < 20F)
+            {
+                FlagReset();
+            }
+        }
 
     }
 
