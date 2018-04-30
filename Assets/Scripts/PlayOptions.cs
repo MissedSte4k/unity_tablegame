@@ -14,7 +14,7 @@ public class PlayOptions : MonoBehaviour
     public Sprite[] teamRedImages;
     public Text[] teamTitles;
     public Button teamNextButton;
-    public GameObject teamLayer, blueCharacterLayer, redCharacterLayer;
+    public GameObject teamLayer, blueCharacterLayer, redCharacterLayer, mainMenuLayer;
 
     public int characterIndex;
     public Sprite[] blueKnightImages;
@@ -392,26 +392,129 @@ public class PlayOptions : MonoBehaviour
         }
     }
 
-    public void ClickBackTeamButton()
-    {      
-        int k = 0;
-        for (int i = 0; i < 5; i++)
+    //-------------------------------------------------------------------------------------------------------------------------------------------
+
+    public void ClickWeaponBackButton(int i)
+    {
+        if (teamIndex == 0)
         {
-            k = i * 5;
-            primaryKnightWeaponButtons[i].image.sprite = primaryKnightWeaponImages[k];
-            secondaryKnightWeaponButtons[i].image.sprite = secondaryKnightWeaponImages[k];
-            primaryScoutWeaponButtons[i].image.sprite = primaryScoutWeaponImages[k];
-            secondaryScoutWeaponButtons[i].image.sprite = secondaryScoutWeaponImages[k];
-            primaryBerserkerWeaponButtons[i].image.sprite = primaryBerserkerWeaponImages[k];
-            primaryArcherWeaponButtons[i].image.sprite = primaryArcherWeaponImages[k];
-            secondaryArcherWeaponButtons[i].image.sprite = secondaryArcherWeaponImages[k];                
+            if (characterIndex == 0)
+            {
+                blueCharacterLayer.gameObject.SetActive(true);
+                KnightWeaponsLayer.gameObject.SetActive(false);
+            }
+            else if (characterIndex == 1)
+            {
+                blueCharacterLayer.gameObject.SetActive(true);
+                ScoutWeaponsLayer.gameObject.SetActive(false);
+            }
+            else if (characterIndex == 2)
+            {
+                blueCharacterLayer.gameObject.SetActive(true);
+                BerserkerWeaponsLayer.gameObject.SetActive(false);
+            }
+            else if (characterIndex == 3)
+            {
+                blueCharacterLayer.gameObject.SetActive(true);
+                ArcherWeaponsLayer.gameObject.SetActive(false);
+            }
+        }
+        else if (teamIndex == 1)
+        {
+            if (characterIndex == 0)
+            {
+                redCharacterLayer.gameObject.SetActive(true);
+                KnightWeaponsLayer.gameObject.SetActive(false);
+            }
+            else if (characterIndex == 1)
+            {
+                redCharacterLayer.gameObject.SetActive(true);
+                ScoutWeaponsLayer.gameObject.SetActive(false);
+            }
+            else if (characterIndex == 2)
+            {
+                redCharacterLayer.gameObject.SetActive(true);
+                BerserkerWeaponsLayer.gameObject.SetActive(false);
+            }
+            else if (characterIndex == 3)
+            {
+                redCharacterLayer.gameObject.SetActive(true);
+                ArcherWeaponsLayer.gameObject.SetActive(false);
+            }
+        }
+
+        int k = 0;
+        for (int m = 0; m < 5; m++)
+        {
+            k = m * 5;
+            primaryKnightWeaponButtons[m].image.sprite = primaryKnightWeaponImages[k];
+            secondaryKnightWeaponButtons[m].image.sprite = secondaryKnightWeaponImages[k];
+            primaryScoutWeaponButtons[m].image.sprite = primaryScoutWeaponImages[k];
+            secondaryScoutWeaponButtons[m].image.sprite = secondaryScoutWeaponImages[k];
+            primaryBerserkerWeaponButtons[m].image.sprite = primaryBerserkerWeaponImages[k];
+            primaryArcherWeaponButtons[m].image.sprite = primaryArcherWeaponImages[k];
+            secondaryArcherWeaponButtons[m].image.sprite = secondaryArcherWeaponImages[k];
         }
         //berserker has 4 available secondary weapons
-        for (int i = 0; i < 4; i++)
+        for (int m = 0; m < 4; m++)
         {
-            k = i * 5;
-            secondaryBerserkerWeaponButtons[i].image.sprite = secondaryBerserkerWeaponImages[k];
-        }       
+            k = m * 5;
+            secondaryBerserkerWeaponButtons[m].image.sprite = secondaryBerserkerWeaponImages[k];
+        }
+        primaryWeaponIndex = -1;
+        secondaryWeaponIndex = -1;
+
+        if (teamIndex == 0)
+        {           
+            blueCharacterButtons[0].image.sprite = blueKnightImages[0];
+            blueCharacterButtons[1].image.sprite = blueScoutImages[0];
+            blueCharacterButtons[2].image.sprite = blueBerserkerImages[0];
+            blueCharacterButtons[3].image.sprite = blueArcherImages[0];
+        }
+        else if (teamIndex == 1)
+        {            
+            redCharacterButtons[0].image.sprite = redKnightImages[0];
+            redCharacterButtons[1].image.sprite = redScoutImages[0];
+            redCharacterButtons[2].image.sprite = redBerserkerImages[0];
+            redCharacterButtons[3].image.sprite = redArcherImages[0];
+        }
+        characterIndex = -1;
+    }
+
+    public void ClickCharacterBackButton()
+    {
+        if(teamIndex == 0)
+        {
+            teamLayer.gameObject.SetActive(true);
+            blueCharacterLayer.gameObject.SetActive(false);
+            blueCharacterButtons[0].image.sprite = blueKnightImages[0];
+            blueCharacterButtons[1].image.sprite = blueScoutImages[0];
+            blueCharacterButtons[2].image.sprite = blueBerserkerImages[0];
+            blueCharacterButtons[3].image.sprite = blueArcherImages[0];
+        }
+        else if (teamIndex == 1)
+        {
+            teamLayer.gameObject.SetActive(true);
+            redCharacterLayer.gameObject.SetActive(false);
+            redCharacterButtons[0].image.sprite = redKnightImages[0];
+            redCharacterButtons[1].image.sprite = redScoutImages[0];
+            redCharacterButtons[2].image.sprite = redBerserkerImages[0];
+            redCharacterButtons[3].image.sprite = redArcherImages[0];
+        }                
+        characterIndex = -1;
+       
+        teamButtons[0].image.sprite = teamBlueImages[0];
+        teamButtons[1].image.sprite = teamRedImages[0];
+        teamIndex = -1;
+    }
+
+    public void ClickTeamBackButton()
+    {
+        mainMenuLayer.gameObject.SetActive(true);
+        teamLayer.gameObject.SetActive(false);       
+        teamButtons[0].image.sprite = teamBlueImages[0];
+        teamButtons[1].image.sprite = teamRedImages[0];
+        teamIndex = -1;
     }
 
     //----------------------------------------------------------------------------------------------------------------------------------------
@@ -2341,7 +2444,7 @@ public class PlayOptions : MonoBehaviour
                 }
                 else if (primaryWeaponIndex == 4)
                 {
-                    primaryKnightWeaponButtons[0].image.sprite = primaryKnightWeaponImages[2];
+                    primaryKnightWeaponButtons[1].image.sprite = primaryKnightWeaponImages[7];
                     primaryKnightWeaponButtons[4].image.sprite = primaryKnightWeaponImages[20];
                     primaryWeaponIndex = i;
                 }
@@ -3098,7 +3201,7 @@ public class PlayOptions : MonoBehaviour
                 }
                 else if (secondaryWeaponIndex == 4)
                 {
-                    secondaryKnightWeaponButtons[0].image.sprite = secondaryKnightWeaponImages[2];
+                    secondaryKnightWeaponButtons[1].image.sprite = secondaryKnightWeaponImages[7];
                     secondaryKnightWeaponButtons[4].image.sprite = secondaryKnightWeaponImages[20];
                     secondaryWeaponIndex = i;
                 }
@@ -3743,55 +3846,5 @@ public class PlayOptions : MonoBehaviour
             }
         }
         SecondaryWeaponButtonPointerEnter(i);
-    }
-
-    public void ClickWeaponBackButton(int i)
-    {
-        if(teamIndex == 0)
-        {
-            if(characterIndex == 0)
-            {
-                blueCharacterLayer.gameObject.SetActive(true);
-                KnightWeaponsLayer.gameObject.SetActive(false);
-            }
-            else if (characterIndex == 1)
-            {
-                blueCharacterLayer.gameObject.SetActive(true);
-                ScoutWeaponsLayer.gameObject.SetActive(false);
-            }
-            else if (characterIndex == 2)
-            {
-                blueCharacterLayer.gameObject.SetActive(true);
-                BerserkerWeaponsLayer.gameObject.SetActive(false);
-            }
-            else if (characterIndex == 3)
-            {
-                blueCharacterLayer.gameObject.SetActive(true);
-                ArcherWeaponsLayer.gameObject.SetActive(false);
-            }           
-        }
-        else if (teamIndex == 1)
-        {
-            if (characterIndex == 0)
-            {
-                redCharacterLayer.gameObject.SetActive(true);
-                KnightWeaponsLayer.gameObject.SetActive(false);
-            }
-            else if (characterIndex == 1)
-            {
-                redCharacterLayer.gameObject.SetActive(true);
-                ScoutWeaponsLayer.gameObject.SetActive(false);
-            }
-            else if (characterIndex == 2)
-            {
-                redCharacterLayer.gameObject.SetActive(true);
-                BerserkerWeaponsLayer.gameObject.SetActive(false);
-            }
-            else if (characterIndex == 3)
-            {
-                redCharacterLayer.gameObject.SetActive(true);
-                ArcherWeaponsLayer.gameObject.SetActive(false);
-            }
-        }
-    }
+    }    
 }
