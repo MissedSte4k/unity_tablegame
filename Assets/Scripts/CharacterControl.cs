@@ -15,7 +15,7 @@ public class CharacterControl : NetworkBehaviour {
 	public int sprintStaminaUse;
 	public int jumpStaminaUse;
 	public int shootStaminaUse;
-	public float jumpHeight;
+	public float jumpSpeed;
 	private Rigidbody rb;
 	private Health health;
 	private CapsuleCollider hitBox;
@@ -26,7 +26,8 @@ public class CharacterControl : NetworkBehaviour {
 	public Transform bulletSpawn;
 	public int bulletSpeed;
 	private float mouseH = 0.0f;
-	private float mouseV = 0.0f;   
+	private float mouseV = 0.0f;
+    private Quaternion spineRotation;
 	public Camera playerCamera;
 	private int currentIncreaseTime;
 	private int currentDecreaseTime;
@@ -106,8 +107,6 @@ public class CharacterControl : NetworkBehaviour {
             //anim.animator.SetFloat("Speed", Input.GetAxis("Vertical"));
             //anim.animator.SetFloat("Strafe", Input.GetAxis("Horizontal"));
 
-            transform.rotation = Quaternion.Euler(0, playerCamera.transform.rotation.eulerAngles.y, 0);
-
             mouseH += Input.GetAxis("Mouse X") * mouseSensitivity;
 			mouseV -= Input.GetAxis("Mouse Y") * mouseSensitivity;
 
@@ -117,6 +116,7 @@ public class CharacterControl : NetworkBehaviour {
 				mouseV = -60;
 			}
 
+            transform.rotation = Quaternion.Euler(0, mouseH, 0);
             playerCamera.transform.rotation = Quaternion.Euler (mouseV, mouseH, 0);
 
             if (Input.GetKeyDown(KeyBindManager.MyInstance.Keybinds["Button(Crouch)"]))
@@ -187,7 +187,7 @@ public class CharacterControl : NetworkBehaviour {
 					anim.animator.SetBool("Jump", true);
 					anim.animator.SetBool("Falling", true);
 					CmdChangeStamina(-jumpStaminaUse);
-					rb.velocity = new Vector3(rb.velocity.x, jumpHeight, rb.velocity.z);
+                    rb.velocity += jumpSpeed * Vector3.up;
 				}
 			}
 			Physics.SyncTransforms();
@@ -195,12 +195,31 @@ public class CharacterControl : NetworkBehaviour {
 		else playerCamera.enabled = false;
 	}
 
-	void LateUpdate() {
-		if (isLocalPlayer) {
-			// vykdoma modelio stuburo rotacija aukštyn/žemyn, kad atrodytu lyg veikėjas ten žiūri
-			spine.localRotation = Quaternion.Euler(spine.localRotation.eulerAngles.x, spine.localRotation.eulerAngles.y, spine.localRotation.eulerAngles.z - mouseV);
-		}
-	}
+    void LateUpdate()
+    {
+        spine.localRotation = Quaternion.Euler(spine.localRotation.eulerAngles.x, spine.localRotation.eulerAngles.y, spine.localRotation.eulerAngles.z - mouseV);
+        //Quaternion rotation;
+        //rotation = Quaternion.Euler(spine.localRotation.eulerAngles.x, spine.localRotation.eulerAngles.y, -playerCamera.transform.rotation.eulerAngles.x);
+        //if (isLocalPlayer)
+        //{
+        //    CmdRotateSpine(rotation);
+        //}
+    }
+
+    //[Command]
+    //void CmdRotateSpine(Quaternion rotation)
+    //{
+    //    spineRotation = rotation;
+    //    spine.localRotation = rotation;
+    //    RpcRotateSpine(rotation);
+    //}
+
+    //[ClientRpc]
+    //void RpcRotateSpine(Quaternion rotation)
+    //{
+    //    spineRotation = rotation;
+    //    spine.localRotation = rotation;
+    //}
 
 	// Update is called once per frame
 	void FixedUpdate() {
@@ -241,16 +260,14 @@ public class CharacterControl : NetworkBehaviour {
 
             //float moveHorizontal = Input.GetAxis("Horizontal");
             //float moveVertical = Input.GetAxis("Vertical");
-            float speed = moveSpeed;
-			if (onSprint) speed = moveSpeed + sprintSpeedBoost;
-			Vector3 forward = new Vector3(transform.forward.x, 0, transform.forward.z).normalized * speed * moveVertical;
-			Vector3 horizontal = new Vector3(transform.right.x, 0, transform.right.z).normalized * speed * moveHorizontal;
+            float speed = moveSpeed + (onSprint ? sprintSpeedBoost : 0);
+            Vector3 moveDirection = (moveHorizontal * transform.right + moveVertical * transform.forward).normalized;
 
 			//Vector3 forward = transform.forward * moveSpeed * moveVertical;
 			//Vector3 horizontal = transform.right * moveSpeed * moveHorizontal;
 
-			rb.velocity = forward + horizontal + new Vector3(0, rb.velocity.y, 0);
-			if (rb.velocity.y > jumpHeight)
+			rb.velocity = moveDirection * speed + rb.velocity.y * Vector3.up;
+			if (rb.velocity.y > jumpSpeed)
 				rb.velocity = new Vector3(rb.velocity.x, 0, rb.velocity.z);
 
 			//if (rb.velocity.magnitude > moveSpeed) rb.velocity = rb.velocity.normalized * moveSpeed;
@@ -298,7 +315,8 @@ public class CharacterControl : NetworkBehaviour {
 		}
 	}
 
-	[Command]
+
+    [Command]
 	private void CmdFire()
 	{
 		GameObject bullet = Instantiate(bulletPrefab, bulletSpawn.position, bulletSpawn.rotation);

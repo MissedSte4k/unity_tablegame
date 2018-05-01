@@ -52,9 +52,9 @@ public class MeleeWeapon : NetworkBehaviour
 
             if (!isSlash)
             {
+                col.enabled = false;
                 if (isLocalPlayer)
                 {
-                    col.enabled = false;
                     CmdDisableCollider();
                 }
             }
