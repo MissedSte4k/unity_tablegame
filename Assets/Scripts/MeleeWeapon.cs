@@ -31,7 +31,7 @@ public class MeleeWeapon : NetworkBehaviour
         {
             foreach (Collider c in collisions)
             {
-                if (c != null && (isLocalPlayer || isClient))
+                if (c != null && (isLocalPlayer))
                     CmdUnignoreCollision();
             }
             Array.Clear(collisions, 0, 5);
