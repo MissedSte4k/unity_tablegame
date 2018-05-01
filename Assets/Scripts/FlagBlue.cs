@@ -14,6 +14,7 @@ public class FlagBlue : NetworkBehaviour
     Vector3 BasePos;
     Vector3 StoreAfterCapture;
     CharacterControl PlayerWithFlag = null;
+    
 
     // Use this for initialization
     void Start()
@@ -48,10 +49,8 @@ public class FlagBlue : NetworkBehaviour
                 FlagReset();
             }
         }
-
-
     }
-
+    
 
     void OnCollisionEnter(Collision collision)
     {
@@ -68,6 +67,7 @@ public class FlagBlue : NetworkBehaviour
                     FlagMoved = true;
                     PlayerWithFlag = member;
                     MoveFlag(StoreAfterCapture);
+                    FlagSoundController.acInstance.PlayTakenSound();
                 }
                 if (member.Team() == 1)
                 {
@@ -75,6 +75,7 @@ public class FlagBlue : NetworkBehaviour
                     {
                         FlagReset();
                         FlagMoved = false;
+                        
 
                     }
                     else
@@ -100,13 +101,15 @@ public class FlagBlue : NetworkBehaviour
     }
     void FlagCaptured()
     {
-        FlagReset();
         VeliavaYra = true;
         FlagMoved = false;
         PlayerWithFlag = null;
+        FlagReset();
+        FlagSoundController.acInstance.PlayCapturedSound();
     }
     void FlagReset()
     {
         MoveFlag(BasePos);
+        FlagSoundController.acInstance.PlayRetakenSound();
     }
 }

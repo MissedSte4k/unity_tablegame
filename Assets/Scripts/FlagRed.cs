@@ -13,6 +13,7 @@ public class FlagRed : NetworkBehaviour {
     Vector3 BasePos;
     Vector3 StoreAfterCapture;
     CharacterControl PlayerWithFlag = null;
+   
 
     // Use this for initialization
     void Start () {
@@ -22,10 +23,11 @@ public class FlagRed : NetworkBehaviour {
         BasePos.x = baseX;
         BasePos.y = baseY;
         BasePos.z = baseZ;
+       
     }
-	
-	// Update is called once per frame
-	void Update () {
+    
+    // Update is called once per frame
+    void Update () {
         if (PlayerWithFlag != null)
         {
             if (PlayerWithFlag.GetComponent<Health>().CurrentHealth() <= 0)
@@ -63,6 +65,7 @@ public class FlagRed : NetworkBehaviour {
                     VeliavaYra = false;
                     FlagMoved = true;
                     PlayerWithFlag = member;
+                    FlagSoundController.acInstance.PlayTakenSound();
                     MoveFlag(StoreAfterCapture);
                 }
                 if (member.Team() == 2)
@@ -71,7 +74,7 @@ public class FlagRed : NetworkBehaviour {
                     {
                         MoveFlag(BasePos);
                         FlagMoved = false;
-
+                        FlagSoundController.acInstance.PlayRetakenSound();
                     }
                     else
                     {
@@ -96,14 +99,16 @@ public class FlagRed : NetworkBehaviour {
     }
     void FlagCaptured()
     {
-        FlagReset();
         VeliavaYra = true;
         FlagMoved = false;
         PlayerWithFlag = null;
+        FlagReset();
+        FlagSoundController.acInstance.PlayCapturedSound();
     }
     void FlagReset()
     {
         MoveFlag(BasePos);
+
     }
 }
 
