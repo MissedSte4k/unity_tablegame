@@ -8,9 +8,6 @@ public class FlagBlue : NetworkBehaviour
 
     bool VeliavaYra = true;
     bool FlagMoved = false;
-    float baseX = -7.703197F;
-    float baseY = 35.257F;
-    float baseZ = 75.40736F;
     Vector3 BasePos;
     Vector3 StoreAfterCapture;
     CharacterControl PlayerWithFlag = null;
@@ -22,9 +19,7 @@ public class FlagBlue : NetworkBehaviour
         StoreAfterCapture.x = -80F;
         StoreAfterCapture.y = 25F;
         StoreAfterCapture.z = 33F;
-        BasePos.x = baseX;
-        BasePos.y = baseY;
-        BasePos.z = baseZ;
+        BasePos = this.gameObject.transform.position;
     }
 
     // Update is called once per frame
@@ -75,7 +70,7 @@ public class FlagBlue : NetworkBehaviour
                     {
                         FlagReset();
                         FlagMoved = false;
-                        
+                        FlagSoundController.acInstance.PlayRetakenSound();
 
                     }
                     else
@@ -83,6 +78,7 @@ public class FlagBlue : NetworkBehaviour
                         if (member.FlagStatus() == 1)
                         {
                             member.FlagCaptured();
+                            
                         }
                     }
 
@@ -110,6 +106,6 @@ public class FlagBlue : NetworkBehaviour
     void FlagReset()
     {
         MoveFlag(BasePos);
-        FlagSoundController.acInstance.PlayRetakenSound();
+        
     }
 }
