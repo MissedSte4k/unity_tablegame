@@ -83,6 +83,14 @@ public class KeyBindManager : MonoBehaviour
             {
                 buttonIndex = 6;
             }
+            if(Input.GetKeyDown(KeyCode.LeftShift))
+            {
+                buttonIndex = 7;
+            }
+            if (Input.GetKeyDown(KeyCode.RightShift))
+            {
+                buttonIndex = 8;
+            }
         }
         
 
@@ -140,6 +148,16 @@ public class KeyBindManager : MonoBehaviour
                 else if (buttonIndex == 6)
                 {
                     BindKey(bindName, (KeyCode)System.Enum.Parse(typeof(KeyCode), "Mouse6"));
+                    buttonIndex = -1;
+                }
+                else if (buttonIndex == 7)
+                {
+                    BindKey(bindName, (KeyCode)System.Enum.Parse(typeof(KeyCode), "LeftShift"));
+                    buttonIndex = -1;
+                }
+                else if (buttonIndex == 8)
+                {
+                    BindKey(bindName, (KeyCode)System.Enum.Parse(typeof(KeyCode), "RightShift"));
                     buttonIndex = -1;
                 }
                 SaveKeys();
