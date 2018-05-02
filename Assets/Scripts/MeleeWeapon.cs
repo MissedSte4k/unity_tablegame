@@ -10,9 +10,7 @@ public class MeleeWeapon : NetworkBehaviour
     public int damage;
     public bool isSlash; //marks whether the weapon can damage more than 1 character.
     private Collider[] collisions = new Collider[5];
-    [SyncVar]
     private int n = 0;
-    [SyncVar]
     private bool isClear = true;
     private Collider col;
 
@@ -29,91 +27,43 @@ public class MeleeWeapon : NetworkBehaviour
             GetComponentInParent<NetworkAnimator>().animator.GetCurrentAnimatorStateInfo(1).IsName("Crouched"))
             && !isClear)
         {
-            foreach (Collider c in collisions)
+            Debug.Log("FOREACH");
+            for (int i = 0; i < 5; i++)
             {
-                if (c != null && (isLocalPlayer || isClient))
-                    CmdUnignoreCollision();
+                if (collisions[i] != null) Physics.IgnoreCollision(col, collisions[i], false);
             }
             Array.Clear(collisions, 0, 5);
+            n = 0;
             isClear = true;
         }
     }
 
     void OnTriggerEnter(Collider other)
     {
-
         if (other.gameObject.CompareTag("Player"))
         {
             var health = other.gameObject.GetComponent<Health>();
             if (health != null)
             {
-                 health.CmdTakeDamage(damage);
+                health.RpcTakeDamage(damage, health.IsFatal(damage));
             }
 
             if (!isSlash)
             {
-                if (isLocalPlayer)
-                {
-                    col.enabled = false;
-                    CmdDisableCollider();
-                }
+                col.enabled = false;
             }
             else
             {
                 collisions[n] = other;
-                if (isLocalPlayer)
-                {
-                    CmdIgnoreCollision();
-                }
+                Physics.IgnoreCollision(col, collisions[n], false);
+                n++;
                 isClear = false;
             }
         }
         else if (other.gameObject.CompareTag("Block"))
         {
             col.enabled = false;
-            if (isLocalPlayer)
-            {
-                CmdDisableCollider();
-            }
             GetComponentInParent<NetworkAnimator>().SetTrigger("Stop");
         }
-    }
-
-    [Command]
-    void CmdDisableCollider()
-    {
-        RpcDisableCollider();
-    }
-
-    [ClientRpc]
-    void RpcDisableCollider()
-    {
-        col.enabled = false;
-    }
-
-    [Command]
-    void CmdIgnoreCollision()
-    {
-        RpcIgnoreCollision();
-    }
-
-    [ClientRpc]
-    void RpcIgnoreCollision()
-    {
-        Physics.IgnoreCollision(col, collisions[n]);
-        n++;
-    }
-
-    [Command]
-    void CmdUnignoreCollision()
-    {
-        RpcUnignoreCollision();
-    }
-
-    [ClientRpc]
-    void RpcUnignoreCollision()
-    {
-        Physics.IgnoreCollision(col, collisions[n], false);
-        n--;
     }
 }

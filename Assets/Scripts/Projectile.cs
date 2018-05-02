@@ -25,7 +25,7 @@ public class Projectile : NetworkBehaviour {
         var health = collision.gameObject.GetComponent<Health>();
         if (health != null)
         {
-            health.CmdTakeDamage(damage);
+            health.TakeDamage(damage);
         }
 
         Destroy(gameObject);

@@ -59,10 +59,15 @@ public class Health : NetworkBehaviour {
         else stamina = maxStamina;
     }
 
-    [Command]
-    public void CmdTakeDamage(int amount)
+    public void TakeDamage(int amount)
     {
-        TakeDamage(amount, GetComponent<CharacterControl>().Team());
+        CmdTakeDamage(amount, GetComponent<CharacterControl>().Team(), IsFatal(amount));
+    }
+
+    [Command]
+    public void CmdTakeDamage(int amount, int team, bool fatal)
+    {
+        TakeDamage(amount, team, fatal);
     }
 
     [Command]
@@ -84,20 +89,10 @@ public class Health : NetworkBehaviour {
     }
 
     [Server]
-    private bool TakeDamage(int amount, int team)
+    private void TakeDamage(int amount, int team, bool fatal)
     {
-        health = health - amount;
-        if (dependOnHealth && stamina > health) ChangeStamina(0);
-        if (health <= 0)
-        {
-            FindObjectOfType<TeamControl>().IncreaseByOne(team);
-            OnHealthChanged(0);
-            OnStaminaChanged(0);
-            RpcTakeDamage(true);
-            return true;
-        }
-
-        return false;
+        if(fatal) FindObjectOfType<TeamControl>().IncreaseByOne(team);
+        RpcTakeDamage(amount, fatal);
     }
 
     [ClientRpc]
@@ -107,9 +102,19 @@ public class Health : NetworkBehaviour {
     }
 
     [ClientRpc]
-    void RpcTakeDamage(bool died)
+    public void RpcTakeDamage(int amount, bool died)
     {
-        if (died) pr.Die();
+        if (died)
+        {
+            health = 0;
+            stamina = 0;
+            pr.Die();
+        }
+        else
+        {
+            health = health - amount;
+            if (dependOnHealth && stamina > health) ChangeStamina(-1);
+        }
     }
 
     public bool IsStaminaMax()
@@ -132,7 +137,10 @@ public class Health : NetworkBehaviour {
 
     public void ChangeStamina(int value)
     {
-        stamina = stamina + value;
+        if (dependOnHealth && stamina + value > health) stamina = health;
+        else if (!dependOnHealth && stamina + value > maxStamina) stamina = maxStamina;
+        else if (stamina + value < 0) stamina = 0;
+        else stamina = stamina + value;
     }
 
     public int CurrentHealth()

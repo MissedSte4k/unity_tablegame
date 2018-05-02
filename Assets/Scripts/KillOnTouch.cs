@@ -21,7 +21,7 @@ public class KillOnTouch : NetworkBehaviour {
         var health = hit.GetComponent<Health>();
         if (health != null)
         {
-            health.CmdTakeDamage(health.CurrentHealth());
+            health.TakeDamage(health.CurrentHealth());
         }
         else
         {

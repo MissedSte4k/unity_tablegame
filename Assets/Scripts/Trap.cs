@@ -60,7 +60,7 @@ public class Trap : NetworkBehaviour {
                         float distance = Vector3.Distance(closestPoint, transform.position);
 
                         int damage = Convert.ToInt32((1 - Mathf.Clamp01(distance / explosionRadius)) * explosionDamage);
-                        hit.GetComponent<Health>().CmdTakeDamage(damage);
+                        hit.GetComponent<Health>().TakeDamage(damage);
                     }
                 }
                 Destroy(gameObject);
