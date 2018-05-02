@@ -8,12 +8,10 @@ public class FlagBlue : NetworkBehaviour
 
     bool VeliavaYra = true;
     bool FlagMoved = false;
-    float baseX = -7.703197F;
-    float baseY = 35.257F;
-    float baseZ = 75.40736F;
     Vector3 BasePos;
     Vector3 StoreAfterCapture;
     CharacterControl PlayerWithFlag = null;
+    
 
     // Use this for initialization
     void Start()
@@ -21,9 +19,7 @@ public class FlagBlue : NetworkBehaviour
         StoreAfterCapture.x = -80F;
         StoreAfterCapture.y = 25F;
         StoreAfterCapture.z = 33F;
-        BasePos.x = baseX;
-        BasePos.y = baseY;
-        BasePos.z = baseZ;
+        BasePos = this.gameObject.transform.position;
     }
 
     // Update is called once per frame
@@ -41,10 +37,15 @@ public class FlagBlue : NetworkBehaviour
                 FlagCaptured();
             }
         }
-
-
+        if (FlagMoved)
+        {
+            if(this.gameObject.transform.position.y < 20F)
+            {
+                FlagReset();
+            }
+        }
     }
-
+    
 
     void OnCollisionEnter(Collision collision)
     {
@@ -61,6 +62,7 @@ public class FlagBlue : NetworkBehaviour
                     FlagMoved = true;
                     PlayerWithFlag = member;
                     MoveFlag(StoreAfterCapture);
+                    FlagSoundController.acInstance.PlayTakenSound();
                 }
                 if (member.Team() == 1)
                 {
@@ -68,6 +70,7 @@ public class FlagBlue : NetworkBehaviour
                     {
                         FlagReset();
                         FlagMoved = false;
+                        FlagSoundController.acInstance.PlayRetakenSound();
 
                     }
                     else
@@ -75,6 +78,7 @@ public class FlagBlue : NetworkBehaviour
                         if (member.FlagStatus() == 1)
                         {
                             member.FlagCaptured();
+                            
                         }
                     }
 
@@ -93,13 +97,15 @@ public class FlagBlue : NetworkBehaviour
     }
     void FlagCaptured()
     {
-        FlagReset();
         VeliavaYra = true;
         FlagMoved = false;
         PlayerWithFlag = null;
+        FlagReset();
+        FlagSoundController.acInstance.PlayCapturedSound();
     }
     void FlagReset()
     {
         MoveFlag(BasePos);
+        
     }
 }

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
 
-public class KillOnTouch : NetworkBehaviour {
+public class KillOnTouchWithoudDestroying : NetworkBehaviour {
 
 	// Use this for initialization
 	void Start () {
@@ -22,10 +22,6 @@ public class KillOnTouch : NetworkBehaviour {
         if (health != null)
         {
             health.TakeDamage(health.CurrentHealth());
-        }
-        else
-        {
-            Destroy(collision.gameObject);
         }
     }
 }
