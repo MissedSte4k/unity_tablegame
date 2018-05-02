@@ -928,7 +928,7 @@ ModelImporter:
       curves: []
       events:
       - time: 0.21518722
-        functionName: CmdArcherShoot
+        functionName: ArcherShoot
         data: 
         objectReferenceParameter: {fileID: 1624340318011626, guid: c2a9a7fb39e0e9844b3f4e17b997b1a6,
           type: 2}
@@ -1478,8 +1478,8 @@ ModelImporter:
       cycleOffset: 0
       loop: 0
       hasAdditiveReferencePose: 0
-      loopTime: 0
-      loopBlend: 0
+      loopTime: 1
+      loopBlend: 1
       loopBlendOrientation: 0
       loopBlendPositionY: 0
       loopBlendPositionXZ: 0
@@ -1716,7 +1716,7 @@ ModelImporter:
       curves: []
       events:
       - time: 0.39481816
-        functionName: CmdArcherShoot
+        functionName: ArcherShoot
         data: 
         objectReferenceParameter: {fileID: 1624340318011626, guid: c2a9a7fb39e0e9844b3f4e17b997b1a6,
           type: 2}
@@ -1794,12 +1794,12 @@ ModelImporter:
       curves: []
       events:
       - time: 0.50987244
-        functionName: CmdArcherShoot
+        functionName: ArcherShoot
         data: 
-        objectReferenceParameter: {fileID: 1296200151415094, guid: e6befcf18af1cd34b88646cf86d670ae,
+        objectReferenceParameter: {fileID: 1719330302290166, guid: e6befcf18af1cd34b88646cf86d670ae,
           type: 2}
         floatParameter: 0
-        intParameter: 2
+        intParameter: 0
         messageOptions: 0
       transformMask: []
       maskType: 3
@@ -2680,7 +2680,7 @@ ModelImporter:
         intParameter: 0
         messageOptions: 0
       - time: 0.46332803
-        functionName: CmdLightEnd
+        functionName: LightEnd
         data: 
         objectReferenceParameter: {instanceID: 0}
         floatParameter: 0

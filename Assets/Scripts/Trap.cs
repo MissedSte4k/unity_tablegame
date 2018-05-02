@@ -9,6 +9,7 @@ public class Trap : NetworkBehaviour {
     public float stopTime;
     public float explosionRadius;
     public float explosionPower;
+    public GameObject[] models;
     public int explosionDamage;
     [SyncVar]
     public bool isExplosive;
@@ -16,6 +17,13 @@ public class Trap : NetworkBehaviour {
     // Use this for initialization
     void Start()
     {
+        if (isExplosive)
+        {
+            models[0].SetActive(true);
+        } else
+        {
+            models[2].SetActive(true);
+        }
     }
 
     // Update is called once per frame
@@ -84,4 +92,6 @@ public class Trap : NetworkBehaviour {
         Destroy(gameObject);
         rb.constraints = RigidbodyConstraints.None;
     }
+
+
 }
