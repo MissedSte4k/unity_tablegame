@@ -2567,7 +2567,7 @@ ModelImporter:
       - time: 0.5071182
         functionName: ArcherShoot
         data: 
-        objectReferenceParameter: {fileID: 1624340318011626, guid: 0076a49fc641f6a48aa5383a4f85546b,
+        objectReferenceParameter: {fileID: 1256147047713698, guid: 0076a49fc641f6a48aa5383a4f85546b,
           type: 2}
         floatParameter: 0
         intParameter: 0

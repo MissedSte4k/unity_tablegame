@@ -13,6 +13,9 @@ public class Trap : NetworkBehaviour {
     public int explosionDamage;
     [SyncVar]
     public bool isExplosive;
+    [SyncVar]
+    public NetworkInstanceId spawnedBy;
+    private Rigidbody hitrb;
 
     // Use this for initialization
     void Start()
@@ -24,6 +27,8 @@ public class Trap : NetworkBehaviour {
         {
             models[2].SetActive(true);
         }
+        GameObject obj = ClientScene.FindLocalObject(spawnedBy);
+        Physics.IgnoreCollision(GetComponent<Collider>(), obj.GetComponent<Collider>());
     }
 
     // Update is called once per frame
@@ -76,21 +81,28 @@ public class Trap : NetworkBehaviour {
         }
         else
         {
-            Rigidbody hitrb = other.GetComponent<Rigidbody>();
+            hitrb = other.GetComponent<Rigidbody>();
             if (other.CompareTag("Player"))
             {
                 hitrb.gameObject.transform.position = transform.position;
-                hitrb.constraints = RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezePositionZ;
-                StartCoroutine(Stop(stopTime, hitrb));
+                hitrb.constraints = RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezePositionZ | RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ;
+                StartCoroutine(Stop(stopTime));
             }
         }
     }
 
-    IEnumerator Stop(float time, Rigidbody rb)
+    IEnumerator Stop(float time)
     {
         yield return new WaitForSeconds(time);
         Destroy(gameObject);
-        rb.constraints = RigidbodyConstraints.None;
+        hitrb.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ;
+        RpcNoConstraints();
+    }
+
+    [ClientRpc]
+    void RpcNoConstraints()
+    {
+        hitrb.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ;
     }
 
 

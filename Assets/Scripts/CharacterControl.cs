@@ -27,6 +27,7 @@ public class CharacterControl : NetworkBehaviour {
 	public int bulletSpeed;
 	private float mouseH = 0.0f;
 	private float mouseV = 0.0f;
+    [SyncVar]
     private Quaternion spineRotation;
 	public Camera playerCamera;
 	private int currentIncreaseTime;
@@ -197,32 +198,12 @@ public class CharacterControl : NetworkBehaviour {
 
     void LateUpdate()
     {
-        spine.localRotation = Quaternion.Euler(spine.localRotation.eulerAngles.x, spine.localRotation.eulerAngles.y, spine.localRotation.eulerAngles.z - mouseV);
-        //Quaternion rotation;
-        //rotation = Quaternion.Euler(spine.localRotation.eulerAngles.x, spine.localRotation.eulerAngles.y, -playerCamera.transform.rotation.eulerAngles.x);
-        //if (isLocalPlayer)
-        //{
-        //    CmdRotateSpine(rotation);
-        //}
+        spineRotation = Quaternion.Euler(spine.localRotation.eulerAngles.x, spine.localRotation.eulerAngles.y, spine.localRotation.eulerAngles.z - mouseV);
+        spine.localRotation = spineRotation;
     }
 
-    //[Command]
-    //void CmdRotateSpine(Quaternion rotation)
-    //{
-    //    spineRotation = rotation;
-    //    spine.localRotation = rotation;
-    //    RpcRotateSpine(rotation);
-    //}
-
-    //[ClientRpc]
-    //void RpcRotateSpine(Quaternion rotation)
-    //{
-    //    spineRotation = rotation;
-    //    spine.localRotation = rotation;
-    //}
-
-	// Update is called once per frame
-	void FixedUpdate() {
+    // Update is called once per frame
+    void FixedUpdate() {
 		if (isLocalPlayer)
 		{
             float moveVertical = 0;
