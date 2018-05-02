@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
 
-public class KillOnTouch : NetworkBehaviour {
+public class KillOnTouchWithoutDestroying : NetworkBehaviour {
 
 	// Use this for initialization
 	void Start () {
