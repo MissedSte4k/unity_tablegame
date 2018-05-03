@@ -23,9 +23,6 @@ public class KillOnTouchWithoutDestroying : NetworkBehaviour {
         {
             health.TakeDamage(health.CurrentHealth());
         }
-        else
-        {
-            Destroy(collision.gameObject);
-        }
+        
     }
 }
