@@ -12,6 +12,8 @@ public class Projectile : NetworkBehaviour {
     public bool isOnFire = false;
     [SyncVar]
     public NetworkInstanceId spawnedBy;
+    public Vector3 spin;
+    public bool likeARecordBaby;
 
     // Use this for initialization
     void Start () {
@@ -27,9 +29,16 @@ public class Projectile : NetworkBehaviour {
 	
 	// Update is called once per frame
 	void FixedUpdate () {
-        Quaternion rotation = transform.rotation;
-        rotation.SetLookRotation(rb.velocity);
-        transform.rotation = rotation;
+        if (!likeARecordBaby)
+        {
+            Quaternion rotation = transform.rotation;
+            rotation.SetLookRotation(rb.velocity);
+            transform.rotation = rotation;
+        } else
+        {
+            Quaternion angleRotation = Quaternion.Euler(spin * Time.deltaTime);
+            rb.MoveRotation(rb.rotation * angleRotation);
+        }
     }
 
     void OnCollisionEnter(Collision collision)

@@ -9,18 +9,34 @@ public class MeleeWeapon : NetworkBehaviour
 
     public int damage;
     public bool isSlash; //marks whether the weapon can damage more than 1 character.
+    public Collider[] weaponColliders;
     private Collider[] collisions = new Collider[5];
     private int n = 0;
     private bool isClear = true;
-    private Collider col;
+    public bool collidersActive = false;
 
     // Use this for initialization
     void Start()
     {
-        col = GetComponent<Collider>();
     }
 
-    // Update is called once per frame
+    void Update()
+    {
+        if (collidersActive)
+        {
+            foreach (Collider c in weaponColliders)
+            {
+                c.enabled = true;
+            }
+        } else
+        {
+            foreach (Collider c in weaponColliders)
+            {
+                c.enabled = false;
+            }
+        }
+    }
+
     void FixedUpdate()
     {
         if ((GetComponentInParent<NetworkAnimator>().animator.GetCurrentAnimatorStateInfo(1).IsName("Running") ||
@@ -30,7 +46,10 @@ public class MeleeWeapon : NetworkBehaviour
             Debug.Log("FOREACH");
             for (int i = 0; i < 5; i++)
             {
-                if (collisions[i] != null) Physics.IgnoreCollision(col, collisions[i], false);
+                foreach (Collider c in weaponColliders)
+                {
+                    if (collisions[i] != null) Physics.IgnoreCollision(c, collisions[i], false);
+                }
             }
             Array.Clear(collisions, 0, 5);
             n = 0;
@@ -50,19 +69,22 @@ public class MeleeWeapon : NetworkBehaviour
 
             if (!isSlash)
             {
-                col.enabled = false;
+                collidersActive = false;
             }
             else
             {
+                foreach (Collider c in weaponColliders)
+                {
+                    Physics.IgnoreCollision(c, other, false);
+                }
                 collisions[n] = other;
-                Physics.IgnoreCollision(col, collisions[n], false);
                 n++;
                 isClear = false;
             }
         }
         else if (other.gameObject.CompareTag("Block"))
         {
-            col.enabled = false;
+            collidersActive = false;
             GetComponentInParent<NetworkAnimator>().SetTrigger("Stop");
         }
     }

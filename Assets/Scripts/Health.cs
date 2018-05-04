@@ -6,6 +6,7 @@ using UnityEngine.Networking;
 
 public class Health : NetworkBehaviour {
 
+    [Range(0, 200)]
     [SerializeField] int maxHealth = 100;
     [SerializeField] int maxStamina = 100;
     [SerializeField] bool dependOnHealth = false;
@@ -64,10 +65,20 @@ public class Health : NetworkBehaviour {
         CmdTakeDamage(amount, GetComponent<CharacterControl>().Team(), IsFatal(amount));
     }
 
+    public void Heal(int amount) {
+        CmdHeal(amount);
+    }
+
     [Command]
     public void CmdTakeDamage(int amount, int team, bool fatal)
     {
         TakeDamage(amount, team, fatal);
+    }
+
+    [Command]
+    public void CmdHeal(int amount)
+    {
+        RpcHeal(amount);
     }
 
     [Command]
@@ -114,6 +125,18 @@ public class Health : NetworkBehaviour {
         {
             health = health - amount;
             if (dependOnHealth && stamina > health) ChangeStamina(-1);
+        }
+    }
+
+    [ClientRpc]
+    public void RpcHeal(int amount)
+    {
+        if (health + amount > maxHealth)
+        {
+            health = maxHealth;
+        } else
+        {
+            health += amount;
         }
     }
 
