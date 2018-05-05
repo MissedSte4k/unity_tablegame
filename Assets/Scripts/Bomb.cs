@@ -13,30 +13,59 @@ public class Bomb : NetworkBehaviour {
     private Rigidbody hitrb;
     public Vector3 spin;
     private Rigidbody rb;
+    public float fuseTime;
+    private bool isCollided = false;
+    public int bombType = 0;
 
     // Use this for initialization
     void Start()
     {
         GameObject obj = ClientScene.FindLocalObject(spawnedBy);
         Physics.IgnoreCollision(GetComponent<Collider>(), obj.GetComponent<Collider>());
+        StartCoroutine(Delay(fuseTime));
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
-
+       if (!isCollided)
+       {
+            Quaternion angleRotation = Quaternion.Euler(spin * Time.deltaTime);
+            rb.MoveRotation(rb.rotation * angleRotation);
+       }
     }
 
-    void OnCollisionEnter(Collision collision)
+    void OnCollisionEnter()
     {
-        Quaternion angleRotation = Quaternion.Euler(spin * Time.deltaTime);
-        rb.MoveRotation(rb.rotation * angleRotation);
+        isCollided = true;
     }
 
-    void OnTriggerEnter(Collider other)
+    void Boom()
     {
-       
+        if (bombType == 0)
+        {
+            Vector3 explosionPosition = transform.position;
+            Collider[] colliders = Physics.OverlapSphere(transform.position, explosionRadius);
+            foreach (Collider hit in colliders)
+            {
+                if (hit.CompareTag("Player"))
+                {
+                    Vector3 closestPoint = hit.ClosestPoint(transform.position);
+                    float distance = Vector3.Distance(closestPoint, transform.position);
+
+                    int damage = Convert.ToInt32((1 - Mathf.Clamp01(distance / explosionRadius)));
+                    hit.GetComponent<Health>().TakeDamage(damage);
+                }
+            }
+            Destroy(gameObject);
+
+        }
+        Destroy(gameObject);
     }
 
-
+    IEnumerator Delay(float time)
+    {
+        yield return new WaitForSeconds(time);
+        Boom();
+    }
 }

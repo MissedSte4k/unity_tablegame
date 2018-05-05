@@ -235,8 +235,7 @@ public class CharacterControl : NetworkBehaviour {
 
     void LateUpdate()
     {
-        spineRotation = Quaternion.Euler(spine.localRotation.eulerAngles.x, spine.localRotation.eulerAngles.y, spine.localRotation.eulerAngles.z - mouseV);
-        spine.localRotation = spineRotation;
+        spine.localRotation = Quaternion.Euler(spine.localRotation.eulerAngles.x, spine.localRotation.eulerAngles.y, spine.localRotation.eulerAngles.z - mouseV);
     }
 
     // Update is called once per frame
@@ -252,7 +251,7 @@ public class CharacterControl : NetworkBehaviour {
 			//Vector3 forward = transform.forward * moveSpeed * moveVertical;
 			//Vector3 horizontal = transform.right * moveSpeed * moveHorizontal;
 
-			rb.velocity = moveDirection * speed + rb.velocity.y * Vector3.up;
+			rb.velocity = moveDirection * speed * Time.deltaTime * 40 + rb.velocity.y * Vector3.up;
 			if (rb.velocity.y > jumpSpeed)
 				rb.velocity = new Vector3(rb.velocity.x, 0, rb.velocity.z);
 
