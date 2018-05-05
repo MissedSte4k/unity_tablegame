@@ -63,14 +63,14 @@ public class Trap : NetworkBehaviour {
             if (other.CompareTag("Player"))
             {
                 Vector3 explosionPosition = transform.position;
-                Collider[] colliders = Physics.OverlapSphere(transform.position, explosionRadius);
+                Collider[] colliders = Physics.OverlapSphere(explosionPosition, explosionRadius);
                 foreach (Collider hit in colliders)
                 {
                     if (hit.CompareTag("Player"))
                     {
                         hit.GetComponent<Rigidbody>().AddExplosionForce(explosionPower, explosionPosition, explosionRadius, 3.0f);
-                        Vector3 closestPoint = hit.ClosestPoint(transform.position);
-                        float distance = Vector3.Distance(closestPoint, transform.position);
+                        Vector3 closestPoint = hit.ClosestPoint(explosionPosition);
+                        float distance = Vector3.Distance(closestPoint, explosionPosition);
 
                         int damage = Convert.ToInt32((1 - Mathf.Clamp01(distance / explosionRadius)) * explosionDamage);
                         hit.GetComponent<Health>().TakeDamage(damage);

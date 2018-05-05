@@ -20,6 +20,8 @@ public class Bomb : NetworkBehaviour {
     // Use this for initialization
     void Start()
     {
+        rb = GetComponent<Rigidbody>();
+        models[bombType * 2].SetActive(true);
         GameObject obj = ClientScene.FindLocalObject(spawnedBy);
         Physics.IgnoreCollision(GetComponent<Collider>(), obj.GetComponent<Collider>());
         StartCoroutine(Delay(fuseTime));
@@ -45,20 +47,18 @@ public class Bomb : NetworkBehaviour {
         if (bombType == 0)
         {
             Vector3 explosionPosition = transform.position;
-            Collider[] colliders = Physics.OverlapSphere(transform.position, explosionRadius);
+            Collider[] colliders = Physics.OverlapSphere(explosionPosition, explosionRadius);
             foreach (Collider hit in colliders)
             {
                 if (hit.CompareTag("Player"))
                 {
-                    Vector3 closestPoint = hit.ClosestPoint(transform.position);
-                    float distance = Vector3.Distance(closestPoint, transform.position);
+                    Vector3 closestPoint = hit.ClosestPoint(explosionPosition);
+                    float distance = Vector3.Distance(closestPoint, explosionPosition);
 
                     int damage = Convert.ToInt32((1 - Mathf.Clamp01(distance / explosionRadius)));
                     hit.GetComponent<Health>().TakeDamage(damage);
                 }
             }
-            Destroy(gameObject);
-
         }
         Destroy(gameObject);
     }

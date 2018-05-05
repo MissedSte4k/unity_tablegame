@@ -8,7 +8,7 @@ public class CharacterControl : NetworkBehaviour {
 
     public float mouseSensitivity;
     public float defaultMoveSpeed;
-    public float moveSpeed;
+    [HideInInspector] public float moveSpeed;
 	public float crouchSpeedMultiplier;
 	public float sprintSpeedMultiplier;
 	public int increaseTime;
@@ -22,8 +22,7 @@ public class CharacterControl : NetworkBehaviour {
 	private CapsuleCollider hitBox;
 	private bool onGround = true;
 	private bool onSprint = false;
-	private bool isCrouched = false;
-	public int bulletSpeed;
+    [HideInInspector] public bool isCrouched = false;
 	private float mouseH = 0.0f;
 	private float mouseV = 0.0f;
     [SyncVar]
@@ -43,7 +42,7 @@ public class CharacterControl : NetworkBehaviour {
     private float moveHorizontal = 0;
     private float moveVertical = 0;
 
-    NetworkAnimator anim;
+    private NetworkAnimator anim;
 	// dvi apatinės skeleto stuburo dalys, naudojamos žiūrėt aukštyn/žemyn
 	public Transform spine;
 
@@ -106,6 +105,8 @@ public class CharacterControl : NetworkBehaviour {
                 moveHorizontal = 0;
             }
 
+            if (isCrouched) moveSpeed *= crouchSpeedMultiplier;
+
             float speed;
             if (!isCrouched)
             {
@@ -162,14 +163,12 @@ public class CharacterControl : NetworkBehaviour {
                 if (!isCrouched)
                 {
                     isCrouched = true;
-                    moveSpeed *= crouchSpeedMultiplier;
                     anim.animator.SetBool("Crouched", true);
                     CmdCrouch();
                 }
                 else
                 {
                     isCrouched = false;
-                    moveSpeed /= crouchSpeedMultiplier;
                     anim.animator.SetBool("Crouched", false);
                     CmdUncrouch();
                 }
@@ -235,8 +234,9 @@ public class CharacterControl : NetworkBehaviour {
 
     void LateUpdate()
     {
-        spine.localRotation = Quaternion.Euler(spine.localRotation.eulerAngles.x, spine.localRotation.eulerAngles.y, spine.localRotation.eulerAngles.z - mouseV);
+        spine.localRotation *= Quaternion.Euler(0, 0, -mouseV);
     }
+
 
     // Update is called once per frame
     void FixedUpdate() {

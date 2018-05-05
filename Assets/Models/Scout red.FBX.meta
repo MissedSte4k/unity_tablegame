@@ -2324,10 +2324,26 @@ ModelImporter:
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
       events:
-      - time: 0.5292706
+      - time: 0.5582561
         functionName: ScoutShoot
         data: 
-        objectReferenceParameter: {fileID: 1776279717796650, guid: 2eb0fcfa2795d164c9817990b32a59c5,
+        objectReferenceParameter: {fileID: 1218300826544440, guid: d4000d509a5c2d34585997fb85c8bb9e,
+          type: 2}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
+      - time: 0.7866896
+        functionName: CmdScoutRedraw
+        data: 
+        objectReferenceParameter: {fileID: 1218300826544440, guid: d4000d509a5c2d34585997fb85c8bb9e,
+          type: 2}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
+      - time: 0.9990191
+        functionName: CmdScoutReset
+        data: 
+        objectReferenceParameter: {fileID: 1218300826544440, guid: d4000d509a5c2d34585997fb85c8bb9e,
           type: 2}
         floatParameter: 0
         intParameter: 0
@@ -2788,6 +2804,13 @@ ModelImporter:
         floatParameter: 0
         intParameter: 0
         messageOptions: 0
+      - time: 0.26907787
+        functionName: CmdFuseLight
+        data: 
+        objectReferenceParameter: {instanceID: 0}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
       transformMask: []
       maskType: 3
       maskSource: {instanceID: 0}
@@ -2843,7 +2866,14 @@ ModelImporter:
       mirror: 0
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
-      events: []
+      events:
+      - time: 0
+        functionName: CmdScoutRedraw
+        data: 
+        objectReferenceParameter: {instanceID: 0}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
       transformMask: []
       maskType: 3
       maskSource: {instanceID: 0}
@@ -4230,7 +4260,21 @@ ModelImporter:
       mirror: 0
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
-      events: []
+      events:
+      - time: 0.23933436
+        functionName: CmdScoutRedraw
+        data: 
+        objectReferenceParameter: {instanceID: 0}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
+      - time: 0.70726675
+        functionName: CmdScoutReset
+        data: 
+        objectReferenceParameter: {instanceID: 0}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
       transformMask: []
       maskType: 3
       maskSource: {instanceID: 0}
@@ -4390,8 +4434,8 @@ ModelImporter:
     feetSpacing: 0
     rootMotionBoneName: 
     rootMotionBoneRotation: {x: 0, y: 0, z: 0, w: 1}
-    hasTranslationDoF: 0
-    hasExtraRoot: 0
+    hasTranslationDoF: 1
+    hasExtraRoot: 1
     skeletonHasParents: 1
   lastHumanDescriptionAvatarSource: {instanceID: 0}
   animationType: 2
