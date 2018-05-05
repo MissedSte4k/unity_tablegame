@@ -518,7 +518,7 @@ ModelImporter:
         floatParameter: 0
         intParameter: 0
         messageOptions: 0
-      - time: 0.607371
+      - time: 0.6045549
         functionName: BerserkerSlashEnd
         data: 
         objectReferenceParameter: {instanceID: 0}
@@ -532,7 +532,7 @@ ModelImporter:
     - serializedVersion: 16
       name: TH_slash_swing2
       takeName: Take 001
-      firstFrame: 35
+      firstFrame: 25
       lastFrame: 60
       wrapMode: 0
       orientationOffsetY: 0
@@ -553,14 +553,14 @@ ModelImporter:
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
       events:
-      - time: 0
+      - time: 0.28778467
         functionName: BerserkerSlashStart
         data: 
         objectReferenceParameter: {instanceID: 0}
         floatParameter: 0
         intParameter: 0
         messageOptions: 0
-      - time: 0.6023513
+      - time: 0.7141526
         functionName: BerserkerSlashEnd
         data: 
         objectReferenceParameter: {instanceID: 0}
@@ -1169,7 +1169,7 @@ ModelImporter:
         floatParameter: 0
         intParameter: 0
         messageOptions: 0
-      - time: 0.60016114
+      - time: 0.6063723
         functionName: BerserkerSlashEnd
         data: 
         objectReferenceParameter: {instanceID: 0}
@@ -1183,7 +1183,7 @@ ModelImporter:
     - serializedVersion: 16
       name: TW_slash_swing2
       takeName: Take 001
-      firstFrame: 1035
+      firstFrame: 1025
       lastFrame: 1060
       wrapMode: 0
       orientationOffsetY: 0
@@ -1204,14 +1204,14 @@ ModelImporter:
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
       events:
-      - time: 0
+      - time: 0.2836439
         functionName: BerserkerSlashStart
         data: 
         objectReferenceParameter: {instanceID: 0}
         floatParameter: 0
         intParameter: 0
         messageOptions: 0
-      - time: 0.603338
+      - time: 0.71306884
         functionName: BerserkerSlashEnd
         data: 
         objectReferenceParameter: {instanceID: 0}
