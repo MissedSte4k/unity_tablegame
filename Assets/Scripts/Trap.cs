@@ -104,6 +104,4 @@ public class Trap : NetworkBehaviour {
     {
         hitrb.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ;
     }
-
-
 }

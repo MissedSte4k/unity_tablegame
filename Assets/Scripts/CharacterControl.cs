@@ -158,6 +158,8 @@ public class CharacterControl : NetworkBehaviour {
             transform.rotation = Quaternion.Euler(0, mouseH, 0);
             playerCamera.transform.rotation = Quaternion.Euler(mouseV, mouseH, 0);
 
+            anim.animator.SetFloat("Look", (mouseV + 60) / 120);
+
             if (Input.GetKeyDown(KeyBindManager.MyInstance.Keybinds["Button(Crouch)"]))
             {
                 if (!isCrouched)
@@ -232,10 +234,10 @@ public class CharacterControl : NetworkBehaviour {
         else playerCamera.enabled = false;
     }
 
-    void LateUpdate()
-    {
-        spine.localRotation *= Quaternion.Euler(0, 0, -mouseV);
-    }
+    //void LateUpdate()
+    //{
+    //    spine.localRotation *= Quaternion.Euler(0, 0, -mouseV);
+    //}
 
 
     // Update is called once per frame

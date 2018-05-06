@@ -43,7 +43,6 @@ public class MeleeWeapon : NetworkBehaviour
             GetComponentInParent<NetworkAnimator>().animator.GetCurrentAnimatorStateInfo(1).IsName("Crouched"))
             && !isClear)
         {
-            Debug.Log("FOREACH");
             for (int i = 0; i < 5; i++)
             {
                 foreach (Collider c in weaponColliders)
@@ -75,6 +74,7 @@ public class MeleeWeapon : NetworkBehaviour
             {
                 foreach (Collider c in weaponColliders)
                 {
+                    Debug.Log("Potato");
                     Physics.IgnoreCollision(c, other, false);
                 }
                 collisions[n] = other;
