@@ -44,7 +44,42 @@ public class Bomb : NetworkBehaviour {
 
     void Boom()
     {
+        //flashbang
         if (bombType == 0)
+        {
+            Vector3 explosionPosition = transform.position;
+            Collider[] colliders = Physics.OverlapSphere(explosionPosition, explosionRadius);
+            foreach (Collider hit in colliders)
+            {
+                if (hit.CompareTag("Player"))
+                {
+                    Vector3 closestPoint = hit.ClosestPoint(explosionPosition);
+                    float distance = Vector3.Distance(closestPoint, explosionPosition);
+
+                    int damage = Convert.ToInt32((1 - Mathf.Clamp01(distance / explosionRadius)));
+                    hit.GetComponent<Health>().TakeDamage(damage);
+                }
+            }
+        }
+        //smokebomb
+        else if (bombType == 1)
+        {
+            Vector3 explosionPosition = transform.position;
+            Collider[] colliders = Physics.OverlapSphere(explosionPosition, explosionRadius);
+            foreach (Collider hit in colliders)
+            {
+                if (hit.CompareTag("Player"))
+                {
+                    Vector3 closestPoint = hit.ClosestPoint(explosionPosition);
+                    float distance = Vector3.Distance(closestPoint, explosionPosition);
+
+                    int damage = Convert.ToInt32((1 - Mathf.Clamp01(distance / explosionRadius)));
+                    hit.GetComponent<Health>().TakeDamage(damage);
+                }
+            }
+        }
+        //grenade
+        else if (bombType == 2)
         {
             Vector3 explosionPosition = transform.position;
             Collider[] colliders = Physics.OverlapSphere(explosionPosition, explosionRadius);

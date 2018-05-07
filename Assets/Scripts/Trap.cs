@@ -46,7 +46,7 @@ public class Trap : NetworkBehaviour {
 
         if (hit.CompareTag("Ground"))
         {
-            transform.rotation = Quaternion.Euler(0, transform.rotation.y, transform.rotation.z);
+            transform.rotation = Quaternion.Euler(0, transform.rotation.eulerAngles.y, transform.rotation.eulerAngles.z);
             rb.isKinematic = true;
             collider.isTrigger = true;
             if (Physics.Raycast(transform.position, Vector3.down, out hit2))

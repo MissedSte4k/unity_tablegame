@@ -353,6 +353,8 @@ ModelImporter:
     7400132: TW_overhead_swing
     7400134: TW_throw_1
     7400136: TW_throw_2
+    7400138: Look up
+    7400140: Look down
     9500000: //RootNode
     13700000: Berserker
     13700002: Tape001
@@ -447,9 +449,7 @@ ModelImporter:
     rigImportErrors: 
     rigImportWarnings: 
     animationImportErrors: 
-    animationImportWarnings: "\nClip 'Take 001' has import animation warnings that
-      might lower retargeting quality:\n\t'Bip002 Spine3' is inbetween humanoid transforms
-      and has rotation animation that will be discarded.\n"
+    animationImportWarnings: 
     animationRetargetingWarnings: 
     animationDoRetargetingWarnings: 0
     importAnimatedCustomProperties: 0
@@ -1622,7 +1622,7 @@ ModelImporter:
       - time: 0.54356825
         functionName: BerserkerShoot
         data: 
-        objectReferenceParameter: {fileID: 1912251827824028, guid: 7917d28070a935642a4c652124ccbf4e,
+        objectReferenceParameter: {fileID: 1543111902217772, guid: 7917d28070a935642a4c652124ccbf4e,
           type: 2}
         floatParameter: 0
         intParameter: 0
@@ -2553,6 +2553,62 @@ ModelImporter:
         floatParameter: 0
         intParameter: 1
         messageOptions: 0
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: Look up
+      takeName: Take 001
+      firstFrame: 3800
+      lastFrame: 3801
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: Look down
+      takeName: Take 001
+      firstFrame: 3802
+      lastFrame: 3803
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
       transformMask: []
       maskType: 3
       maskSource: {instanceID: 0}

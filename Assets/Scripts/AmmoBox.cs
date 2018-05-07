@@ -24,7 +24,7 @@ public class AmmoBox : NetworkBehaviour {
 
         if (hit.CompareTag("Ground"))
         {
-            transform.rotation = Quaternion.Euler(0, transform.rotation.y, transform.rotation.z);
+            transform.rotation = Quaternion.Euler(0, transform.rotation.eulerAngles.y, 0);
             rb.isKinematic = true;
             collider.isTrigger = true;
             if (Physics.Raycast(transform.position, Vector3.down, out hit2))
@@ -39,7 +39,7 @@ public class AmmoBox : NetworkBehaviour {
         if (other.CompareTag("Player"))
         {
             float ammoRef = ammoRefreshes;
-            if (other.gameObject.GetComponent<ScoutControl>() == null)
+            if (other.gameObject.GetComponent<ScoutControl>() != null)
             {
                 ScoutControl classControl = other.gameObject.GetComponent<ScoutControl>();
                 if (classControl.primaryWeaponAmmo < classControl.maxAmmo[classControl.primaryWeapon])
@@ -53,7 +53,7 @@ public class AmmoBox : NetworkBehaviour {
                     classControl.secondaryWeaponAmmo = classControl.maxAmmo[classControl.secondaryWeapon];
                 }
             }
-            else if (other.gameObject.GetComponent<ArcherControl>() == null)
+            else if (other.gameObject.GetComponent<ArcherControl>() != null)
             {
                 ArcherControl classControl = other.gameObject.GetComponent<ArcherControl>();
                 if (classControl.primaryWeaponAmmo < classControl.maxAmmo[classControl.primaryWeapon])
@@ -67,8 +67,9 @@ public class AmmoBox : NetworkBehaviour {
                     classControl.secondaryWeaponAmmo = classControl.maxAmmo[classControl.secondaryWeapon];
                 }
             }
-            else if (other.gameObject.GetComponent<KnightControl>() == null)
+            else if (other.gameObject.GetComponent<KnightControl>() != null)
             {
+                Debug.Log("Potato");
                 KnightControl classControl = other.gameObject.GetComponent<KnightControl>();
                 if (classControl.primaryWeaponAmmo < classControl.maxAmmo[classControl.primaryWeapon])
                 {
@@ -81,7 +82,7 @@ public class AmmoBox : NetworkBehaviour {
                     classControl.secondaryWeaponAmmo = classControl.maxAmmo[classControl.secondaryWeapon];
                 }
             }
-            else if (other.gameObject.GetComponent<BerserkerControl>() == null)
+            else if (other.gameObject.GetComponent<BerserkerControl>() != null)
             {
                 BerserkerControl classControl = other.gameObject.GetComponent<BerserkerControl>();
                 if (classControl.primaryWeaponAmmo < classControl.maxAmmo[classControl.primaryWeapon])
