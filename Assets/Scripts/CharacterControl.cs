@@ -38,6 +38,8 @@ public class CharacterControl : NetworkBehaviour {
 	private float minCenterChangeSpeed = 0.0001f;
 	private int team;
     private int hasFlag = 0;
+    public bool lockCursor;
+    private CapsuleCollider capsule;
 
     private float moveHorizontal = 0;
     private float moveVertical = 0;
@@ -51,6 +53,12 @@ public class CharacterControl : NetworkBehaviour {
 
     // Use this for initialization
     void Start() {
+        if (lockCursor)
+        {
+            Cursor.lockState = CursorLockMode.Locked;
+        }
+
+        capsule = GetComponent<CapsuleCollider>();
         moveSpeed = defaultMoveSpeed;
         mouseSensitivity = MenuSettings.Instance.mouseSensitivity;
         rb = GetComponent<Rigidbody>();
@@ -61,7 +69,7 @@ public class CharacterControl : NetworkBehaviour {
 		minHeightChangeSpeed = 0.001f;
 		minCenterChangeSpeed = 0.0001f;
 
-        playerCamera.fieldOfView = MenuSettings.Instance.fieldOfView;
+            playerCamera.fieldOfView = MenuSettings.Instance.fieldOfView;
 
         CmdTeam();
     }
@@ -78,11 +86,13 @@ public class CharacterControl : NetworkBehaviour {
             moveVertical = 0;
             if (Input.GetKey(KeyBindManager.MyInstance.Keybinds["Button(MoveForward)"]) == true)
             {
-                moveVertical = 1;
+                if (CanMove(transform.forward))
+                    moveVertical = 1;
             }
             if (Input.GetKey(KeyBindManager.MyInstance.Keybinds["Button(MoveBackward)"]) == true)
             {
-                moveVertical = -1;
+                if (CanMove(-transform.forward))
+                    moveVertical = -1;
             }
             if (Input.GetKey(KeyBindManager.MyInstance.Keybinds["Button(MoveForward)"]) == true &&
                 Input.GetKey(KeyBindManager.MyInstance.Keybinds["Button(MoveBackward)"]) == true)
@@ -93,10 +103,12 @@ public class CharacterControl : NetworkBehaviour {
             moveHorizontal = 0;
             if (Input.GetKey(KeyBindManager.MyInstance.Keybinds["Button(MoveRight)"]) == true)
             {
-                moveHorizontal = 1;
+                if (CanMove(transform.right))
+                    moveHorizontal = 1;
             }
             if (Input.GetKey(KeyBindManager.MyInstance.Keybinds["Button(MoveLeft)"]) == true)
             {
+                if (CanMove(-transform.right))
                 moveHorizontal = -1;
             }
             if (Input.GetKey(KeyBindManager.MyInstance.Keybinds["Button(MoveRight)"]) == true &&
@@ -261,7 +273,32 @@ public class CharacterControl : NetworkBehaviour {
         }
     }
 
-	private bool IsStanding()
+    private bool CanMove(Vector3 direction)
+    {
+        if (!onGround)
+        {
+            float distanceToPoints = capsule.height / 2 - capsule.radius;
+            Vector3 point1 = transform.position + capsule.center + Vector3.up * distanceToPoints;
+            Vector3 point2 = point1;
+
+            float radius = capsule.radius * 0.95f;
+            float castDistance = 0.5f;
+
+            RaycastHit[] hits = Physics.CapsuleCastAll(point1, point2, radius, direction, castDistance);
+
+            foreach (RaycastHit objectHit in hits)
+            {
+                if (objectHit.transform.tag == "Ground")
+                {
+                    return false;
+                }
+            }
+        }
+
+        return true;
+    }
+
+    private bool IsStanding()
 	{
 		if (Mathf.Abs(rb.velocity.x) < 0.5 && Mathf.Abs(rb.velocity.z) < 0.5) return true;
 		else return false;
@@ -272,10 +309,10 @@ public class CharacterControl : NetworkBehaviour {
 		{
 			if (collision.gameObject.CompareTag("Ground"))
 			{
-				onGround = true;
+                onGround = true;
 				anim.animator.SetBool("Jump", false);
 				anim.animator.SetBool("Falling", false);
-			}
+            }
 		}
 	}
 
@@ -286,21 +323,30 @@ public class CharacterControl : NetworkBehaviour {
 			{
 				onGround = false;
 				anim.animator.SetBool("Falling", true);
-			}
+                if (rb.velocity.y < 0)
+                {
+                    rb.velocity = new Vector3(rb.velocity.x, 0, rb.velocity.y);
+                }
+            }
 		}
 	}
 
-	private void OnCollisionStay(Collision collision) {
-		if (isLocalPlayer)
-		{
-			if (collision.gameObject.CompareTag("Ground"))
-			{
-				onGround = true;
-				anim.animator.SetBool("Jump", false);
-				anim.animator.SetBool("Falling", false);
-			}
-		}
-	}
+    private void OnCollisionStay(Collision collision)
+    {
+        if (isLocalPlayer)
+        {
+            if (collision.gameObject.CompareTag("Ground"))
+            {
+                onGround = true;
+                anim.animator.SetBool("Jump", false);
+                anim.animator.SetBool("Falling", false);
+                if (!Input.GetKey(KeyBindManager.MyInstance.Keybinds["Button(Jump)"]))
+                {
+                    rb.AddForce(0, -300, 0);
+                }
+            }
+        }
+    }
 
 
  //   [Command]

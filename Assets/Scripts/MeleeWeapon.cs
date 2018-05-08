@@ -65,6 +65,7 @@ public class MeleeWeapon : NetworkBehaviour
             {
                 health.RpcTakeDamage(damage, health.IsFatal(damage));
             }
+            other.GetComponent<NetworkAnimator>().SetTrigger("Hurt");
 
             if (!isSlash)
             {
@@ -85,7 +86,10 @@ public class MeleeWeapon : NetworkBehaviour
         else if (other.gameObject.CompareTag("Block"))
         {
             collidersActive = false;
-            GetComponentInParent<NetworkAnimator>().SetTrigger("Stop");
+            NetworkAnimator anim = GetComponentInParent<NetworkAnimator>();
+            anim.SetTrigger("Stop");
+            anim.SetTrigger("Hurt");
+            other.GetComponentInParent<NetworkAnimator>().SetTrigger("Block hurt");
         }
     }
 }

@@ -43,10 +43,18 @@ public class Projectile : NetworkBehaviour {
 
     void OnCollisionEnter(Collision collision)
     {
-        var health = collision.gameObject.GetComponent<Health>();
-        if (health != null)
+        if (collision.gameObject.CompareTag("Player"))
         {
-            health.TakeDamage(damage);
+            var health = collision.gameObject.GetComponent<Health>();
+            if (health != null)
+            {
+                health.TakeDamage(damage);
+            }
+            collision.gameObject.GetComponent<NetworkAnimator>().SetTrigger("Hurt");
+        }
+        else if (collision.gameObject.CompareTag("Block"))
+        {
+            collision.gameObject.GetComponentInParent<NetworkAnimator>().SetTrigger("Block hurt");
         }
 
         Destroy(gameObject);

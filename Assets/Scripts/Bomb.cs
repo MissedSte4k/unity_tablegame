@@ -92,6 +92,7 @@ public class Bomb : NetworkBehaviour {
 
                     int damage = Convert.ToInt32((1 - Mathf.Clamp01(distance / explosionRadius)));
                     hit.GetComponent<Health>().TakeDamage(damage);
+                    hit.GetComponent<NetworkAnimator>().SetTrigger("Hurt");
                 }
             }
         }
