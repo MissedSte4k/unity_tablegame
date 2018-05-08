@@ -69,6 +69,8 @@ public class MeleeWeapon : NetworkBehaviour
             }
             other.GetComponent<NetworkAnimator>().SetTrigger("Hurt");
 
+            //RpcHurtOther(other.GetComponent<NetworkIdentity>().netId);
+
             if (!isSlash)
             {
                 collidersActive = false;
@@ -93,4 +95,11 @@ public class MeleeWeapon : NetworkBehaviour
             other.GetComponentInParent<NetworkAnimator>().SetTrigger("Block hurt");
         }
     }
+
+    //[ClientRpc]
+    //void RpcHurtOther(NetworkInstanceId netid)
+    //{
+    //    GameObject obj = ClientScene.FindLocalObject(netId);
+    //    obj.GetComponent<NetworkAnimator>().SetTrigger("Hurt");
+    //}
 }
