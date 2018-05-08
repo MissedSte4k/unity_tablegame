@@ -63,7 +63,9 @@ public class MeleeWeapon : NetworkBehaviour
             var health = other.gameObject.GetComponent<Health>();
             if (health != null)
             {
-                health.RpcTakeDamage(damage, health.IsFatal(damage));
+                {
+                    health.RpcTakeDamage(damage, health.IsFatal(damage));
+                }
             }
             other.GetComponent<NetworkAnimator>().SetTrigger("Hurt");
 
@@ -75,8 +77,7 @@ public class MeleeWeapon : NetworkBehaviour
             {
                 foreach (Collider c in weaponColliders)
                 {
-                    Debug.Log("Potato");
-                    Physics.IgnoreCollision(c, other, false);
+                    Physics.IgnoreCollision(c, other);
                 }
                 collisions[n] = other;
                 n++;

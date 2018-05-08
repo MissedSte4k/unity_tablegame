@@ -7,8 +7,8 @@ using UnityEngine.Networking;
 public class Health : NetworkBehaviour {
 
     [Range(0, 200)]
-    [SerializeField] int maxHealth = 100;
-    [SerializeField] int maxStamina = 100;
+    [SerializeField] int maxHealth;
+    [SerializeField] int maxStamina;
     [SerializeField] bool dependOnHealth = false;
     public Text teamText;
     public Slider healthSlider;
@@ -25,6 +25,21 @@ public class Health : NetworkBehaviour {
     void Start()
     {
         CmdCurrentScore();
+        if (isLocalPlayer)
+        {
+            healthSlider.maxValue = maxHealth;
+            healthSlider.value = maxHealth;
+            if (dependOnHealth)
+            {
+                staminaSlider.value = maxHealth;
+                staminaSlider.maxValue = maxHealth;
+            }
+            else
+            {
+                staminaSlider.value = maxStamina;
+                staminaSlider.maxValue = maxStamina;
+            }
+        }
     }
 
     void Awake()
