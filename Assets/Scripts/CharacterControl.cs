@@ -71,7 +71,8 @@ public class CharacterControl : NetworkBehaviour {
 
             playerCamera.fieldOfView = MenuSettings.Instance.fieldOfView;
 
-        CmdTeam();
+        //CmdTeam();
+        Team(FindObjectOfType<PrefabControl>().Team());
     }
 
     private void OnEnable()
