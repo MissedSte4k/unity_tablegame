@@ -39,6 +39,7 @@ public class PrefabControl : NetworkManager
             GameObject player = Instantiate(Resources.Load("Characters/B", typeof(GameObject))) as GameObject;
             NetworkServer.AddPlayerForConnection(conn, player, playerControllerId);
         }*/
+        Debug.Log("Team " + FindObjectOfType<PlayOptions>().teamIndex + ", prefab " + FindObjectOfType<PlayOptions>().characterIndex + ", ID " + playerControllerId);
         switch (FindObjectOfType<PlayOptions>().teamIndex)
         {
             case 0:
@@ -100,6 +101,7 @@ public class PrefabControl : NetworkManager
 
     private void LoadPlayer(GameObject prefab, NetworkConnection conn, short playerControllerId)
     {
+        Debug.Log(prefab.ToString() + ", " + playerControllerId);
         GameObject player = Instantiate(prefab) as GameObject;
         NetworkServer.AddPlayerForConnection(conn, player, playerControllerId);
     }
