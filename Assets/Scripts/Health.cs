@@ -138,6 +138,7 @@ public class Health : NetworkBehaviour {
         }
         else
         {
+            GetComponent<NetworkAnimator>().SetTrigger("Hurt");
             health = health - amount;
             if (dependOnHealth && stamina > health) ChangeStamina(-1);
         }

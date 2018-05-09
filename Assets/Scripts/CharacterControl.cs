@@ -413,6 +413,23 @@ public class CharacterControl : NetworkBehaviour {
 		hitBox.center = new Vector3(0, value, 0);
 	}
 
+    [ClientRpc]
+    public void RpcHitBlock()
+    {
+        if (anim != null)
+        {
+            anim.SetTrigger("Hurt");
+            anim.SetTrigger("Stop");
+        }
+    }
+
+    [ClientRpc]
+    public void RpcBlockHurt()
+    {
+        if (anim != null)
+            anim.SetTrigger("Block hurt");
+    }
+
     [Command]
     private void CmdTeam()
     {
@@ -467,4 +484,5 @@ public class CharacterControl : NetworkBehaviour {
     {
         return hasFlag;
     }
+
 }

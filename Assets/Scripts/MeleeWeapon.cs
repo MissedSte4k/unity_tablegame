@@ -7,17 +7,21 @@ using UnityEngine.Networking;
 public class MeleeWeapon : NetworkBehaviour
 {
 
-    public int damage;
-    public bool isSlash; //marks whether the weapon can damage more than 1 character.
+    [HideInInspector] public int damage;
+    [HideInInspector] public bool isSlash; //marks whether the weapon can damage more than 1 character.
     public Collider[] weaponColliders;
     private Collider[] collisions = new Collider[5];
     private int n = 0;
     private bool isClear = true;
-    public bool collidersActive = false;
+    [HideInInspector] public bool collidersActive;
+    [HideInInspector] public NetworkInstanceId attacker;
+    [HideInInspector] public bool isTrigger;
 
     // Use this for initialization
     void Start()
     {
+        collidersActive = false;
+        isTrigger = true;
     }
 
     void Update()
@@ -33,6 +37,20 @@ public class MeleeWeapon : NetworkBehaviour
             foreach (Collider c in weaponColliders)
             {
                 c.enabled = false;
+            }
+        }
+        if (isTrigger)
+        {
+            foreach (Collider c in weaponColliders)
+            {
+                c.isTrigger = true;
+            }
+        }
+        else
+        {
+            foreach (Collider c in weaponColliders)
+            {
+                c.isTrigger = false;
             }
         }
     }
@@ -67,9 +85,6 @@ public class MeleeWeapon : NetworkBehaviour
                     health.RpcTakeDamage(damage, health.IsFatal(damage));
                 }
             }
-            other.GetComponent<NetworkAnimator>().SetTrigger("Hurt");
-
-            //RpcHurtOther(other.GetComponent<NetworkIdentity>().netId);
 
             if (!isSlash)
             {
@@ -89,17 +104,8 @@ public class MeleeWeapon : NetworkBehaviour
         else if (other.gameObject.CompareTag("Block"))
         {
             collidersActive = false;
-            NetworkAnimator anim = GetComponentInParent<NetworkAnimator>();
-            anim.SetTrigger("Stop");
-            anim.SetTrigger("Hurt");
-            other.GetComponentInParent<NetworkAnimator>().SetTrigger("Block hurt");
+            GetComponentInParent<CharacterControl>().RpcHitBlock();
+            other.GetComponentInParent<CharacterControl>().RpcBlockHurt();
         }
     }
-
-    //[ClientRpc]
-    //void RpcHurtOther(NetworkInstanceId netid)
-    //{
-    //    GameObject obj = ClientScene.FindLocalObject(netId);
-    //    obj.GetComponent<NetworkAnimator>().SetTrigger("Hurt");
-    //}
 }
