@@ -71,8 +71,8 @@ public class CharacterControl : NetworkBehaviour {
 
             playerCamera.fieldOfView = MenuSettings.Instance.fieldOfView;
 
-        //CmdTeam();
-        SetTeam();
+        CmdTeam();
+        //SetTeam();
     }
 
     private void OnEnable()
@@ -431,7 +431,7 @@ public class CharacterControl : NetworkBehaviour {
             anim.SetTrigger("Block hurt");
     }
 
-    /*[Command]
+    [Command]
     private void CmdTeam()
     {
         SetTeam();
@@ -451,13 +451,29 @@ public class CharacterControl : NetworkBehaviour {
 
     private void Team(int team)
     {
-        this.team = team;
+        if (team == 0)
+        {
+            switch (FindObjectOfType<PlayOptions>().teamIndex)
+            {
+                case 0:
+                    this.team = 1;
+                    break;
+                case 1:
+                    this.team = 2;
+                    break;
+                default:
+                    this.team = 0;
+                    break;
+            }
+        }
+        else this.team = team;
         health.SetTeamText(this.team);
         Spawn();
-    }*/
+    }
 
-    private void SetTeam()
+    /*private void SetTeam()
     {
+
         switch (FindObjectOfType<PlayOptions>().teamIndex)
         {
             case 0:
@@ -472,7 +488,7 @@ public class CharacterControl : NetworkBehaviour {
         }
         health.SetTeamText(team);
         Spawn();
-    }
+    }*/
 
     public int Team()
     {

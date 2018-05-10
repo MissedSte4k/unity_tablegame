@@ -17,10 +17,15 @@ public class Health : NetworkBehaviour {
     public Text blueTeamKillsText;
     public Text TargetInfoText;
     public Text winText;
+    public Image background;
+    public Text respawnText1;
+    public Text respawnText2;
+    public Text respawnCount;
 
     PlayerRespawn pr;
-    [SyncVar (hook = "OnHealthChanged")] int health;
-    [SyncVar (hook = "OnStaminaChanged")] int stamina;
+    [SyncVar(hook = "OnHealthChanged")] int health;
+    [SyncVar(hook = "OnStaminaChanged")] int stamina;
+    [SyncVar(hook = "OnDeath")] bool isDead = true;
 
     void Start()
     {
@@ -77,11 +82,17 @@ public class Health : NetworkBehaviour {
 
     public void TakeDamage(int amount)
     {
-        CmdTakeDamage(amount, GetComponent<CharacterControl>().Team(), IsFatal(amount));
+        if (!isDead) CmdTakeDamage(amount, GetComponent<CharacterControl>().Team(), IsFatal(amount));
     }
 
     public void Heal(int amount) {
-        CmdHeal(amount);
+        if (!isDead) CmdHeal(amount);
+    }
+
+    [Command]
+    private void CmdAlive()
+    {
+        RpcAlive();
     }
 
     [Command]
@@ -117,8 +128,17 @@ public class Health : NetworkBehaviour {
     [Server]
     private void TakeDamage(int amount, int team, bool fatal)
     {
-        if(fatal) FindObjectOfType<TeamControl>().IncreaseByOne(team);
+        if (fatal) FindObjectOfType<TeamControl>().IncreaseByOne(team);
         RpcTakeDamage(amount, fatal);
+    }
+
+    [ClientRpc]
+    private void RpcAlive()
+    {
+        isDead = false;
+        health = maxHealth;
+        if (dependOnHealth) stamina = maxHealth;
+        else stamina = maxStamina;
     }
 
     [ClientRpc]
@@ -134,6 +154,7 @@ public class Health : NetworkBehaviour {
         {
             health = 0;
             stamina = 0;
+            isDead = true;
             pr.Die();
         }
         else
@@ -200,6 +221,40 @@ public class Health : NetworkBehaviour {
         if (!dependOnHealth && stamina > maxStamina) stamina = maxStamina;
         if (stamina < 0) stamina = 0;
         if (isLocalPlayer) staminaSlider.value = value;
+    }
+
+    void OnDeath(bool value)
+    {
+        isDead = value;
+        if (isDead)
+        {
+            background.enabled = true;
+            respawnText1.enabled = true;
+            respawnText2.enabled = true;
+            respawnCount.enabled = true;
+            teamText.enabled = false;
+            healthSlider.enabled = false;
+            staminaSlider.enabled = false;
+            redTeamKillsText.enabled = false;
+            blueTeamKillsText.enabled = false;
+            TargetInfoText.enabled = false;
+            winText.enabled = false;
+            CmdCurrentScore();
+        }
+        else
+        {
+            background.enabled = false;
+            respawnText1.enabled = false;
+            respawnText2.enabled = false;
+            respawnCount.enabled = false;
+            teamText.enabled = true;
+            healthSlider.enabled = true;
+            staminaSlider.enabled = true;
+            redTeamKillsText.enabled = true;
+            blueTeamKillsText.enabled = true;
+            TargetInfoText.enabled = true;
+            winText.enabled = true;
+        }
     }
 
     public void UpdateKillText(int target, int blue, int red, int won)

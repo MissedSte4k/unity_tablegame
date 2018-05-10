@@ -33,7 +33,7 @@ public class TeamControl : NetworkBehaviour
             if (cc.Team() == 1) blueTeamCount++;
             if (cc.Team() == 2) redTeamCount++;
         }
-        if (blueTeamCount == redTeamCount) return Random.Range(1, 3);
+        if (blueTeamCount == redTeamCount) return 0;
         if (blueTeamCount < redTeamCount) return 1;
         else return 2;
 
