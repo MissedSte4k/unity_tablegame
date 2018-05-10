@@ -88,18 +88,5 @@ public class PrefabControl : NetworkManager
         GameObject player = Instantiate(prefab) as GameObject;
         NetworkServer.AddPlayerForConnection(conn, player, playerControllerId);
     }
-
-    public int Team()
-    {
-        switch(FindObjectOfType<PlayOptions>().teamIndex)
-        {
-            case 0:
-                return 1;
-            case 1:
-                return 2;
-            default:
-                return 0;
-        }
-    }
 }
 
