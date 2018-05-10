@@ -14,36 +14,22 @@ public class PrefabControl : NetworkManager
     public GameObject scoutBlue;
     public GameObject scoutRed;
 
-    //public int chosenCharacter = 0;
-
-    //subclass for sending network messages
-    /*public class NetworkMessage : MessageBase
+    public class NetworkMessage : MessageBase
     {
-        public int chosenClass;
-    }*/
+        public int team;
+        public int character;
+        public int primaryWeapon;
+        public int secondaryWeapon;
+    }
 
-    public override void OnServerAddPlayer(NetworkConnection conn, short playerControllerId) //, NetworkReader extraMessageReader)
-    {
-        //NetworkMessage message = extraMessageReader.ReadMessage<NetworkMessage>();
-        //int selectedClass = message.chosenClass;
-        //Debug.Log("server add with message " + selectedClass);
+    public override void OnServerAddPlayer(NetworkConnection conn, short playerControllerId, NetworkReader extraMessageReader)
+    {     
+        NetworkMessage message = extraMessageReader.ReadMessage<NetworkMessage>();
 
-        /*if (selectedClass == 0)
-        {
-            GameObject player = Instantiate(Resources.Load("Characters/A", typeof(GameObject))) as GameObject;
-            NetworkServer.AddPlayerForConnection(conn, player, playerControllerId);
-        }
-
-        if (selectedClass == 1)
-        {
-            GameObject player = Instantiate(Resources.Load("Characters/B", typeof(GameObject))) as GameObject;
-            NetworkServer.AddPlayerForConnection(conn, player, playerControllerId);
-        }*/
-        Debug.Log("Team " + FindObjectOfType<PlayOptions>().teamIndex + ", prefab " + FindObjectOfType<PlayOptions>().characterIndex + ", ID " + playerControllerId);
-        switch (FindObjectOfType<PlayOptions>().teamIndex)
+        switch (message.team)
         {
             case 0:
-                switch (FindObjectOfType<PlayOptions>().characterIndex)
+                switch (message.character)
                 {
                     case 0:
                         LoadPlayer(knightBlue, conn, playerControllerId);
@@ -62,7 +48,7 @@ public class PrefabControl : NetworkManager
                 }
                 break;
             case 1:
-                switch (FindObjectOfType<PlayOptions>().characterIndex)
+                switch (message.character)
                 {
                     case 0:
                         LoadPlayer(knightRed, conn, playerControllerId);
@@ -85,19 +71,16 @@ public class PrefabControl : NetworkManager
         }
     }
 
-    /*public override void OnClientConnect(NetworkConnection conn)
+    public override void OnClientConnect(NetworkConnection conn)
     {
-        NetworkMessage test = new NetworkMessage();
-        test.chosenClass = chosenCharacter;
-
-        ClientScene.AddPlayer(conn, 0, test);
-    }*/
-
-
-    /*public override void OnClientSceneChanged(NetworkConnection conn)
-    {
-        //base.OnClientSceneChanged(conn);
-    }*/
+        PlayOptions po = FindObjectOfType<PlayOptions>();
+        NetworkMessage message = new NetworkMessage();
+        message.team = po.teamIndex;
+        message.character = po.characterIndex;
+        message.primaryWeapon = po.primaryWeaponIndex;
+        message.secondaryWeapon = po.secondaryWeaponIndex;
+        ClientScene.AddPlayer(conn, 0, message);
+    }
 
     private void LoadPlayer(GameObject prefab, NetworkConnection conn, short playerControllerId)
     {
