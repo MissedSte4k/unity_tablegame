@@ -69,7 +69,7 @@ public class CharacterControl : NetworkBehaviour {
 		minHeightChangeSpeed = 0.001f;
 		minCenterChangeSpeed = 0.0001f;
 
-            playerCamera.fieldOfView = MenuSettings.Instance.fieldOfView;
+        playerCamera.fieldOfView = MenuSettings.Instance.fieldOfView;
 
         //CmdTeam();
         SetTeam();
@@ -243,6 +243,12 @@ public class CharacterControl : NetworkBehaviour {
                 }
             }
             Physics.SyncTransforms();
+
+            if (NetworkServer.active)
+            {
+                anim.animator.ResetTrigger("Hurt");
+                anim.animator.ResetTrigger("Block hurt");
+            }
         }
         else playerCamera.enabled = false;
     }
