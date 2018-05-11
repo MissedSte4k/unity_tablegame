@@ -720,7 +720,7 @@ ModelImporter:
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
       events:
-      - time: 0
+      - time: 0.004149378
         functionName: KnightSlashStart
         data: 
         objectReferenceParameter: {instanceID: 0}
@@ -1392,7 +1392,7 @@ ModelImporter:
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
       events:
-      - time: 0
+      - time: 0.004149378
         functionName: KnightSlashStart
         data: 
         objectReferenceParameter: {instanceID: 0}
@@ -1456,7 +1456,7 @@ ModelImporter:
       name: TH_block
       takeName: Take 001
       firstFrame: 2205
-      lastFrame: 2285
+      lastFrame: 2265
       wrapMode: 0
       orientationOffsetY: 0
       level: 0

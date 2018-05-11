@@ -74,7 +74,6 @@ public class Trap : NetworkBehaviour {
 
                         int damage = Convert.ToInt32((1 - Mathf.Clamp01(distance / explosionRadius)) * explosionDamage);
                         hit.GetComponent<Health>().TakeDamage(damage);
-                        other.GetComponent<NetworkAnimator>().SetTrigger("Hurt");
                     }
                 }
                 Destroy(gameObject);

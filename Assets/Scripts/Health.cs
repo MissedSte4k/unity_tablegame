@@ -182,6 +182,18 @@ public class Health : NetworkBehaviour {
         else stamina = stamina + value;
     }
 
+    [Command]
+    public void CmdChangeStamina(int value)
+    {
+        ChangeStaminaServer(value);
+    }
+
+    [Server]
+    public void ChangeStaminaServer(int value)
+    {
+        ChangeStamina(value);
+    }
+
     public int CurrentHealth()
     {
         return health;

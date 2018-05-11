@@ -50,11 +50,10 @@ public class Projectile : NetworkBehaviour {
             {
                 health.TakeDamage(damage);
             }
-            collision.gameObject.GetComponent<NetworkAnimator>().SetTrigger("Hurt");
         }
         else if (collision.gameObject.CompareTag("Block"))
         {
-            collision.gameObject.GetComponentInParent<NetworkAnimator>().SetTrigger("Block hurt");
+            collision.gameObject.GetComponentInParent<CharacterControl>().RpcBlockHurt();
         }
 
         Destroy(gameObject);

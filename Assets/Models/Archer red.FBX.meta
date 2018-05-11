@@ -2146,7 +2146,7 @@ ModelImporter:
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
       events:
-      - time: 0
+      - time: 0.004149378
         functionName: ArcherSlashStart
         data: 
         objectReferenceParameter: {instanceID: 0}
@@ -2167,7 +2167,7 @@ ModelImporter:
     - serializedVersion: 16
       name: Javelin_slash_swing2
       takeName: Take 001
-      firstFrame: 4070.0002
+      firstFrame: 4059.9998
       lastFrame: 4130
       wrapMode: 0
       orientationOffsetY: 0
@@ -2188,7 +2188,7 @@ ModelImporter:
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
       events:
-      - time: 0
+      - time: 0.14522822
         functionName: ArcherSlashStart
         data: 
         objectReferenceParameter: {instanceID: 0}
@@ -2784,7 +2784,7 @@ ModelImporter:
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
       events:
-      - time: 0
+      - time: 0.004149378
         functionName: ArcherSlashStart
         data: 
         objectReferenceParameter: {instanceID: 0}
@@ -2805,7 +2805,7 @@ ModelImporter:
     - serializedVersion: 16
       name: OH_slash_swing2
       takeName: Take 001
-      firstFrame: 6070
+      firstFrame: 6060
       lastFrame: 6130
       wrapMode: 0
       orientationOffsetY: 0
@@ -2826,7 +2826,7 @@ ModelImporter:
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
       events:
-      - time: 0
+      - time: 0.14523685
         functionName: ArcherSlashStart
         data: 
         objectReferenceParameter: {instanceID: 0}

@@ -514,7 +514,7 @@ ModelImporter:
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
       events:
-      - time: 0
+      - time: 0.004149378
         functionName: BerserkerSlashStart
         data: 
         objectReferenceParameter: {instanceID: 0}
@@ -556,7 +556,7 @@ ModelImporter:
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
       events:
-      - time: 0.28778467
+      - time: 0.29194266
         functionName: BerserkerSlashStart
         data: 
         objectReferenceParameter: {instanceID: 0}
@@ -1165,7 +1165,7 @@ ModelImporter:
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
       events:
-      - time: 0
+      - time: 0.01038207
         functionName: BerserkerSlashStart
         data: 
         objectReferenceParameter: {instanceID: 0}
@@ -1207,7 +1207,7 @@ ModelImporter:
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
       events:
-      - time: 0.2836439
+      - time: 0.2878019
         functionName: BerserkerSlashStart
         data: 
         objectReferenceParameter: {instanceID: 0}
