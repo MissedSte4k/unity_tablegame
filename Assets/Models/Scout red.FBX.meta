@@ -2811,7 +2811,8 @@ ModelImporter:
       - time: 0.26907787
         functionName: CmdFuseLight
         data: 
-        objectReferenceParameter: {instanceID: 0}
+        objectReferenceParameter: {fileID: 1040348701295030, guid: 652b4926bf92e1d46a7e80d5c957002a,
+          type: 2}
         floatParameter: 0
         intParameter: 0
         messageOptions: 0

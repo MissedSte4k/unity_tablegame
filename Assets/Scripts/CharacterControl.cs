@@ -25,8 +25,6 @@ public class CharacterControl : NetworkBehaviour {
     [HideInInspector] public bool isCrouched = false;
 	private float mouseH = 0.0f;
 	private float mouseV = 0.0f;
-    [SyncVar]
-    private Quaternion spineRotation;
 	public Camera playerCamera;
 	private int currentIncreaseTime;
 	private int currentDecreaseTime;
@@ -58,6 +56,7 @@ public class CharacterControl : NetworkBehaviour {
             Cursor.lockState = CursorLockMode.Locked;
         }
 
+        Application.targetFrameRate = -1;
         capsule = GetComponent<CapsuleCollider>();
         moveSpeed = defaultMoveSpeed;
         mouseSensitivity = MenuSettings.Instance.mouseSensitivity;
@@ -172,6 +171,7 @@ public class CharacterControl : NetworkBehaviour {
             playerCamera.transform.rotation = Quaternion.Euler(mouseV, mouseH, 0);
 
             anim.animator.SetFloat("Look", (mouseV + 60) / 120);
+            CmdLook(mouseV);
 
             if (Input.GetKeyDown(KeyBindManager.MyInstance.Keybinds["Button(Crouch)"]))
             {
@@ -355,22 +355,36 @@ public class CharacterControl : NetworkBehaviour {
         }
     }
 
+    [Command]
+    void CmdLook(float mouseV)
+    {
+        RpcLook(mouseV);
+    }
 
- //   [Command]
-	//private void CmdFire()
-	//{
-	//	GameObject bullet = Instantiate(bulletPrefab, bulletSpawn.position, bulletSpawn.rotation);
+    [ClientRpc]
+    void RpcLook(float mouseV)
+    {
+        if (!isLocalPlayer)
+        {
+            GetComponent<Animator>().SetFloat("Look", (mouseV + 60) / 120);
+        }
+    }
 
-	//	// Add velocity to the bullet
-	//	bullet.GetComponent<Rigidbody>().velocity = bullet.transform.forward * bulletSpeed;
+    //   [Command]
+    //private void CmdFire()
+    //{
+    //	GameObject bullet = Instantiate(bulletPrefab, bulletSpawn.position, bulletSpawn.rotation);
 
-	//	NetworkServer.Spawn(bullet);
+    //	// Add velocity to the bullet
+    //	bullet.GetComponent<Rigidbody>().velocity = bullet.transform.forward * bulletSpeed;
 
-	//	// Destroy the bullet after 2 seconds
-	//	Destroy(bullet, 2.0f);
-	//}
+    //	NetworkServer.Spawn(bullet);
 
-	[Command]
+    //	// Destroy the bullet after 2 seconds
+    //	Destroy(bullet, 2.0f);
+    //}
+
+    [Command]
 	private void CmdChangeStamina(int value)
 	{
 		ChangeStamina(value);
