@@ -57,9 +57,7 @@ public class MeleeWeapon : NetworkBehaviour
 
     void FixedUpdate()
     {
-        if ((GetComponentInParent<NetworkAnimator>().animator.GetCurrentAnimatorStateInfo(1).IsName("Running") ||
-            GetComponentInParent<NetworkAnimator>().animator.GetCurrentAnimatorStateInfo(1).IsName("Crouched"))
-            && !isClear)
+        if (!isClear && !collidersActive)
         {
             for (int i = 0; i < 5; i++)
             {
