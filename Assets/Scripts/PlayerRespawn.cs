@@ -12,7 +12,7 @@ public class PlayerRespawn : NetworkBehaviour {
     [SerializeField] ToggleEvent onToggleShared;
     [SerializeField] ToggleEvent onToggleLocal;
     [SerializeField] ToggleEvent onToggleRemote;
-    [SerializeField] float respawnTime = 5f;
+    [SerializeField] int respawnTime = 5;
 
     //GameObject mainCamera;
 
@@ -42,7 +42,10 @@ public class PlayerRespawn : NetworkBehaviour {
     {
         DisablePlayer();
 
-        Invoke("Respawn", respawnTime);
+        Health health = GetComponent<Health>();
+        health.currentRespawnCount = respawnTime;
+        health.UpdateRespawnCount();
+        Invoke("RespawnCount", 1);
     }
 
     void Respawn()
@@ -55,5 +58,14 @@ public class PlayerRespawn : NetworkBehaviour {
         }
 
         EnablePlayer();
+    }
+
+    public void RespawnCount()
+    {
+        Health health = GetComponent<Health>();
+        health.currentRespawnCount--;
+        health.UpdateRespawnCount();
+        if (health.currentRespawnCount < 1) Respawn();
+        else Invoke("RespawnCount", 1);
     }
 }

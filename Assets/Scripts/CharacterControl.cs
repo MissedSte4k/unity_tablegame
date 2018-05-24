@@ -57,7 +57,7 @@ public class CharacterControl : NetworkBehaviour {
         {
             Cursor.lockState = CursorLockMode.Locked;
         }
-
+        Debug.Log("Start");
         capsule = GetComponent<CapsuleCollider>();
         moveSpeed = defaultMoveSpeed;
         mouseSensitivity = MenuSettings.Instance.mouseSensitivity;
@@ -77,6 +77,9 @@ public class CharacterControl : NetworkBehaviour {
 
     private void OnEnable()
     {
+        Debug.Log("Enable");
+        if (!isLocalPlayer) playerCamera.enabled = false;
+        else Debug.Log("NotLocal");
         Spawn();
     }
 

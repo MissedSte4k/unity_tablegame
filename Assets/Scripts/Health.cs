@@ -21,6 +21,7 @@ public class Health : NetworkBehaviour {
     public Text respawnText1;
     public Text respawnText2;
     public Text respawnCount;
+    public int currentRespawnCount = 0;
 
     PlayerRespawn pr;
     [SyncVar(hook = "OnHealthChanged")] int health;
@@ -29,6 +30,7 @@ public class Health : NetworkBehaviour {
 
     void Start()
     {
+        pr = GetComponent<PlayerRespawn>();
         CmdCurrentScore();
         if (isLocalPlayer)
         {
@@ -239,7 +241,6 @@ public class Health : NetworkBehaviour {
             blueTeamKillsText.enabled = false;
             TargetInfoText.enabled = false;
             winText.enabled = false;
-            CmdCurrentScore();
         }
         else
         {
@@ -254,6 +255,7 @@ public class Health : NetworkBehaviour {
             blueTeamKillsText.enabled = true;
             TargetInfoText.enabled = true;
             winText.enabled = true;
+            CmdCurrentScore();
         }
     }
 
@@ -273,5 +275,10 @@ public class Health : NetworkBehaviour {
             winText.color = Color.red;
             winText.text = "TEAM RED WINS!";
         }
+    }
+
+    public void UpdateRespawnCount()
+    {
+        respawnCount.text = currentRespawnCount.ToString();
     }
 }
