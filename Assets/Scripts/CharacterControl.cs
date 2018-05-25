@@ -8,20 +8,21 @@ public class CharacterControl : NetworkBehaviour {
 
     public float mouseSensitivity;
     public float defaultMoveSpeed;
+    public float referenceMoveSpeed;
     [HideInInspector] public float moveSpeed;
 	public float crouchSpeedMultiplier;
 	public float sprintSpeedMultiplier;
-	public int increaseTime;
+    public int increaseTime;
 	public int decreaseTime;
-	public int sprintStaminaUse;
-	public int jumpStaminaUse;
+    public float sprintStaminaUse;
+    public int jumpStaminaUse;
 	public int shootStaminaUse;
-	public float jumpSpeed;
+    public float jumpSpeed;
 	private Rigidbody rb;
 	private Health health;
 	private CapsuleCollider hitBox;
 	private bool onGround = true;
-	private bool onSprint = false;
+    [HideInInspector] public bool onSprint = false;
     [HideInInspector] public bool isCrouched = false;
 	private float mouseH = 0.0f;
 	private float mouseV = 0.0f;
@@ -38,6 +39,9 @@ public class CharacterControl : NetworkBehaviour {
     private int hasFlag = 0;
     public bool lockCursor;
     private CapsuleCollider capsule;
+    public AudioSource audioSourceWalk;
+    public AudioClip walkClip;
+    public AudioClip runClip;
 
     private float moveHorizontal = 0;
     private float moveVertical = 0;
@@ -119,39 +123,6 @@ public class CharacterControl : NetworkBehaviour {
 
             if (isCrouched) moveSpeed *= crouchSpeedMultiplier;
 
-            float speed;
-            if (!isCrouched)
-            {
-                speed = moveSpeed * (onSprint ? sprintSpeedMultiplier : 1);
-                if (speed < defaultMoveSpeed)
-                {
-                    anim.animator.SetFloat("Speed", moveVertical * speed / defaultMoveSpeed);
-                    anim.animator.SetFloat("Strafe", moveHorizontal * speed / defaultMoveSpeed);
-                }
-                else
-                {
-                    anim.animator.SetFloat("Speed", moveVertical);
-                    anim.animator.SetFloat("Strafe", moveHorizontal);
-                    anim.animator.SetFloat("SpeedMultiplier", speed / defaultMoveSpeed);
-                }
-            }
-            else
-            {
-                speed = moveSpeed;
-                float defaultCrouchedSpeed = defaultMoveSpeed * crouchSpeedMultiplier;
-                if (speed < defaultCrouchedSpeed)
-                {
-                    anim.animator.SetFloat("Speed", moveVertical * moveSpeed / defaultCrouchedSpeed);
-                    anim.animator.SetFloat("Strafe", moveHorizontal * moveSpeed / defaultCrouchedSpeed);
-                }
-                else
-                {
-                    anim.animator.SetFloat("Speed", moveVertical);
-                    anim.animator.SetFloat("Strafe", moveHorizontal);
-                    anim.animator.SetFloat("SpeedMultiplier", speed / defaultCrouchedSpeed);
-                }
-            }
-
             //anim.animator.SetFloat("Speed", Input.GetAxis("Vertical"));
             //anim.animator.SetFloat("Strafe", Input.GetAxis("Horizontal"));
 
@@ -200,21 +171,72 @@ public class CharacterControl : NetworkBehaviour {
                 if (!health.isStaminaZero(-shootStaminaUse)) CmdFire();
             }*/
 
-            if (Input.GetKey(KeyBindManager.MyInstance.Keybinds["Button(Sprint)"]) && !IsStanding() && onGround && !isCrouched)
+            if (Input.GetKey(KeyBindManager.MyInstance.Keybinds["Button(Sprint)"]) && !IsStanding() && onGround && !isCrouched && moveVertical > 0 && moveHorizontal != 0)
             {
                 onSprint = true;
-            }
-
-            if (Input.GetKeyUp(KeyBindManager.MyInstance.Keybinds["Button(Sprint)"]) || IsStanding() || !onGround || isCrouched)
+            } else
             {
                 onSprint = false;
+            }
+
+            if (!isCrouched)
+            {
+                float speed = moveSpeed * (onSprint ? sprintSpeedMultiplier : 1);
+                if (speed < defaultMoveSpeed)
+                {
+                    anim.animator.SetFloat("Speed", moveVertical * speed / defaultMoveSpeed);
+                    anim.animator.SetFloat("Strafe", moveHorizontal * speed / defaultMoveSpeed);
+                    anim.animator.SetFloat("SpeedMultiplier", defaultMoveSpeed / referenceMoveSpeed);
+                }
+                else
+                {
+                    anim.animator.SetFloat("Speed", moveVertical);
+                    anim.animator.SetFloat("Strafe", moveHorizontal);
+                    anim.animator.SetFloat("SpeedMultiplier", speed / referenceMoveSpeed);
+                }
+            }
+            else
+            {
+                float defaultCrouchedSpeed = defaultMoveSpeed * crouchSpeedMultiplier;
+                if (moveSpeed < defaultCrouchedSpeed)
+                {
+                    anim.animator.SetFloat("Speed", moveVertical * moveSpeed / defaultCrouchedSpeed);
+                    anim.animator.SetFloat("Strafe", moveHorizontal * moveSpeed / defaultCrouchedSpeed);
+                    anim.animator.SetFloat("SpeedMultiplier", defaultMoveSpeed / referenceMoveSpeed);
+                }
+                else
+                {
+                    anim.animator.SetFloat("Speed", moveVertical);
+                    anim.animator.SetFloat("Strafe", moveHorizontal);
+                    anim.animator.SetFloat("SpeedMultiplier", moveSpeed / crouchSpeedMultiplier / referenceMoveSpeed);
+                }
+            }
+
+            if (moveHorizontal != 0 || moveVertical != 0 && onGround)
+            {
+                float pitch;
+
+                if (!isCrouched)
+                {
+                    pitch = 0.666f * moveSpeed * (onSprint ? sprintSpeedMultiplier : 1) / referenceMoveSpeed;
+                }
+                else
+                {
+                    pitch = 0.833f * moveSpeed / referenceMoveSpeed / crouchSpeedMultiplier;
+                }
+
+                CmdWalkAudio(pitch, true, isCrouched);
+            }
+            else
+            {
+                CmdWalkAudio(0, false, isCrouched);
             }
 
             if (onSprint)
             {
                 if (currentDecreaseTime < 1)
                 {
-                    CmdChangeStamina(-sprintStaminaUse);
+                    health.CmdChangeStamina(-sprintStaminaUse);
                     if (health.IsStaminaZero()) onSprint = false;
                     currentDecreaseTime = decreaseTime;
                 }
@@ -225,7 +247,7 @@ public class CharacterControl : NetworkBehaviour {
             {
                 if (currentIncreaseTime < 1 && !health.IsStaminaMax())
                 {
-                    CmdChangeStamina(1);
+                    health.CmdChangeStamina(1);
                     currentIncreaseTime = increaseTime;
                 }
                 else currentIncreaseTime--;
@@ -238,7 +260,7 @@ public class CharacterControl : NetworkBehaviour {
                 {
                     anim.animator.SetBool("Jump", true);
                     anim.animator.SetBool("Falling", true);
-                    CmdChangeStamina(-jumpStaminaUse);
+                    health.CmdChangeStamina(-jumpStaminaUse);
                     rb.velocity += jumpSpeed * Vector3.up;
                 }
             }
@@ -272,7 +294,7 @@ public class CharacterControl : NetworkBehaviour {
 			//Vector3 forward = transform.forward * moveSpeed * moveVertical;
 			//Vector3 horizontal = transform.right * moveSpeed * moveHorizontal;
 
-			rb.velocity = moveDirection * speed * Time.deltaTime * 40 + rb.velocity.y * Vector3.up;
+			rb.velocity = moveDirection * speed * Time.deltaTime * 50 + rb.velocity.y * Vector3.up;
 			if (rb.velocity.y > jumpSpeed)
 				rb.velocity = new Vector3(rb.velocity.x, 0, rb.velocity.z);
 
@@ -384,19 +406,6 @@ public class CharacterControl : NetworkBehaviour {
     //	Destroy(bullet, 2.0f);
     //}
 
-    [Command]
-	private void CmdChangeStamina(int value)
-	{
-		ChangeStamina(value);
-	}
-
-	[Server]
-	private void ChangeStamina(int value)
-	{
-		health = GetComponent<Health>();
-		health.ChangeStamina(value);
-	}
-
 	[Command]
 	private void CmdCrouch()
 	{
@@ -408,8 +417,8 @@ public class CharacterControl : NetworkBehaviour {
 	[Command]
 	private void CmdUncrouch()
 	{
-		float h = Mathf.Min(Mathf.Max(Mathf.Lerp(height, normalHeight, Time.deltaTime * 5), height + minHeightChangeSpeed/(Time.deltaTime*1.5f)), normalHeight);
-		float c = Mathf.Max(Mathf.Min(Mathf.Lerp(center, normalCenter, Time.deltaTime * 5), center - minCenterChangeSpeed/(Time.deltaTime*1.5f)), normalCenter);
+		float h = Mathf.Min(Mathf.Max(Mathf.Lerp(height, normalHeight, Time.deltaTime * 5), height + minHeightChangeSpeed/(Time.deltaTime)), normalHeight);
+		float c = Mathf.Max(Mathf.Min(Mathf.Lerp(center, normalCenter, Time.deltaTime * 5), center - minCenterChangeSpeed/(Time.deltaTime)), normalCenter);
 		CrouchUncrouch(h, c);
 	}
 
@@ -505,6 +514,38 @@ public class CharacterControl : NetworkBehaviour {
     void RpcSetTeam(int t)
     {
         team = t;
+    }
+
+    [Command]
+    void CmdWalkAudio(float pitch, bool active, bool crouch)
+    {
+        RpcWalkAudio(pitch, active, crouch);
+    }
+
+    [ClientRpc]
+    void RpcWalkAudio(float pitch, bool active, bool crouch)
+    {
+        if (active)
+        {
+            if (crouch)
+                audioSourceWalk.clip = walkClip;
+            else
+                audioSourceWalk.clip = runClip;
+
+            audioSourceWalk.pitch = pitch;
+
+            if (!audioSourceWalk.isPlaying)
+                audioSourceWalk.Play();
+        }
+        else
+        {
+            audioSourceWalk.Stop();
+        }
+    }
+
+    void MakeInvisible()
+    {
+
     }
 
     public int Team()

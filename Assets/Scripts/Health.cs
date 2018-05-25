@@ -20,7 +20,7 @@ public class Health : NetworkBehaviour {
 
     PlayerRespawn pr;
     [SyncVar (hook = "OnHealthChanged")] int health;
-    [SyncVar (hook = "OnStaminaChanged")] int stamina;
+    [SyncVar (hook = "OnStaminaChanged")] float stamina;
 
     void Start()
     {
@@ -174,7 +174,7 @@ public class Health : NetworkBehaviour {
         else return false;
     }
 
-    public void ChangeStamina(int value)
+    public void ChangeStamina(float value)
     {
         if (dependOnHealth && stamina + value > health) stamina = health;
         else if (!dependOnHealth && stamina + value > maxStamina) stamina = maxStamina;
@@ -183,13 +183,13 @@ public class Health : NetworkBehaviour {
     }
 
     [Command]
-    public void CmdChangeStamina(int value)
+    public void CmdChangeStamina(float value)
     {
         ChangeStaminaServer(value);
     }
 
     [Server]
-    public void ChangeStaminaServer(int value)
+    public void ChangeStaminaServer(float value)
     {
         ChangeStamina(value);
     }
@@ -205,7 +205,7 @@ public class Health : NetworkBehaviour {
         if (isLocalPlayer) healthSlider.value = value;
     }
 
-    void OnStaminaChanged(int value)
+    void OnStaminaChanged(float value)
     {
         stamina = value;
         if (dependOnHealth && stamina > health) stamina = health;
