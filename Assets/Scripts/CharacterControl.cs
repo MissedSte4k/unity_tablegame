@@ -490,8 +490,21 @@ public class CharacterControl : NetworkBehaviour {
                 team = 0;
                 break;
         }
+        CmdSetTeam(team);
         health.SetTeamText(team);
         Spawn();
+    }
+
+    [Command]
+    void CmdSetTeam(int t)
+    {
+        RpcSetTeam(t);
+    }
+
+    [ClientRpc]
+    void RpcSetTeam(int t)
+    {
+        team = t;
     }
 
     public int Team()

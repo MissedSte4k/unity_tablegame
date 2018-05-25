@@ -16,10 +16,33 @@ public class Bomb : NetworkBehaviour {
     public float fuseTime;
     private bool isCollided = false;
     public int bombType = 0;
+    [SyncVar]
+    public int team;
 
     // Use this for initialization
     void Start()
     {
+        switch (bombType)
+        {
+            case 0:
+                if (team == 1)
+                    models[1].SetActive(true);
+                else
+                    models[0].SetActive(true);
+                break;
+            case 1:
+                if (team == 1)
+                    models[3].SetActive(true);
+                else
+                    models[2].SetActive(true);
+                break;
+            case 2:
+                if (team == 1)
+                    models[5].SetActive(true);
+                else
+                    models[4].SetActive(true);
+                break;
+        }
         rb = GetComponent<Rigidbody>();
         models[bombType * 2].SetActive(true);
         GameObject obj = ClientScene.FindLocalObject(spawnedBy);

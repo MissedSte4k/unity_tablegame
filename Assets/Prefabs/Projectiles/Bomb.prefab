@@ -553,10 +553,11 @@ MonoBehaviour:
   - {fileID: 1321263020490240}
   - {fileID: 1874043131188082}
   - {fileID: 1632356989480022}
-  - {fileID: 1874043131188082}
+  - {fileID: 1057396189192116}
   spin: {x: 0, y: -360, z: 0}
   fuseTime: 5
   bombType: 0
+  team: 0
 --- !u!114 &114454682427029396
 MonoBehaviour:
   m_ObjectHideFlags: 1

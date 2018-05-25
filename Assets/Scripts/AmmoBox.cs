@@ -6,11 +6,22 @@ using UnityEngine.Networking;
 public class AmmoBox : NetworkBehaviour {
 
     public GameObject[] models;
+    [SyncVar]
     public NetworkInstanceId spawnedBy;
     public int ammoRefreshes;
+    [SyncVar]
+    public int team;
 
     // Use this for initialization
     void Start () {
+        if (team == 1)
+        {
+            models[1].SetActive(true);
+        }
+        else
+        {
+            models[0].SetActive(true);
+        }
         GameObject obj = ClientScene.FindLocalObject(spawnedBy);
         Physics.IgnoreCollision(GetComponent<Collider>(), obj.GetComponent<Collider>());
     }
@@ -36,73 +47,48 @@ public class AmmoBox : NetworkBehaviour {
 
     void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player"))
+        if (other.CompareTag("Player") && other.GetComponent<CharacterControl>().Team() == team)
         {
-            if (isLocalPlayer)
+            if (other.gameObject.GetComponent<ScoutControl>() != null)
             {
-                float ammoRef = ammoRefreshes;
-                if (other.gameObject.GetComponent<ScoutControl>() != null)
+                ScoutControl classControl = other.gameObject.GetComponent<ScoutControl>();
+                if (!classControl.isAmmoFull())
                 {
-                    ScoutControl classControl = other.gameObject.GetComponent<ScoutControl>();
-                    if (classControl.primaryWeaponAmmo < classControl.maxAmmo[classControl.primaryWeapon])
-                    {
-                        ammoRef -= 0.5f;
-                        classControl.primaryWeaponAmmo = classControl.maxAmmo[classControl.primaryWeapon];
-                    }
-                    if (classControl.secondaryWeaponAmmo < classControl.maxAmmo[classControl.secondaryWeapon])
-                    {
-                        ammoRef -= 0.5f;
-                        classControl.secondaryWeaponAmmo = classControl.maxAmmo[classControl.secondaryWeapon];
-                    }
-                }
-                else if (other.gameObject.GetComponent<ArcherControl>() != null)
-                {
-                    ArcherControl classControl = other.gameObject.GetComponent<ArcherControl>();
-                    if (classControl.primaryWeaponAmmo < classControl.maxAmmo[classControl.primaryWeapon])
-                    {
-                        ammoRef -= 0.5f;
-                        classControl.primaryWeaponAmmo = classControl.maxAmmo[classControl.primaryWeapon];
-                    }
-                    if (classControl.secondaryWeaponAmmo < classControl.maxAmmo[classControl.secondaryWeapon])
-                    {
-                        ammoRef -= 0.5f;
-                        classControl.secondaryWeaponAmmo = classControl.maxAmmo[classControl.secondaryWeapon];
-                    }
-                }
-                else if (other.gameObject.GetComponent<KnightControl>() != null)
-                {
-                    KnightControl classControl = other.gameObject.GetComponent<KnightControl>();
-                    if (classControl.primaryWeaponAmmo < classControl.maxAmmo[classControl.primaryWeapon])
-                    {
-                        ammoRef -= 0.5f;
-                        classControl.primaryWeaponAmmo = classControl.maxAmmo[classControl.primaryWeapon];
-                    }
-                    if (classControl.secondaryWeaponAmmo < classControl.maxAmmo[classControl.secondaryWeapon])
-                    {
-                        ammoRef -= 0.5f;
-                        classControl.secondaryWeaponAmmo = classControl.maxAmmo[classControl.secondaryWeapon];
-                    }
-                }
-                else if (other.gameObject.GetComponent<BerserkerControl>() != null)
-                {
-                    BerserkerControl classControl = other.gameObject.GetComponent<BerserkerControl>();
-                    if (classControl.primaryWeaponAmmo < classControl.maxAmmo[classControl.primaryWeapon])
-                    {
-                        ammoRef -= 0.5f;
-                        classControl.primaryWeaponAmmo = classControl.maxAmmo[classControl.primaryWeapon];
-                    }
-                    if (classControl.secondaryWeaponAmmo < classControl.maxAmmo[classControl.secondaryWeapon])
-                    {
-                        ammoRef -= 0.5f;
-                        classControl.secondaryWeaponAmmo = classControl.maxAmmo[classControl.secondaryWeapon];
-                    }
-                }
-                ammoRefreshes = (int)ammoRef;
-                if (ammoRefreshes == 0)
-                {
-                    Destroy(gameObject);
+                    ammoRefreshes--;
+                    classControl.ammoRefresh();
                 }
             }
+            else if (other.gameObject.GetComponent<ArcherControl>() != null)
+            {
+                ArcherControl classControl = other.gameObject.GetComponent<ArcherControl>();
+                if (!classControl.isAmmoFull())
+                {
+                    ammoRefreshes--;
+                    classControl.ammoRefresh();
+                }
+            }
+            else if (other.gameObject.GetComponent<KnightControl>() != null)
+            {
+                KnightControl classControl = other.gameObject.GetComponent<KnightControl>();
+                if (!classControl.isAmmoFull())
+                {
+                    ammoRefreshes--;
+                    classControl.ammoRefresh();
+                }
+            }
+            else if (other.gameObject.GetComponent<BerserkerControl>() != null)
+            {
+                BerserkerControl classControl = other.gameObject.GetComponent<BerserkerControl>();
+                if (!classControl.isAmmoFull())
+                {
+                    ammoRefreshes--;
+                    classControl.ammoRefresh();
+                }
+            }
+            if (ammoRefreshes == 0)
+            {
+                Destroy(gameObject);
+            }
         }
-    }
+    } 
 }

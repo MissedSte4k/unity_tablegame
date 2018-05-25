@@ -47,7 +47,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!1 &1884825156875414
 GameObject:
   m_ObjectHideFlags: 0
@@ -264,6 +264,7 @@ MonoBehaviour:
   - {fileID: 1153726936082956}
   - {fileID: 1884825156875414}
   ammoRefreshes: 3
+  team: 0
 --- !u!114 &114653711034622124
 MonoBehaviour:
   m_ObjectHideFlags: 1

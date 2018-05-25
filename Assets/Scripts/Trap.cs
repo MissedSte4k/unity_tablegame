@@ -16,6 +16,8 @@ public class Trap : NetworkBehaviour {
     [SyncVar]
     public NetworkInstanceId spawnedBy;
     private Rigidbody hitrb;
+    [SyncVar]
+    public int team;
 
     // Use this for initialization
     void Start()
@@ -25,7 +27,10 @@ public class Trap : NetworkBehaviour {
             models[0].SetActive(true);
         } else
         {
-            models[2].SetActive(true);
+            if (team == 1)
+                models[1].SetActive(true);
+            else
+                models[2].SetActive(true);
         }
         GameObject obj = ClientScene.FindLocalObject(spawnedBy);
         Physics.IgnoreCollision(GetComponent<Collider>(), obj.GetComponent<Collider>());
@@ -60,7 +65,7 @@ public class Trap : NetworkBehaviour {
     {
         if (isExplosive)
         {
-            if (other.CompareTag("Player"))
+            if (other.CompareTag("Player") && other.GetComponent<CharacterControl>().Team() == team)
             {
                 Vector3 explosionPosition = transform.position;
                 Collider[] colliders = Physics.OverlapSphere(explosionPosition, explosionRadius);
@@ -81,9 +86,9 @@ public class Trap : NetworkBehaviour {
         }
         else
         {
-            hitrb = other.GetComponent<Rigidbody>();
-            if (other.CompareTag("Player"))
+            if (other.CompareTag("Player") && other.GetComponent<CharacterControl>().Team() == team)
             {
+                hitrb = other.GetComponent<Rigidbody>();
                 hitrb.gameObject.transform.position = transform.position;
                 hitrb.constraints = RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezePositionZ | RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ;
                 StartCoroutine(Stop(stopTime));

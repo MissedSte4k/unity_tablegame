@@ -1,7 +1,5 @@
 fileFormatVersion: 2
 guid: ed84306793c744e478506213ceb4e00a
-timeCreated: 1522640720
-licenseType: Free
 ModelImporter:
   serializedVersion: 22
   fileIDToRecycleName:
@@ -581,6 +579,7 @@ ModelImporter:
     animationRetargetingWarnings: 
     animationDoRetargetingWarnings: 0
     importAnimatedCustomProperties: 0
+    importConstraints: 0
     animationCompression: 3
     animationRotationError: 0.5
     animationPositionError: 0.5
@@ -2803,7 +2802,7 @@ ModelImporter:
       - time: 0.7083167
         functionName: ScoutShoot
         data: 
-        objectReferenceParameter: {fileID: 1755430392918646, guid: 652b4926bf92e1d46a7e80d5c957002a,
+        objectReferenceParameter: {fileID: 1040348701295030, guid: 652b4926bf92e1d46a7e80d5c957002a,
           type: 2}
         floatParameter: 0
         intParameter: 0

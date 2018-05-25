@@ -14,9 +14,13 @@ public class Projectile : NetworkBehaviour {
     public NetworkInstanceId spawnedBy;
     public Vector3 spin;
     public bool likeARecordBaby;
+    [SyncVar]
+    public int team;
 
     // Use this for initialization
     void Start () {
+        if (team == 1)
+            GetComponent<TrailRenderer>().startColor = new Color(0, 0, 255);
         rb = GetComponent<Rigidbody>();
         if (isOnFire)
         {
