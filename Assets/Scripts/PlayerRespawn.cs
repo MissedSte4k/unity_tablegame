@@ -14,10 +14,14 @@ public class PlayerRespawn : NetworkBehaviour {
     [SerializeField] ToggleEvent onToggleRemote;
     [SerializeField] float respawnTime = 5f;
 
-    //GameObject mainCamera;
+    GameObject mainCamera;
 
     void Start()
     {
+        foreach(GameObject obj in FindObjectsOfType<GameObject>())
+        {
+            if (obj.tag == "MainCamera") mainCamera = obj;
+        }
         EnablePlayer();
     }
 
@@ -25,7 +29,13 @@ public class PlayerRespawn : NetworkBehaviour {
     {
         onToggleShared.Invoke(false);
 
-        if (isLocalPlayer) onToggleLocal.Invoke(false);
+        if (isLocalPlayer)
+        {
+            mainCamera.GetComponent<Camera>().enabled = true;
+            mainCamera.GetComponent<AudioListener>().enabled = true;
+            mainCamera.GetComponent<FlareLayer>().enabled = true;
+            onToggleLocal.Invoke(false);
+        }
 
         else onToggleRemote.Invoke(false);
     }
@@ -34,14 +44,20 @@ public class PlayerRespawn : NetworkBehaviour {
     {
         onToggleShared.Invoke(true);
 
-        if (isLocalPlayer) onToggleLocal.Invoke(true);
+        if (isLocalPlayer)
+        {
+            mainCamera.GetComponent<Camera>().enabled = false;
+            mainCamera.GetComponent<AudioListener>().enabled = false;
+            mainCamera.GetComponent<FlareLayer>().enabled = false;
+            onToggleLocal.Invoke(true);
+        }
         else onToggleRemote.Invoke(true);
     }
 
     public void Die()
     {
         DisablePlayer();
-
+        
         Invoke("Respawn", respawnTime);
     }
 
