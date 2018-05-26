@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine.Networking;
 using UnityEngine.Networking.Match;
 using System.Collections;
+using UnityEngine.SceneManagement;
 
 public class JoinGame : MonoBehaviour
 {
@@ -90,8 +91,9 @@ public class JoinGame : MonoBehaviour
 
     public void JoinRoom(MatchInfoSnapshot _match)
     {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 2);
         networkManager.matchMaker.JoinMatch(_match.networkId, "", "", "", 0, 0, networkManager.OnMatchJoined);
-        StartCoroutine(WaitForJoin());
+        //StartCoroutine(WaitForJoin());
     }
 
     IEnumerator WaitForJoin()

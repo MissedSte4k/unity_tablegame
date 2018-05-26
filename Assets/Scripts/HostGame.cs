@@ -1,11 +1,12 @@
 ﻿using UnityEngine;
 using UnityEngine.Networking;
+using UnityEngine.SceneManagement;
 
 public class HostGame : MonoBehaviour
 {
 
     [SerializeField]
-    private uint roomSize = 6;
+    private uint roomSize = 8;
 
     private string roomName;
 
@@ -29,7 +30,7 @@ public class HostGame : MonoBehaviour
     {
         if (roomName != "" && roomName != null)
         {
-            Debug.Log("Creating Room: " + roomName + " with room for " + roomSize + " players.");
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 2);
             networkManager.matchMaker.CreateMatch(roomName, roomSize, true, "", "", "", 0, 0, networkManager.OnMatchCreate);
         }
     }

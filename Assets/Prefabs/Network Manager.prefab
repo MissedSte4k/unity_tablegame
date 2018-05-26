@@ -55,7 +55,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   status: {fileID: 0}
-  roomListItemPrefab: {fileID: 0}
+  roomListItemPrefab: {fileID: 1151872720098452, guid: fe086a567c767fe4a9b366fffea7256b,
+    type: 2}
   roomListParent: {fileID: 0}
 --- !u!114 &114056066019934208
 MonoBehaviour:

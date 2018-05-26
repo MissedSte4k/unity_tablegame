@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657868, g: 0.49641263, b: 0.57481706, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657844, g: 0.49641222, b: 0.57481694, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -206,7 +206,7 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1047709409}
+      - m_Target: {fileID: 1047709408}
         m_MethodName: SetRoomName
         m_Mode: 0
         m_Arguments:
@@ -8104,7 +8104,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 1047709409}
         m_MethodName: RefreshRoomList
         m_Mode: 1
         m_Arguments:
@@ -8718,7 +8718,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 1886000837}
   m_Direction: 2
   m_Value: 0
-  m_Size: 1
+  m_Size: 0.9999999
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -11794,7 +11794,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1047709409}
+      - m_Target: {fileID: 1047709408}
         m_MethodName: CreateRoom
         m_Mode: 1
         m_Arguments:
@@ -18752,32 +18752,38 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 1834628981657054, guid: a1567f9cc92e9854fb02d37a5e28fbd2, type: 2}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 114518538969843920, guid: a1567f9cc92e9854fb02d37a5e28fbd2,
         type: 2}
       propertyPath: showGUI
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 114033697713532558, guid: a1567f9cc92e9854fb02d37a5e28fbd2,
+        type: 2}
+      propertyPath: status
+      value: 
+      objectReference: {fileID: 1745343323}
+    - target: {fileID: 114033697713532558, guid: a1567f9cc92e9854fb02d37a5e28fbd2,
+        type: 2}
+      propertyPath: roomListParent
+      value: 
+      objectReference: {fileID: 1588397204}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: a1567f9cc92e9854fb02d37a5e28fbd2, type: 2}
   m_IsPrefabParent: 0
---- !u!1 &1047709408 stripped
-GameObject:
-  m_PrefabParentObject: {fileID: 1834628981657054, guid: a1567f9cc92e9854fb02d37a5e28fbd2,
+--- !u!114 &1047709408 stripped
+MonoBehaviour:
+  m_PrefabParentObject: {fileID: 114100297565548746, guid: a1567f9cc92e9854fb02d37a5e28fbd2,
     type: 2}
   m_PrefabInternal: {fileID: 1047709407}
---- !u!114 &1047709409
+  m_Script: {fileID: 11500000, guid: 0b65003bc4854014d9ffd66213155719, type: 3}
+--- !u!114 &1047709409 stripped
 MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1047709408}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4d48ad4db39afd040a54d0808d0d634e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_PrefabParentObject: {fileID: 114033697713532558, guid: a1567f9cc92e9854fb02d37a5e28fbd2,
+    type: 2}
+  m_PrefabInternal: {fileID: 1047709407}
+  m_Script: {fileID: 11500000, guid: 679b940d59287a54f8296f9c6243ac24, type: 3}
 --- !u!1 &1048121539
 GameObject:
   m_ObjectHideFlags: 0
@@ -28239,7 +28245,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -0.0000152570965}
+  m_AnchoredPosition: {x: 0, y: 0.000007630981}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &1588397205
