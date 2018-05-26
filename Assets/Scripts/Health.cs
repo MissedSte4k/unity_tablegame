@@ -211,7 +211,7 @@ public class Health : NetworkBehaviour {
         if (dependOnHealth && stamina > health) stamina = health;
         if (!dependOnHealth && stamina > maxStamina) stamina = maxStamina;
         if (stamina < 0) stamina = 0;
-        if (isLocalPlayer) staminaSlider.value = value;
+        if (isLocalPlayer) staminaSlider.value = stamina;
     }
 
     public void UpdateKillText(int target, int blue, int red, int won)

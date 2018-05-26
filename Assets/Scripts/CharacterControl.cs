@@ -171,10 +171,11 @@ public class CharacterControl : NetworkBehaviour {
                 if (!health.isStaminaZero(-shootStaminaUse)) CmdFire();
             }*/
 
-            if (Input.GetKey(KeyBindManager.MyInstance.Keybinds["Button(Sprint)"]) && !IsStanding() && onGround && !isCrouched && moveVertical > 0 && moveHorizontal != 0)
+            if (Input.GetKey(KeyBindManager.MyInstance.Keybinds["Button(Sprint)"]) && Input.GetKey(KeyBindManager.MyInstance.Keybinds["Button(MoveForward)"]) && !(Input.GetKey(KeyBindManager.MyInstance.Keybinds["Button(MoveBackward)"]) || Input.GetKey(KeyBindManager.MyInstance.Keybinds["Button(MoveLeft)"]) || Input.GetKey(KeyBindManager.MyInstance.Keybinds["Button(MoveRight)"])) && !IsStanding() && onGround && !isCrouched && !health.IsStaminaZero())
             {
                 onSprint = true;
-            } else
+            }
+            else
             {
                 onSprint = false;
             }
@@ -245,7 +246,7 @@ public class CharacterControl : NetworkBehaviour {
 
             if (!onSprint)
             {
-                if (currentIncreaseTime < 1 && !health.IsStaminaMax())
+                if (currentIncreaseTime < 1 && !health.IsStaminaMax() && !Input.GetKey(KeyBindManager.MyInstance.Keybinds["Button(Sprint)"]))
                 {
                     health.CmdChangeStamina(1);
                     currentIncreaseTime = increaseTime;
