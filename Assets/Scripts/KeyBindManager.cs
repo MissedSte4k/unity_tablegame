@@ -37,6 +37,13 @@ public class KeyBindManager : MonoBehaviour
         BindKey("Button(Jump)", (KeyCode)System.Enum.Parse(typeof(KeyCode), PlayerPrefs.GetString("Button(Jump)", "Space")));
         BindKey("Button(Crouch)", (KeyCode)System.Enum.Parse(typeof(KeyCode), PlayerPrefs.GetString("Button(Crouch)", "C")));
         BindKey("Button(Sprint)", (KeyCode)System.Enum.Parse(typeof(KeyCode), PlayerPrefs.GetString("Button(Sprint)", "LeftShift")));
+        BindKey("Button(Attack1)", (KeyCode)System.Enum.Parse(typeof(KeyCode), PlayerPrefs.GetString("Button(Attack1)", "Alpha1")));
+        BindKey("Button(Attack2)", (KeyCode)System.Enum.Parse(typeof(KeyCode), PlayerPrefs.GetString("Button(Attack2)", "Alpha2")));
+        BindKey("Button(Attack3)", (KeyCode)System.Enum.Parse(typeof(KeyCode), PlayerPrefs.GetString("Button(Attack3)", "Alpha3")));
+        BindKey("Button(Attack4)", (KeyCode)System.Enum.Parse(typeof(KeyCode), PlayerPrefs.GetString("Button(Attack4)", "Alpha4")));
+        BindKey("Button(SwapWeapon)", (KeyCode)System.Enum.Parse(typeof(KeyCode), PlayerPrefs.GetString("Button(SwapWeapon)", "Q")));
+        BindKey("Button(Block)", (KeyCode)System.Enum.Parse(typeof(KeyCode), PlayerPrefs.GetString("Button(Block)", "B")));
+        BindKey("Button(Reload)", (KeyCode)System.Enum.Parse(typeof(KeyCode), PlayerPrefs.GetString("Button(Reload)", "R")));
     }
 
 
