@@ -5,6 +5,7 @@ using System.Linq;
 
 public class KeyBindManager : MonoBehaviour
 {
+    private int buttonIndex = -1;
 
     private static KeyBindManager instance;
 
@@ -37,13 +38,45 @@ public class KeyBindManager : MonoBehaviour
         BindKey("Button(Jump)", (KeyCode)System.Enum.Parse(typeof(KeyCode), PlayerPrefs.GetString("Button(Jump)", "Space")));
         BindKey("Button(Crouch)", (KeyCode)System.Enum.Parse(typeof(KeyCode), PlayerPrefs.GetString("Button(Crouch)", "C")));
         BindKey("Button(Sprint)", (KeyCode)System.Enum.Parse(typeof(KeyCode), PlayerPrefs.GetString("Button(Sprint)", "LeftShift")));
-        BindKey("Button(Attack1)", (KeyCode)System.Enum.Parse(typeof(KeyCode), PlayerPrefs.GetString("Button(Attack1)", "Alpha1")));
-        BindKey("Button(Attack2)", (KeyCode)System.Enum.Parse(typeof(KeyCode), PlayerPrefs.GetString("Button(Attack2)", "Alpha2")));
-        BindKey("Button(Attack3)", (KeyCode)System.Enum.Parse(typeof(KeyCode), PlayerPrefs.GetString("Button(Attack3)", "Alpha3")));
-        BindKey("Button(Attack4)", (KeyCode)System.Enum.Parse(typeof(KeyCode), PlayerPrefs.GetString("Button(Attack4)", "Alpha4")));
+        BindKey("Button(Attack1)", (KeyCode)System.Enum.Parse(typeof(KeyCode), PlayerPrefs.GetString("Button(Attack1)", "Mouse0")));
+        BindKey("Button(Attack2)", (KeyCode)System.Enum.Parse(typeof(KeyCode), PlayerPrefs.GetString("Button(Attack2)", "E")));
+        BindKey("Button(Attack3)", (KeyCode)System.Enum.Parse(typeof(KeyCode), PlayerPrefs.GetString("Button(Attack3)", "Mouse2")));
+        BindKey("Button(Attack4)", (KeyCode)System.Enum.Parse(typeof(KeyCode), PlayerPrefs.GetString("Button(Attack4)", "F")));
         BindKey("Button(SwapWeapon)", (KeyCode)System.Enum.Parse(typeof(KeyCode), PlayerPrefs.GetString("Button(SwapWeapon)", "Q")));
-        BindKey("Button(Block)", (KeyCode)System.Enum.Parse(typeof(KeyCode), PlayerPrefs.GetString("Button(Block)", "B")));
+        BindKey("Button(Block)", (KeyCode)System.Enum.Parse(typeof(KeyCode), PlayerPrefs.GetString("Button(Block)", "Mouse1")));
         BindKey("Button(Reload)", (KeyCode)System.Enum.Parse(typeof(KeyCode), PlayerPrefs.GetString("Button(Reload)", "R")));
+    }
+
+
+    public void Update()
+    {
+        if (bindName != string.Empty)
+        {
+            if (Input.GetMouseButtonDown(3))
+            {
+                buttonIndex = 3;
+            }
+            if (Input.GetMouseButtonDown(4))
+            {
+                buttonIndex = 4;
+            }
+            if (Input.GetMouseButtonDown(5))
+            {
+                buttonIndex = 5;
+            }
+            if (Input.GetMouseButtonDown(6))
+            {
+                buttonIndex = 6;
+            }
+            if (Input.GetKeyDown(KeyCode.LeftShift))
+            {
+                buttonIndex = 7;
+            }
+            if (Input.GetKeyDown(KeyCode.RightShift))
+            {
+                buttonIndex = 8;
+            }           
+        }
     }
 
 
@@ -66,41 +99,6 @@ public class KeyBindManager : MonoBehaviour
         currentDictionary[key] = keyBind;
         MenuSettings.Instance.UpdateKeyText(key, keyBind);
         bindName = string.Empty;
-    }
-
-    private int buttonIndex = -1;
-
-    public void Update()
-    {
-        if (bindName != string.Empty)
-        {
-            if (Input.GetMouseButtonDown(3))
-            {
-                buttonIndex = 3;
-            }
-            if (Input.GetMouseButtonDown(4))
-            {
-                buttonIndex = 4;
-            }
-            if (Input.GetMouseButtonDown(5))
-            {
-                buttonIndex = 5;
-            }
-            if (Input.GetMouseButtonDown(6))
-            {
-                buttonIndex = 6;
-            }
-            if(Input.GetKeyDown(KeyCode.LeftShift))
-            {
-                buttonIndex = 7;
-            }
-            if (Input.GetKeyDown(KeyCode.RightShift))
-            {
-                buttonIndex = 8;
-            }
-        }
-        
-
     }
 
     public void KeyBindOnClick(string bindName)
@@ -168,7 +166,7 @@ public class KeyBindManager : MonoBehaviour
                     buttonIndex = -1;
                 }
                 SaveKeys();
-            }
+            }            
         }
     }
 

@@ -4086,7 +4086,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Double Axes
+  m_Text: Double Axes (no secondary)
 --- !u!222 &353790676
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -12928,7 +12928,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Javelin and Shield
+  m_Text: Javelin and Shield (no secondary)
 --- !u!222 &805800385
 CanvasRenderer:
   m_ObjectHideFlags: 0

@@ -212,7 +212,24 @@ public class PlayOptions : MonoBehaviour
         }
         else if (characterIndex == 2)
         {
-            if (primaryWeaponIndex == -1 || secondaryWeaponIndex == -1)
+            if(primaryWeaponIndex == 4)
+            {
+                weaponPlayButtons[2].interactable = true;
+                playButtonColors.normalColor = new Color32(24, 156, 14, 255);
+                weaponPlayButtons[2].colors = playButtonColors;
+
+                if(secondaryWeaponIndex != -1)
+                {
+                    int k = 0;
+                    for (int i = 0; i < 4; i++)
+                    {                       
+                        secondaryBerserkerWeaponButtons[i].image.sprite = secondaryBerserkerWeaponImages[k];
+                        k = k + 5;
+                    }
+                    secondaryWeaponIndex = -1;
+                }
+            }
+            else if (primaryWeaponIndex == -1 || secondaryWeaponIndex == -1)
             {
                 playButtonColors.normalColor = new Color32(51, 105, 46, 255);
                 weaponPlayButtons[2].colors = playButtonColors;
@@ -227,7 +244,24 @@ public class PlayOptions : MonoBehaviour
         }
         else if (characterIndex == 3)
         {
-            if (primaryWeaponIndex == -1 || secondaryWeaponIndex == -1)
+            if (primaryWeaponIndex == 4)
+            {
+                weaponPlayButtons[3].interactable = true;
+                playButtonColors.normalColor = new Color32(24, 156, 14, 255);
+                weaponPlayButtons[3].colors = playButtonColors;
+
+                if (secondaryWeaponIndex != -1)
+                {
+                    int k = 0;
+                    for (int i = 0; i < 5; i++)
+                    {
+                        secondaryArcherWeaponButtons[i].image.sprite = secondaryArcherWeaponImages[k];
+                        k = k + 5;
+                    }
+                    secondaryWeaponIndex = -1;
+                }
+            }
+            else if (primaryWeaponIndex == -1 || secondaryWeaponIndex == -1)
             {
                 playButtonColors.normalColor = new Color32(51, 105, 46, 255);
                 weaponPlayButtons[3].colors = playButtonColors;
@@ -238,6 +272,36 @@ public class PlayOptions : MonoBehaviour
                 weaponPlayButtons[3].interactable = true;
                 playButtonColors.normalColor = new Color32(24, 156, 14, 255);
                 weaponPlayButtons[3].colors = playButtonColors;
+            }
+        }
+
+        if(characterIndex == 2 && primaryWeaponIndex == 4)
+        {
+            for(int i = 0; i < 4; i++)
+            {
+                secondaryBerserkerWeaponButtons[i].interactable = false;
+            }
+        }
+        else
+        {
+            for (int i = 0; i < 4; i++)
+            {
+                secondaryBerserkerWeaponButtons[i].interactable = true;
+            }
+        }
+
+        if (characterIndex == 3 && primaryWeaponIndex == 4)
+        {
+            for (int i = 0; i < 5; i++)
+            {
+                secondaryArcherWeaponButtons[i].interactable = false;
+            }
+        }
+        else
+        {
+            for (int i = 0; i < 5; i++)
+            {
+                secondaryArcherWeaponButtons[i].interactable = true;
             }
         }
 
