@@ -8,7 +8,6 @@ public class Trap : NetworkBehaviour {
 
     public float stopTime;
     public float explosionRadius;
-    public float explosionPower;
     public GameObject[] models;
     public int explosionDamage;
     [SyncVar]
@@ -18,6 +17,9 @@ public class Trap : NetworkBehaviour {
     private Rigidbody hitrb;
     [SyncVar]
     public int team;
+    public GameObject explosionParticles;
+    [SyncVar]
+    private int activeTrap;
 
     // Use this for initialization
     void Start()
@@ -25,12 +27,20 @@ public class Trap : NetworkBehaviour {
         if (isExplosive)
         {
             models[0].SetActive(true);
-        } else
+            activeTrap = 0;
+        }
+        else
         {
             if (team == 1)
+            {
                 models[1].SetActive(true);
+                activeTrap = 1;
+            }
             else
+            {
                 models[2].SetActive(true);
+                activeTrap = 2;
+            }
         }
         GameObject obj = ClientScene.FindLocalObject(spawnedBy);
         Physics.IgnoreCollision(GetComponent<Collider>(), obj.GetComponent<Collider>());
@@ -63,37 +73,40 @@ public class Trap : NetworkBehaviour {
 
     void OnTriggerEnter(Collider other)
     {
-        if (isExplosive)
-        {
-            if (other.CompareTag("Player") && other.GetComponent<CharacterControl>().Team() == team)
+            if (isExplosive)
             {
-                Vector3 explosionPosition = transform.position;
-                Collider[] colliders = Physics.OverlapSphere(explosionPosition, explosionRadius);
-                foreach (Collider hit in colliders)
+                if (other.CompareTag("Player") && other.GetComponent<CharacterControl>().Team() == team)
                 {
-                    if (hit.CompareTag("Player"))
+                    ParticleSystem exp = explosionParticles.GetComponent<ParticleSystem>();
+                    exp.Play();
+                    models[activeTrap].SetActive(false);
+                    Vector3 explosionPosition = transform.position;
+                    Collider[] colliders = Physics.OverlapSphere(explosionPosition, explosionRadius);
+                    foreach (Collider hit in colliders)
                     {
-                        hit.GetComponent<Rigidbody>().AddExplosionForce(explosionPower, explosionPosition, explosionRadius, 3.0f);
-                        Vector3 closestPoint = hit.ClosestPoint(explosionPosition);
-                        float distance = Vector3.Distance(closestPoint, explosionPosition);
+                        if (hit.CompareTag("Player"))
+                        {
+                            Vector3 closestPoint = hit.ClosestPoint(explosionPosition);
+                            float distance = Vector3.Distance(closestPoint, explosionPosition);
 
-                        int damage = Convert.ToInt32((1 - Mathf.Clamp01(distance / explosionRadius)) * explosionDamage);
-                        hit.GetComponent<Health>().TakeDamage(damage);
+                            int damage = Convert.ToInt32((1 - Mathf.Clamp01(distance / explosionRadius)) * explosionDamage);
+                        if (isServer)
+                            hit.GetComponent<Health>().TakeDamage(damage);
+                        }
                     }
+                    Destroy(gameObject, exp.main.duration);
                 }
-                Destroy(gameObject);
             }
-        }
-        else
-        {
-            if (other.CompareTag("Player") && other.GetComponent<CharacterControl>().Team() == team)
+            else
             {
-                hitrb = other.GetComponent<Rigidbody>();
-                hitrb.gameObject.transform.position = transform.position;
-                hitrb.constraints = RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezePositionZ | RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ;
-                StartCoroutine(Stop(stopTime));
+                if (other.CompareTag("Player") && other.GetComponent<CharacterControl>().Team() == team)
+                {
+                    hitrb = other.GetComponent<Rigidbody>();
+                    hitrb.gameObject.transform.position = transform.position;
+                    hitrb.constraints = RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezePositionZ | RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ;
+                    StartCoroutine(Stop(stopTime));
+                }
             }
-        }
     }
 
     IEnumerator Stop(float time)

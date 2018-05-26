@@ -4,57 +4,63 @@ using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.UI;
 
-public class CharacterControl : NetworkBehaviour {
+public class CharacterControl : NetworkBehaviour
+{
 
     public float mouseSensitivity;
     public float defaultMoveSpeed;
     public float referenceMoveSpeed;
     [HideInInspector] public float moveSpeed;
-	public float crouchSpeedMultiplier;
-	public float sprintSpeedMultiplier;
-    public int increaseTime;
-	public int decreaseTime;
+    public float crouchSpeedMultiplier;
+    public float sprintSpeedMultiplier;
+    public float increaseTime;
+    public float decreaseTime;
     public float sprintStaminaUse;
     public int jumpStaminaUse;
-	public int shootStaminaUse;
+    public int shootStaminaUse;
     public float jumpSpeed;
-	private Rigidbody rb;
-	private Health health;
-	private CapsuleCollider hitBox;
-	private bool onGround = true;
+    private Rigidbody rb;
+    private Health health;
+    private CapsuleCollider hitBox;
+    private bool onGround = true;
     [HideInInspector] public bool onSprint = false;
     [HideInInspector] public bool isCrouched = false;
-	private float mouseH = 0.0f;
-	private float mouseV = 0.0f;
-	public Camera playerCamera;
-	private int currentIncreaseTime;
-	private int currentDecreaseTime;
-	public float normalHeight = 2.2f;
-	public float crouchHeight = 1.5f;
-	public float normalCenter = 0.1f;
-	public float crouchCenter = 0.25f;
-	private float minHeightChangeSpeed = 0.001f;
-	private float minCenterChangeSpeed = 0.0001f;
-	private int team;
+    private float mouseH = 0.0f;
+    private float mouseV = 0.0f;
+    public Camera playerCamera;
+    private float currentIncreaseTime;
+    private float currentDecreaseTime;
+    public float normalHeight = 2.2f;
+    public float crouchHeight = 1.5f;
+    public float normalCenter = 0.1f;
+    public float crouchCenter = 0.25f;
+    private float minHeightChangeSpeed = 0.001f;
+    private float minCenterChangeSpeed = 0.0001f;
+    private int team;
     private int hasFlag = 0;
     public bool lockCursor;
     private CapsuleCollider capsule;
     public AudioSource audioSourceWalk;
     public AudioClip walkClip;
     public AudioClip runClip;
+    public Image flashbangOverlay;
+    private bool isBlind;
+    private float flashDuration;
+    private float flashRemaining;
 
     private float moveHorizontal = 0;
     private float moveVertical = 0;
 
     private NetworkAnimator anim;
-	// dvi apatinės skeleto stuburo dalys, naudojamos žiūrėt aukštyn/žemyn
-	public Transform spine;
+    // dvi apatinės skeleto stuburo dalys, naudojamos žiūrėt aukštyn/žemyn
+    public Transform spine;
 
-	[SyncVar(hook = "OnHeightChanged")] public float height = 2.2f;
-	[SyncVar(hook = "OnCenterChanged")] public float center = 0.1f;
+    [SyncVar(hook = "OnHeightChanged")] public float height = 2.2f;
+    [SyncVar(hook = "OnCenterChanged")] public float center = 0.1f;
 
     // Use this for initialization
-    void Start() {
+    void Start()
+    {
         if (lockCursor)
         {
             Cursor.lockState = CursorLockMode.Locked;
@@ -65,12 +71,12 @@ public class CharacterControl : NetworkBehaviour {
         moveSpeed = defaultMoveSpeed;
         mouseSensitivity = MenuSettings.Instance.mouseSensitivity;
         rb = GetComponent<Rigidbody>();
-		currentIncreaseTime = increaseTime;
-		currentDecreaseTime = decreaseTime;
-		anim = GetComponent<NetworkAnimator>();
-		health = GetComponent<Health>();
-		minHeightChangeSpeed = 0.001f;
-		minCenterChangeSpeed = 0.0001f;
+        currentIncreaseTime = increaseTime;
+        currentDecreaseTime = decreaseTime;
+        anim = GetComponent<NetworkAnimator>();
+        health = GetComponent<Health>();
+        minHeightChangeSpeed = 0.001f;
+        minCenterChangeSpeed = 0.0001f;
 
         playerCamera.fieldOfView = MenuSettings.Instance.fieldOfView;
 
@@ -113,7 +119,7 @@ public class CharacterControl : NetworkBehaviour {
             if (Input.GetKey(KeyBindManager.MyInstance.Keybinds["Button(MoveLeft)"]) == true)
             {
                 if (CanMove(-transform.right))
-                moveHorizontal = -1;
+                    moveHorizontal = -1;
             }
             if (Input.GetKey(KeyBindManager.MyInstance.Keybinds["Button(MoveRight)"]) == true &&
                 Input.GetKey(KeyBindManager.MyInstance.Keybinds["Button(MoveLeft)"]) == true)
@@ -171,7 +177,7 @@ public class CharacterControl : NetworkBehaviour {
                 if (!health.isStaminaZero(-shootStaminaUse)) CmdFire();
             }*/
 
-            if (Input.GetKey(KeyBindManager.MyInstance.Keybinds["Button(Sprint)"]) && Input.GetKey(KeyBindManager.MyInstance.Keybinds["Button(MoveForward)"]) && !(Input.GetKey(KeyBindManager.MyInstance.Keybinds["Button(MoveBackward)"]) || Input.GetKey(KeyBindManager.MyInstance.Keybinds["Button(MoveLeft)"]) || Input.GetKey(KeyBindManager.MyInstance.Keybinds["Button(MoveRight)"])) && !IsStanding() && onGround && !isCrouched && !health.IsStaminaZero())
+            if (Input.GetKey(KeyBindManager.MyInstance.Keybinds["Button(Sprint)"]) && !IsStanding() && onGround && !isCrouched && moveVertical > 0 && moveHorizontal == 0)
             {
                 onSprint = true;
             }
@@ -235,23 +241,23 @@ public class CharacterControl : NetworkBehaviour {
 
             if (onSprint)
             {
-                if (currentDecreaseTime < 1)
+                if (currentDecreaseTime <= 0)
                 {
                     health.CmdChangeStamina(-sprintStaminaUse);
                     if (health.IsStaminaZero()) onSprint = false;
                     currentDecreaseTime = decreaseTime;
                 }
-                else currentDecreaseTime--;
+                else currentDecreaseTime -= Time.deltaTime;
             }
 
             if (!onSprint)
             {
-                if (currentIncreaseTime < 1 && !health.IsStaminaMax() && !Input.GetKey(KeyBindManager.MyInstance.Keybinds["Button(Sprint)"]))
+                if (currentIncreaseTime <= 0 && !health.IsStaminaMax())
                 {
                     health.CmdChangeStamina(1);
                     currentIncreaseTime = increaseTime;
                 }
-                else currentIncreaseTime--;
+                else currentIncreaseTime -= Time.deltaTime;
             }
 
             if (Input.GetKey(KeyBindManager.MyInstance.Keybinds["Button(Jump)"]) && onGround)
@@ -272,6 +278,20 @@ public class CharacterControl : NetworkBehaviour {
                 anim.animator.ResetTrigger("Hurt");
                 anim.animator.ResetTrigger("Block hurt");
             }
+
+            if (isBlind)
+            {
+                flashRemaining -= Time.deltaTime;
+                if (flashRemaining <= 2)
+                {
+                    flashbangOverlay.color = new Color(255, 255, 255, Mathf.Clamp(flashRemaining, 0, 1));
+                    Debug.Log(flashRemaining / flashDuration);
+                    if (flashRemaining <= 0)
+                    {
+                        isBlind = false;
+                    }
+                }
+            }
         }
         else playerCamera.enabled = false;
     }
@@ -283,21 +303,22 @@ public class CharacterControl : NetworkBehaviour {
 
 
     // Update is called once per frame
-    void FixedUpdate() {
-		if (isLocalPlayer)
-		{
+    void FixedUpdate()
+    {
+        if (isLocalPlayer)
+        {
 
             //float moveHorizontal = Input.GetAxis("Horizontal");
             //float moveVertical = Input.GetAxis("Vertical");
             float speed = moveSpeed * (onSprint ? sprintSpeedMultiplier : 1);
             Vector3 moveDirection = (moveHorizontal * transform.right + moveVertical * transform.forward).normalized;
 
-			//Vector3 forward = transform.forward * moveSpeed * moveVertical;
-			//Vector3 horizontal = transform.right * moveSpeed * moveHorizontal;
+            //Vector3 forward = transform.forward * moveSpeed * moveVertical;
+            //Vector3 horizontal = transform.right * moveSpeed * moveHorizontal;
 
-			rb.velocity = moveDirection * speed * Time.deltaTime * 50 + rb.velocity.y * Vector3.up;
-			if (rb.velocity.y > jumpSpeed)
-				rb.velocity = new Vector3(rb.velocity.x, 0, rb.velocity.z);
+            rb.velocity = moveDirection * speed * Time.deltaTime * 50 + rb.velocity.y * Vector3.up;
+            if (rb.velocity.y > jumpSpeed)
+                rb.velocity = new Vector3(rb.velocity.x, 0, rb.velocity.z);
 
             //if (rb.velocity.magnitude > moveSpeed) rb.velocity = rb.velocity.normalized * moveSpeed;
         }
@@ -329,37 +350,39 @@ public class CharacterControl : NetworkBehaviour {
     }
 
     private bool IsStanding()
-	{
-		if (Mathf.Abs(rb.velocity.x) < 0.5 && Mathf.Abs(rb.velocity.z) < 0.5) return true;
-		else return false;
-	}
+    {
+        if (Mathf.Abs(rb.velocity.x) < 0.5 && Mathf.Abs(rb.velocity.z) < 0.5) return true;
+        else return false;
+    }
 
-	private void OnCollisionEnter(Collision collision) {
-		if (isLocalPlayer)
-		{
-			if (collision.gameObject.CompareTag("Ground"))
-			{
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (isLocalPlayer)
+        {
+            if (collision.gameObject.CompareTag("Ground"))
+            {
                 onGround = true;
-				anim.animator.SetBool("Jump", false);
-				anim.animator.SetBool("Falling", false);
+                anim.animator.SetBool("Jump", false);
+                anim.animator.SetBool("Falling", false);
             }
-		}
-	}
+        }
+    }
 
-	private void OnCollisionExit(Collision collision) {
-		if (isLocalPlayer)
-		{
-			if (collision.gameObject.CompareTag("Ground"))
-			{
-				onGround = false;
-				anim.animator.SetBool("Falling", true);
+    private void OnCollisionExit(Collision collision)
+    {
+        if (isLocalPlayer)
+        {
+            if (collision.gameObject.CompareTag("Ground"))
+            {
+                onGround = false;
+                anim.animator.SetBool("Falling", true);
                 if (rb.velocity.y < 0)
                 {
                     rb.velocity = new Vector3(rb.velocity.x, 0, rb.velocity.y);
                 }
             }
-		}
-	}
+        }
+    }
 
     private void OnCollisionStay(Collision collision)
     {
@@ -407,47 +430,47 @@ public class CharacterControl : NetworkBehaviour {
     //	Destroy(bullet, 2.0f);
     //}
 
-	[Command]
-	private void CmdCrouch()
-	{
-		float h = Mathf.Max(Mathf.Min(Mathf.Lerp(height, crouchHeight, Time.deltaTime * 5), height - minHeightChangeSpeed/Time.deltaTime), crouchHeight);
-		float c = Mathf.Min(Mathf.Max(Mathf.Lerp(center, crouchCenter, Time.deltaTime * 5), center + minCenterChangeSpeed/Time.deltaTime), crouchCenter);
-		CrouchUncrouch(h, c);
-	}
+    [Command]
+    private void CmdCrouch()
+    {
+        float h = Mathf.Max(Mathf.Min(Mathf.Lerp(height, crouchHeight, Time.deltaTime * 5), height - minHeightChangeSpeed / Time.deltaTime), crouchHeight);
+        float c = Mathf.Min(Mathf.Max(Mathf.Lerp(center, crouchCenter, Time.deltaTime * 5), center + minCenterChangeSpeed / Time.deltaTime), crouchCenter);
+        CrouchUncrouch(h, c);
+    }
 
-	[Command]
-	private void CmdUncrouch()
-	{
-		float h = Mathf.Min(Mathf.Max(Mathf.Lerp(height, normalHeight, Time.deltaTime * 5), height + minHeightChangeSpeed/(Time.deltaTime)), normalHeight);
-		float c = Mathf.Max(Mathf.Min(Mathf.Lerp(center, normalCenter, Time.deltaTime * 5), center - minCenterChangeSpeed/(Time.deltaTime)), normalCenter);
-		CrouchUncrouch(h, c);
-	}
+    [Command]
+    private void CmdUncrouch()
+    {
+        float h = Mathf.Min(Mathf.Max(Mathf.Lerp(height, normalHeight, Time.deltaTime * 5), height + minHeightChangeSpeed / (Time.deltaTime)), normalHeight);
+        float c = Mathf.Max(Mathf.Min(Mathf.Lerp(center, normalCenter, Time.deltaTime * 5), center - minCenterChangeSpeed / (Time.deltaTime)), normalCenter);
+        CrouchUncrouch(h, c);
+    }
 
-	[Server]
-	private void CrouchUncrouch(float h, float c)
-	{
-		height = h;
-		center = c;
-	}
+    [Server]
+    private void CrouchUncrouch(float h, float c)
+    {
+        height = h;
+        center = c;
+    }
 
-	void OnHeightChanged(float value)
-	{
-		height = value;
-		hitBox = GetComponent<CapsuleCollider>();
-		hitBox.height = value;
-	}
+    void OnHeightChanged(float value)
+    {
+        height = value;
+        hitBox = GetComponent<CapsuleCollider>();
+        hitBox.height = value;
+    }
 
-	void OnCenterChanged(float value)
-	{
-		center = value;
-		hitBox = GetComponent<CapsuleCollider>();
-		hitBox.center = new Vector3(0, value, 0);
-	}
+    void OnCenterChanged(float value)
+    {
+        center = value;
+        hitBox = GetComponent<CapsuleCollider>();
+        hitBox.center = new Vector3(0, value, 0);
+    }
 
     [ClientRpc]
     public void RpcHitBlock()
     {
-        if (anim != null)
+        if (isLocalPlayer)
         {
             anim.SetTrigger("Hurt");
             anim.SetTrigger("Stop");
@@ -457,7 +480,7 @@ public class CharacterControl : NetworkBehaviour {
     [ClientRpc]
     public void RpcBlockHurt()
     {
-        if (anim != null)
+        if (isLocalPlayer)
             anim.SetTrigger("Block hurt");
     }
 
@@ -579,4 +602,15 @@ public class CharacterControl : NetworkBehaviour {
         return hasFlag;
     }
 
+    public void Blind(Vector3 position, float duration)
+    {
+        Vector3 screenPoint = playerCamera.WorldToViewportPoint(position);
+        bool onScreen = screenPoint.z > 0 && screenPoint.x > 0 && screenPoint.x < 1 && screenPoint.y > 0 && screenPoint.y < 1;
+        if (onScreen)
+        {
+            flashDuration = flashRemaining = duration;
+            isBlind = true;
+            flashbangOverlay.color = new Color(255, 255, 255, 255);
+        }
+    }
 }

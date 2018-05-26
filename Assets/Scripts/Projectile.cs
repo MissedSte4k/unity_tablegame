@@ -47,19 +47,20 @@ public class Projectile : NetworkBehaviour {
 
     void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.CompareTag("Player"))
-        {
-            var health = collision.gameObject.GetComponent<Health>();
-            if (health != null)
+            if (collision.gameObject.CompareTag("Player"))
             {
-                health.TakeDamage(damage);
+                var health = collision.gameObject.GetComponent<Health>();
+                if (health != null)
+                {
+                    if (isServer)
+                        health.TakeDamage(damage);
+                }
             }
-        }
-        else if (collision.gameObject.CompareTag("Block"))
-        {
-            collision.gameObject.GetComponentInParent<CharacterControl>().RpcBlockHurt();
-        }
+            else if (collision.gameObject.CompareTag("Block"))
+            {
+                collision.gameObject.GetComponentInParent<CharacterControl>().RpcBlockHurt();
+            }
 
-        Destroy(gameObject);
-    }
+            Destroy(gameObject);
+        }
 }

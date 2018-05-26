@@ -2802,7 +2802,7 @@ ModelImporter:
       - time: 0.7083167
         functionName: ScoutShoot
         data: 
-        objectReferenceParameter: {fileID: 1040348701295030, guid: 652b4926bf92e1d46a7e80d5c957002a,
+        objectReferenceParameter: {fileID: 1645547724301534, guid: 652b4926bf92e1d46a7e80d5c957002a,
           type: 2}
         floatParameter: 0
         intParameter: 0

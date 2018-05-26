@@ -4,10 +4,12 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Networking;
 
-public class Health : NetworkBehaviour {
+public class Health : NetworkBehaviour
+{
 
     [Range(0, 200)]
-    [SerializeField] int maxHealth;
+    [SerializeField]
+    int maxHealth;
     [SerializeField] int maxStamina;
     [SerializeField] bool dependOnHealth = false;
     public Text teamText;
@@ -19,8 +21,8 @@ public class Health : NetworkBehaviour {
     public Text winText;
 
     PlayerRespawn pr;
-    [SyncVar (hook = "OnHealthChanged")] int health;
-    [SyncVar (hook = "OnStaminaChanged")] float stamina;
+    [SyncVar(hook = "OnHealthChanged")] int health;
+    [SyncVar(hook = "OnStaminaChanged")] float stamina;
 
     void Start()
     {
@@ -80,7 +82,8 @@ public class Health : NetworkBehaviour {
         CmdTakeDamage(amount, GetComponent<CharacterControl>().Team(), IsFatal(amount));
     }
 
-    public void Heal(int amount) {
+    public void Heal(int amount)
+    {
         CmdHeal(amount);
     }
 
@@ -117,7 +120,7 @@ public class Health : NetworkBehaviour {
     [Server]
     private void TakeDamage(int amount, int team, bool fatal)
     {
-        if(fatal) FindObjectOfType<TeamControl>().IncreaseByOne(team);
+        if (fatal) FindObjectOfType<TeamControl>().IncreaseByOne(team);
         RpcTakeDamage(amount, fatal);
     }
 
@@ -138,7 +141,10 @@ public class Health : NetworkBehaviour {
         }
         else
         {
-            GetComponent<NetworkAnimator>().SetTrigger("Hurt");
+            if (isLocalPlayer)
+            {
+                GetComponent<NetworkAnimator>().SetTrigger("Hurt");
+            }
             health = health - amount;
             if (dependOnHealth && stamina > health) ChangeStamina(-1);
         }
@@ -150,7 +156,8 @@ public class Health : NetworkBehaviour {
         if (health + amount > maxHealth)
         {
             health = maxHealth;
-        } else
+        }
+        else
         {
             health += amount;
         }

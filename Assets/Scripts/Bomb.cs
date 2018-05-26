@@ -15,9 +15,16 @@ public class Bomb : NetworkBehaviour {
     private Rigidbody rb;
     public float fuseTime;
     private bool isCollided = false;
+    [SyncVar]
     public int bombType = 0;
     [SyncVar]
     public int team;
+    public GameObject explosionParticles;
+    public GameObject smokeParticles;
+    public int explosionDamage;
+    [SyncVar]
+    private int activeBomb;
+    public float flashDuration;
 
     // Use this for initialization
     void Start()
@@ -26,21 +33,39 @@ public class Bomb : NetworkBehaviour {
         {
             case 0:
                 if (team == 1)
+                {
                     models[1].SetActive(true);
+                    activeBomb = 1;
+                }
                 else
+                {
                     models[0].SetActive(true);
+                    activeBomb = 0;
+                }
                 break;
             case 1:
                 if (team == 1)
+                {
                     models[3].SetActive(true);
+                    activeBomb = 3;
+                }
                 else
+                {
                     models[2].SetActive(true);
+                    activeBomb = 2;
+                }
                 break;
             case 2:
                 if (team == 1)
+                {
                     models[5].SetActive(true);
+                    activeBomb = 5;
+                }
                 else
+                {
                     models[4].SetActive(true);
+                    activeBomb = 4;
+                }
                 break;
         }
         rb = GetComponent<Rigidbody>();
@@ -67,9 +92,28 @@ public class Bomb : NetworkBehaviour {
 
     void Boom()
     {
-        //flashbang
-        if (bombType == 0)
+        GameObject obj = ClientScene.FindLocalObject(spawnedBy);
+        Physics.IgnoreCollision(GetComponent<Collider>(), obj.GetComponent<Collider>(), false);
+        if (bombType == 0) //flashbang
         {
+            CharacterControl[] C = FindObjectsOfType<CharacterControl>();
+            foreach (CharacterControl c in C)
+            {
+                c.Blind(transform.position, flashDuration);
+            }
+            Destroy(gameObject);
+        }
+        else if (bombType == 1) //smokebomb
+        {
+            ParticleSystem exp = smokeParticles.GetComponent<ParticleSystem>();
+            exp.Play();
+            Destroy(gameObject, exp.main.duration);
+        }
+        else if (bombType == 2) //grenade
+        {
+            ParticleSystem exp = explosionParticles.GetComponent<ParticleSystem>();
+            exp.Play();
+            models[activeBomb].SetActive(false);
             Vector3 explosionPosition = transform.position;
             Collider[] colliders = Physics.OverlapSphere(explosionPosition, explosionRadius);
             foreach (Collider hit in colliders)
@@ -79,47 +123,13 @@ public class Bomb : NetworkBehaviour {
                     Vector3 closestPoint = hit.ClosestPoint(explosionPosition);
                     float distance = Vector3.Distance(closestPoint, explosionPosition);
 
-                    int damage = Convert.ToInt32((1 - Mathf.Clamp01(distance / explosionRadius)));
-                    hit.GetComponent<Health>().TakeDamage(damage);
+                    int damage = Convert.ToInt32((1 - Mathf.Clamp01(distance / explosionRadius)) * explosionDamage);
+                    if (isServer)
+                        hit.GetComponent<Health>().TakeDamage(damage);
                 }
             }
+            Destroy(gameObject, exp.main.duration);
         }
-        //smokebomb
-        else if (bombType == 1)
-        {
-            Vector3 explosionPosition = transform.position;
-            Collider[] colliders = Physics.OverlapSphere(explosionPosition, explosionRadius);
-            foreach (Collider hit in colliders)
-            {
-                if (hit.CompareTag("Player"))
-                {
-                    Vector3 closestPoint = hit.ClosestPoint(explosionPosition);
-                    float distance = Vector3.Distance(closestPoint, explosionPosition);
-
-                    int damage = Convert.ToInt32((1 - Mathf.Clamp01(distance / explosionRadius)));
-                    hit.GetComponent<Health>().TakeDamage(damage);
-                }
-            }
-        }
-        //grenade
-        else if (bombType == 2)
-        {
-            Vector3 explosionPosition = transform.position;
-            Collider[] colliders = Physics.OverlapSphere(explosionPosition, explosionRadius);
-            foreach (Collider hit in colliders)
-            {
-                if (hit.CompareTag("Player"))
-                {
-                    Vector3 closestPoint = hit.ClosestPoint(explosionPosition);
-                    float distance = Vector3.Distance(closestPoint, explosionPosition);
-
-                    int damage = Convert.ToInt32((1 - Mathf.Clamp01(distance / explosionRadius)));
-                    hit.GetComponent<Health>().TakeDamage(damage);
-                    hit.GetComponent<NetworkAnimator>().SetTrigger("Hurt");
-                }
-            }
-        }
-        Destroy(gameObject);
     }
 
     IEnumerator Delay(float time)
