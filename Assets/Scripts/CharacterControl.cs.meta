@@ -1,11 +1,18 @@
 fileFormatVersion: 2
 guid: d401f883799bd7b47a0e8c3dee85e987
-timeCreated: 1522186036
-licenseType: Free
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - playerCamera: {instanceID: 0}
+  - audioSourceWalk: {instanceID: 0}
+  - walkClip: {fileID: 8300000, guid: 8d95312f73472a84e8e76da36520d07b, type: 3}
+  - runClip: {fileID: 8300000, guid: 6481ac8e23bca3d4ea86fa57daa40ac4, type: 3}
+  - flashbangOverlay: {instanceID: 0}
+  - audioSourceOther: {instanceID: 0}
+  - jumpClip: {fileID: 8300000, guid: 21e98346a6a5509409fbedffb38792a2, type: 3}
+  - landClip: {fileID: 8300000, guid: 0c31dd3749eedaf46a569f0d6349aa94, type: 3}
+  - spine: {instanceID: 0}
   executionOrder: 100
   icon: {instanceID: 0}
   userData: 

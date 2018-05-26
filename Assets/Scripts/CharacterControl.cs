@@ -47,6 +47,9 @@ public class CharacterControl : NetworkBehaviour
     private bool isBlind;
     private float flashDuration;
     private float flashRemaining;
+    public AudioSource audioSourceOther;
+    public AudioClip jumpClip;
+    public AudioClip landClip;
 
     private float moveHorizontal = 0;
     private float moveVertical = 0;
@@ -64,6 +67,7 @@ public class CharacterControl : NetworkBehaviour
         if (lockCursor)
         {
             Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
         }
 
         Application.targetFrameRate = -1;
@@ -269,6 +273,7 @@ public class CharacterControl : NetworkBehaviour
                     anim.animator.SetBool("Falling", true);
                     health.CmdChangeStamina(-jumpStaminaUse);
                     rb.velocity += jumpSpeed * Vector3.up;
+                    CmdOtherAudio(1);
                 }
             }
             Physics.SyncTransforms();
@@ -361,6 +366,10 @@ public class CharacterControl : NetworkBehaviour
         {
             if (collision.gameObject.CompareTag("Ground"))
             {
+                if (!onGround)
+                {
+                    CmdOtherAudio(0);
+                }
                 onGround = true;
                 anim.animator.SetBool("Jump", false);
                 anim.animator.SetBool("Falling", false);
@@ -564,6 +573,30 @@ public class CharacterControl : NetworkBehaviour
         else
         {
             audioSourceWalk.Stop();
+        }
+    }
+
+    [Command]
+    void CmdOtherAudio(int action)
+    {
+        RpcOtherAudio(action);
+    }
+
+    [ClientRpc]
+    void RpcOtherAudio(int action)
+    {
+        switch (action)
+        {
+            case 0:
+                audioSourceOther.pitch = 0.5f;
+                audioSourceOther.clip = landClip;
+                audioSourceOther.Play();
+                break;
+            case 1:
+                audioSourceOther.pitch = 1;
+                audioSourceOther.clip = jumpClip;
+                audioSourceOther.Play();
+                break;
         }
     }
 
