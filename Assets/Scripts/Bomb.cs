@@ -6,25 +6,35 @@ using UnityEngine.Networking;
 
 public class Bomb : NetworkBehaviour {
 
-    public float explosionRadius;
+    [Header("Bomb models")]
     public GameObject[] models;
-    [SyncVar]
-    public NetworkInstanceId spawnedBy;
-    private Rigidbody hitrb;
-    public Vector3 spin;
-    private Rigidbody rb;
-    public float fuseTime;
-    private bool isCollided = false;
-    [SyncVar]
-    public int bombType = 0;
-    [SyncVar]
-    public int team;
+
+    [Header("Particles used by explosive and smoke bombs")]
     public GameObject explosionParticles;
     public GameObject smokeParticles;
+
+    [Header("Explosion damage and radius")]
+    [Range(0, 200)]
     public int explosionDamage;
-    [SyncVar]
-    private int activeBomb;
+    [Range(0, 50)]
+    public float explosionRadius;
+
+    [Header("Spin added to bomb")]
+    public Vector3 spin;
+
+    [Header("Time until bomb explodes")]
+    public float fuseTime;
+
+    [Header("Duration of flashbang blind effect")]
     public float flashDuration;
+
+    private Rigidbody rb;
+    private Rigidbody hitrb;
+    private bool isCollided = false;
+    [SyncVar] private int activeBomb;
+    [SyncVar] [HideInInspector] public NetworkInstanceId spawnedBy;
+    [SyncVar] [HideInInspector] public int bombType = 0;
+    [SyncVar] [HideInInspector] public int team;
 
     // Use this for initialization
     void Start()

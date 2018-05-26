@@ -6,62 +6,86 @@ using UnityEngine.UI;
 
 public class CharacterControl : NetworkBehaviour
 {
-
-    public float mouseSensitivity;
+    [Header("Default movement speed, reference speed used for adjusting animation speeds")]
+    [Range(0, 200)]
     public float defaultMoveSpeed;
+    [Range(64, 64)]
     public float referenceMoveSpeed;
     [HideInInspector] public float moveSpeed;
+
+    [Header("Speed multipliers when crouching and sprinting")]
+    [Range(0, 1)]
     public float crouchSpeedMultiplier;
+    [Range(1, 3)]
     public float sprintSpeedMultiplier;
+
+    [Header("Time intervals for stamina recharging by 1, for stamina decreasing when sprinting")]
+    [Range(0, 1)]
     public float increaseTime;
+    [Range(0, 1)]
     public float decreaseTime;
-    public float sprintStaminaUse;
-    public int jumpStaminaUse;
-    public int shootStaminaUse;
-    public float jumpSpeed;
-    private Rigidbody rb;
-    private Health health;
-    private CapsuleCollider hitBox;
-    private bool onGround = true;
-    [HideInInspector] public bool onSprint = false;
-    [HideInInspector] public bool isCrouched = false;
-    private float mouseH = 0.0f;
-    private float mouseV = 0.0f;
-    public Camera playerCamera;
     private float currentIncreaseTime;
     private float currentDecreaseTime;
+
+    [Header("Stamina used when sprinting every decreaseTime seconds, delay after hitting 0 stamina")]
+    [Range(0, 5)]
+    public float sprintStaminaUse;
+    [Range(0, 5)]
+    public float sprintDelay;
+    private float sprintDelayRemaining = 0;
+
+    [Header("Stamina use for jumping, jump height")]
+    [Range(0, 100)]
+    public int jumpStaminaUse;
+    [Range(0, 20)]
+    public float jumpSpeed;
+
+    [Header("Collider attributes for standing and crouching")]
+    [SyncVar(hook = "OnHeightChanged")] public float height = 2.2f;
+    [SyncVar(hook = "OnCenterChanged")] public float center = 0.1f;
     public float normalHeight = 2.2f;
     public float crouchHeight = 1.5f;
     public float normalCenter = 0.1f;
     public float crouchCenter = 0.25f;
     private float minHeightChangeSpeed = 0.001f;
     private float minCenterChangeSpeed = 0.0001f;
-    private int team;
-    private int hasFlag = 0;
+
+    [Header("Lock cursor to window")]
     public bool lockCursor;
-    private CapsuleCollider capsule;
+
+    [Header("Player camera and UI elements")]
+    public Camera playerCamera;
+    public Image flashbangOverlay;
+    private float flashDuration;
+    private float flashRemaining;
+
+    [Header("Audio sources and sounds")]
     public AudioSource audioSourceWalk;
     public AudioClip walkClip;
     public AudioClip runClip;
-    public Image flashbangOverlay;
-    private bool isBlind;
-    private float flashDuration;
-    private float flashRemaining;
     public AudioSource audioSourceOther;
     public AudioClip jumpClip;
     public AudioClip landClip;
-    public float sprintDelay;
-    private float sprintDelayRemaining = 0;
 
+    [HideInInspector] public float mouseSensitivity;
     private float moveHorizontal = 0;
     private float moveVertical = 0;
+    private float mouseH = 0.0f;
+    private float mouseV = 0.0f;
 
     private NetworkAnimator anim;
-    // dvi apatinės skeleto stuburo dalys, naudojamos žiūrėt aukštyn/žemyn
-    public Transform spine;
+    private Rigidbody rb;
+    private Health health;
+    private CapsuleCollider hitBox;
+    private CapsuleCollider capsule;
 
-    [SyncVar(hook = "OnHeightChanged")] public float height = 2.2f;
-    [SyncVar(hook = "OnCenterChanged")] public float center = 0.1f;
+    [HideInInspector] public bool onSprint = false;
+    [HideInInspector] public bool isCrouched = false;
+    private bool onGround = true;
+    private bool isBlind = false;
+
+    private int team;
+    private int hasFlag = 0;
 
     // Use this for initialization
     void Start()

@@ -5,14 +5,16 @@ using UnityEngine.Networking;
 
 public class AmmoBox : NetworkBehaviour {
 
+    [Header("Red and blue ammo box models")]
     public GameObject[] models;
-    [SyncVar]
-    public NetworkInstanceId spawnedBy;
-    public int ammoRefreshes;
-    [SyncVar]
-    public int team;
 
-    // Use this for initialization
+    [Header("Number of times the ammo box can give ammo")]
+    [Range(0, 10)]
+    public int ammoRefreshes;
+
+    [SyncVar] [HideInInspector] public int team;
+    [SyncVar] [HideInInspector] public NetworkInstanceId spawnedBy;
+
     void Start () {
         if (team == 1)
         {

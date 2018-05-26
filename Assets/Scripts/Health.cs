@@ -6,15 +6,22 @@ using UnityEngine.Networking;
 
 public class Health : NetworkBehaviour
 {
-
+    [Header("Maximum character health and stamina")]
     [Range(0, 200)]
-    [SerializeField]
-    int maxHealth;
-    [SerializeField] int maxStamina;
-    [SerializeField] bool dependOnHealth = false;
-    public bool canRecharge = true;
+    [SerializeField] private int maxHealth;
+    [Range(0, 200)]
+    [SerializeField] private int maxStamina;
+
+    [Header("Makes maximum stamina dependent on current health")]
+    [SerializeField] private bool dependOnHealth = false;
+
+    [Header("Delay until stamina can recharge after being used")]
+    [Range(0, 5)]
     public float rechargeDelay;
     [HideInInspector] public float delayRemaining;
+    [HideInInspector] public bool canRecharge = true;
+
+    [Header("UI elements")]
     public Text teamText;
     public Slider healthSlider;
     public Slider staminaSlider;
@@ -23,9 +30,10 @@ public class Health : NetworkBehaviour
     public Text TargetInfoText;
     public Text winText;
 
-    PlayerRespawn pr;
-    [SyncVar(hook = "OnHealthChanged")] int health;
-    [SyncVar(hook = "OnStaminaChanged")] float stamina;
+    private PlayerRespawn pr;
+
+    [SyncVar(hook = "OnHealthChanged")] private int health;
+    [SyncVar(hook = "OnStaminaChanged")] private float stamina;
 
     void Start()
     {

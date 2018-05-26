@@ -5,17 +5,18 @@ using UnityEngine.Networking;
 
 public class Projectile : NetworkBehaviour {
 
-    public int damage;
-    private Rigidbody rb;
+    [Header("The weapon's fire gameObject (if it has one)")]
     public GameObject fire;
-    [SyncVar]
-    public bool isOnFire = false;
-    [SyncVar]
-    public NetworkInstanceId spawnedBy;
-    public Vector3 spin;
+
+    [Header("Select whether the projectile spins and by how much on each axis")]
     public bool likeARecordBaby;
-    [SyncVar]
-    public int team;
+    public Vector3 spin;
+
+    private Rigidbody rb;
+    [HideInInspector] public int damage;
+    [SyncVar] [HideInInspector] public NetworkInstanceId spawnedBy;
+    [SyncVar] [HideInInspector] public int team;
+    [SyncVar] [HideInInspector] public bool isOnFire = false;
 
     // Use this for initialization
     void Start () {

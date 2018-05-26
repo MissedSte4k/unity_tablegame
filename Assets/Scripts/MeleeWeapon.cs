@@ -6,16 +6,16 @@ using UnityEngine.Networking;
 
 public class MeleeWeapon : NetworkBehaviour
 {
-
-    [HideInInspector] public int damage;
-    [HideInInspector] public bool isSlash; //marks whether the weapon can damage more than 1 character.
+    [Header("This weapon's colliders")]
     public Collider[] weaponColliders;
+
     private Collider[] collisions = new Collider[5];
     private int n = 0;
     private bool isClear = true;
     [HideInInspector] public bool collidersActive;
-    [HideInInspector] public NetworkInstanceId attacker;
     [HideInInspector] public bool isTrigger;
+    [HideInInspector] public int damage;
+    [HideInInspector] public bool isSlash; //marks whether the weapon can damage more than 1 character.
 
     // Use this for initialization
     void Start()

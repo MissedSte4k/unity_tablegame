@@ -6,20 +6,27 @@ using UnityEngine.Networking;
 
 public class Trap : NetworkBehaviour {
 
-    public float stopTime;
-    public float explosionRadius;
+    [Header("Trap models")]
     public GameObject[] models;
-    public int explosionDamage;
-    [SyncVar]
-    public bool isExplosive;
-    [SyncVar]
-    public NetworkInstanceId spawnedBy;
-    private Rigidbody hitrb;
-    [SyncVar]
-    public int team;
+
+    [Header("Particles used by explosive trap")]
     public GameObject explosionParticles;
-    [SyncVar]
-    private int activeTrap;
+
+    [Header("Explosion damage and radius")]
+    [Range(0, 200)]
+    public int explosionDamage;
+    [Range(0, 50)]
+    public float explosionRadius;
+
+    [Header("Duration that the immobilizing trap stops you")]
+    [Range(0, 10)]
+    public float stopTime;
+
+    private Rigidbody hitrb;
+    [SyncVar] private int activeTrap;
+    [SyncVar] [HideInInspector] public bool isExplosive;
+    [SyncVar] [HideInInspector] public NetworkInstanceId spawnedBy;
+    [SyncVar] [HideInInspector] public int team;
 
     // Use this for initialization
     void Start()
