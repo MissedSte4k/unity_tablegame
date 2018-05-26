@@ -59,6 +59,9 @@ public class PlayOptions : MonoBehaviour
     public Text[] primaryArcherWeaponTitles;
     public Text[] secondaryArcherWeaponTitles;
     public Button[] weaponPlayButtons;
+
+    public GameObject matchMakingLayer;
+
     
     public static PlayOptions Instance;
 
@@ -3751,4 +3754,70 @@ public class PlayOptions : MonoBehaviour
         }
         SecondaryWeaponButtonPointerEnter(i);
     }    
+
+    public void matchmakingBackButton()
+    {
+        if(characterIndex == 0)
+        {
+            KnightWeaponsLayer.gameObject.SetActive(true);
+            matchMakingLayer.gameObject.SetActive(false);
+            primaryKnightWeaponButtons[0].image.sprite = primaryKnightWeaponImages[0];
+            primaryKnightWeaponButtons[1].image.sprite = primaryKnightWeaponImages[5];
+            primaryKnightWeaponButtons[2].image.sprite = primaryKnightWeaponImages[10];
+            primaryKnightWeaponButtons[3].image.sprite = primaryKnightWeaponImages[15];
+            primaryKnightWeaponButtons[4].image.sprite = primaryKnightWeaponImages[20];
+            secondaryKnightWeaponButtons[0].image.sprite = secondaryKnightWeaponImages[0];
+            secondaryKnightWeaponButtons[1].image.sprite = secondaryKnightWeaponImages[5];
+            secondaryKnightWeaponButtons[2].image.sprite = secondaryKnightWeaponImages[10];
+            secondaryKnightWeaponButtons[3].image.sprite = secondaryKnightWeaponImages[15];
+            secondaryKnightWeaponButtons[4].image.sprite = secondaryKnightWeaponImages[20];
+        }
+        else if(characterIndex == 1)
+        {
+            ScoutWeaponsLayer.gameObject.SetActive(true);
+            matchMakingLayer.gameObject.SetActive(false);
+            primaryScoutWeaponButtons[0].image.sprite = primaryScoutWeaponImages[0];
+            primaryScoutWeaponButtons[1].image.sprite = primaryScoutWeaponImages[5];
+            primaryScoutWeaponButtons[2].image.sprite = primaryScoutWeaponImages[10];
+            primaryScoutWeaponButtons[3].image.sprite = primaryScoutWeaponImages[15];
+            primaryScoutWeaponButtons[4].image.sprite = primaryScoutWeaponImages[20];
+            secondaryScoutWeaponButtons[0].image.sprite = secondaryScoutWeaponImages[0];
+            secondaryScoutWeaponButtons[1].image.sprite = secondaryScoutWeaponImages[5];
+            secondaryScoutWeaponButtons[2].image.sprite = secondaryScoutWeaponImages[10];
+            secondaryScoutWeaponButtons[3].image.sprite = secondaryScoutWeaponImages[15];
+            secondaryScoutWeaponButtons[4].image.sprite = secondaryScoutWeaponImages[20];
+        }
+        else if (characterIndex == 2)
+        {
+            BerserkerWeaponsLayer.gameObject.SetActive(true);
+            matchMakingLayer.gameObject.SetActive(false);
+            primaryBerserkerWeaponButtons[0].image.sprite = primaryBerserkerWeaponImages[0];
+            primaryBerserkerWeaponButtons[1].image.sprite = primaryBerserkerWeaponImages[5];
+            primaryBerserkerWeaponButtons[2].image.sprite = primaryBerserkerWeaponImages[10];
+            primaryBerserkerWeaponButtons[3].image.sprite = primaryBerserkerWeaponImages[15];
+            primaryBerserkerWeaponButtons[4].image.sprite = primaryBerserkerWeaponImages[20];
+            secondaryBerserkerWeaponButtons[0].image.sprite = secondaryBerserkerWeaponImages[0];
+            secondaryBerserkerWeaponButtons[1].image.sprite = secondaryBerserkerWeaponImages[5];
+            secondaryBerserkerWeaponButtons[2].image.sprite = secondaryBerserkerWeaponImages[10];
+            secondaryBerserkerWeaponButtons[3].image.sprite = secondaryBerserkerWeaponImages[15];
+        }
+        else if (characterIndex == 3)
+        {
+            ArcherWeaponsLayer.gameObject.SetActive(true);
+            matchMakingLayer.gameObject.SetActive(false);
+            primaryArcherWeaponButtons[0].image.sprite = primaryArcherWeaponImages[0];
+            primaryArcherWeaponButtons[1].image.sprite = primaryArcherWeaponImages[5];
+            primaryArcherWeaponButtons[2].image.sprite = primaryArcherWeaponImages[10];
+            primaryArcherWeaponButtons[3].image.sprite = primaryArcherWeaponImages[15];
+            primaryArcherWeaponButtons[4].image.sprite = primaryArcherWeaponImages[20];
+            secondaryArcherWeaponButtons[0].image.sprite = secondaryArcherWeaponImages[0];
+            secondaryArcherWeaponButtons[1].image.sprite = secondaryArcherWeaponImages[5];
+            secondaryArcherWeaponButtons[2].image.sprite = secondaryArcherWeaponImages[10];
+            secondaryArcherWeaponButtons[3].image.sprite = secondaryArcherWeaponImages[15];
+            secondaryArcherWeaponButtons[4].image.sprite = secondaryArcherWeaponImages[20];
+        }
+        primaryWeaponIndex = -1;
+        secondaryWeaponIndex = -1;
+
+    }
 }
