@@ -12,6 +12,9 @@ public class Health : NetworkBehaviour
     int maxHealth;
     [SerializeField] int maxStamina;
     [SerializeField] bool dependOnHealth = false;
+    public bool canRecharge = true;
+    public float rechargeDelay;
+    [HideInInspector] public float delayRemaining;
     public Text teamText;
     public Slider healthSlider;
     public Slider staminaSlider;
@@ -48,6 +51,17 @@ public class Health : NetworkBehaviour
     {
         pr = GetComponent<PlayerRespawn>();
         CmdCurrentScore();
+    }
+
+    void Update()
+    {
+        if (isLocalPlayer)
+        {
+            if (!canRecharge)
+            {
+                CmdDelayTick();
+            }
+        }
     }
 
     public void SetTeamText(int team)
@@ -187,6 +201,12 @@ public class Health : NetworkBehaviour
         else if (!dependOnHealth && stamina + value > maxStamina) stamina = maxStamina;
         else if (stamina + value < 0) stamina = 0;
         else stamina = stamina + value;
+        if (value < 0)
+        {
+            Debug.Log(canRecharge);
+            canRecharge = false;
+            delayRemaining = rechargeDelay;
+        }
     }
 
     [Command]
@@ -236,6 +256,16 @@ public class Health : NetworkBehaviour
         {
             winText.color = Color.red;
             winText.text = "TEAM RED WINS!";
+        }
+    }
+
+    [Command]
+    void CmdDelayTick()
+    {
+        delayRemaining -= Time.deltaTime; 
+        if (delayRemaining <= 0)
+        {
+            canRecharge = true;
         }
     }
 }

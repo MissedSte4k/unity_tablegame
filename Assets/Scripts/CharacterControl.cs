@@ -50,6 +50,8 @@ public class CharacterControl : NetworkBehaviour
     public AudioSource audioSourceOther;
     public AudioClip jumpClip;
     public AudioClip landClip;
+    public float sprintDelay;
+    private float sprintDelayRemaining = 0;
 
     private float moveHorizontal = 0;
     private float moveVertical = 0;
@@ -190,6 +192,44 @@ public class CharacterControl : NetworkBehaviour
                 onSprint = false;
             }
 
+            if (onSprint)
+            {
+                if (currentDecreaseTime <= 0 && sprintDelayRemaining <= 0)
+                {
+                    health.CmdChangeStamina(-sprintStaminaUse);
+                    currentDecreaseTime = decreaseTime;
+                    if (health.IsStaminaZero())
+                    {
+                        onSprint = false;
+                        sprintDelayRemaining = health.delayRemaining + sprintDelay;
+                    }
+                }
+                else
+                {
+                    if (sprintDelayRemaining > 0)
+                    {
+                        onSprint = false;
+                        sprintDelayRemaining -= Time.deltaTime;
+                    }
+                    if (currentDecreaseTime > 0)
+                        currentDecreaseTime -= Time.deltaTime;
+                }
+            }
+
+            if (!onSprint)
+            {
+                if (currentIncreaseTime <= 0 && !health.IsStaminaMax() && health.canRecharge)
+                {
+                    health.CmdChangeStamina(1);
+                    currentIncreaseTime = increaseTime;
+                }
+                else
+                {
+                    if (currentIncreaseTime > 0)
+                        currentIncreaseTime -= Time.deltaTime;
+                }
+            }
+
             if (!isCrouched)
             {
                 float speed = moveSpeed * (onSprint ? sprintSpeedMultiplier : 1);
@@ -241,27 +281,6 @@ public class CharacterControl : NetworkBehaviour
             else
             {
                 CmdWalkAudio(0, false, isCrouched);
-            }
-
-            if (onSprint)
-            {
-                if (currentDecreaseTime <= 0)
-                {
-                    health.CmdChangeStamina(-sprintStaminaUse);
-                    if (health.IsStaminaZero()) onSprint = false;
-                    currentDecreaseTime = decreaseTime;
-                }
-                else currentDecreaseTime -= Time.deltaTime;
-            }
-
-            if (!onSprint)
-            {
-                if (currentIncreaseTime <= 0 && !health.IsStaminaMax())
-                {
-                    health.CmdChangeStamina(1);
-                    currentIncreaseTime = increaseTime;
-                }
-                else currentIncreaseTime -= Time.deltaTime;
             }
 
             if (Input.GetKey(KeyBindManager.MyInstance.Keybinds["Button(Jump)"]) && onGround)
