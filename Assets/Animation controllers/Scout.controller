@@ -2448,8 +2448,8 @@ AnimatorStateTransition:
   - m_ConditionMode: 1
     m_ConditionEvent: Crossbow
     m_EventTreshold: 0
-  - m_ConditionMode: 3
-    m_ConditionEvent: SpeedMultiplier
+  - m_ConditionMode: 1
+    m_ConditionEvent: Hurt
     m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 1102190367284460632}
@@ -6789,7 +6789,7 @@ AnimatorStateTransition:
   serializedVersion: 3
   m_TransitionDuration: 0.2
   m_TransitionOffset: 0
-  m_ExitTime: 0.65
+  m_ExitTime: 0.6
   m_HasExitTime: 1
   m_HasFixedDuration: 0
   m_InterruptionSource: 0
@@ -10053,7 +10053,7 @@ AnimatorStateTransition:
   serializedVersion: 3
   m_TransitionDuration: 0.2
   m_TransitionOffset: 0
-  m_ExitTime: 0.65
+  m_ExitTime: 0.6
   m_HasExitTime: 1
   m_HasFixedDuration: 0
   m_InterruptionSource: 0

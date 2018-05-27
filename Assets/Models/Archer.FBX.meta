@@ -873,7 +873,14 @@ ModelImporter:
       mirror: 0
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
-      events: []
+      events:
+      - time: 0
+        functionName: BowPullSound
+        data: 
+        objectReferenceParameter: {instanceID: 0}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
       transformMask: []
       maskType: 3
       maskSource: {instanceID: 0}
@@ -930,6 +937,14 @@ ModelImporter:
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
       events:
+      - time: 0.034188036
+        functionName: ShootSound
+        data: 
+        objectReferenceParameter: {fileID: 1624340318011626, guid: c2a9a7fb39e0e9844b3f4e17b997b1a6,
+          type: 2}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
       - time: 0.17170896
         functionName: ArcherShoot
         data: 
@@ -1416,6 +1431,14 @@ ModelImporter:
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
       events:
+      - time: 0.102564104
+        functionName: ShootSound
+        data: 
+        objectReferenceParameter: {fileID: 1624340318011626, guid: c2a9a7fb39e0e9844b3f4e17b997b1a6,
+          type: 2}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
       - time: 0.30313957
         functionName: ArcherShoot
         data: 
@@ -1461,6 +1484,13 @@ ModelImporter:
         messageOptions: 0
       - time: 0.5240806
         functionName: CmdBowArrowPlace
+        data: 
+        objectReferenceParameter: {instanceID: 0}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
+      - time: 0.68287003
+        functionName: ClickSound
         data: 
         objectReferenceParameter: {instanceID: 0}
         floatParameter: 0
@@ -1718,6 +1748,14 @@ ModelImporter:
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
       events:
+      - time: 0.102564104
+        functionName: ShootSound
+        data: 
+        objectReferenceParameter: {fileID: 1624340318011626, guid: c2a9a7fb39e0e9844b3f4e17b997b1a6,
+          type: 2}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
       - time: 0.30165046
         functionName: ArcherShoot
         data: 
@@ -1768,6 +1806,13 @@ ModelImporter:
         floatParameter: 0
         intParameter: 0
         messageOptions: 0
+      - time: 0.6689802
+        functionName: ClickSound
+        data: 
+        objectReferenceParameter: {instanceID: 0}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
       transformMask: []
       maskType: 3
       maskSource: {instanceID: 0}
@@ -1798,6 +1843,14 @@ ModelImporter:
       events:
       - time: 0.50987244
         functionName: ArcherShoot
+        data: 
+        objectReferenceParameter: {fileID: 1113916435146124, guid: e6befcf18af1cd34b88646cf86d670ae,
+          type: 2}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
+      - time: 0
+        functionName: ShootSound
         data: 
         objectReferenceParameter: {fileID: 1113916435146124, guid: e6befcf18af1cd34b88646cf86d670ae,
           type: 2}
@@ -2584,6 +2637,13 @@ ModelImporter:
         messageOptions: 0
       - time: 0.9944382
         functionName: JavelinReset
+        data: 
+        objectReferenceParameter: {instanceID: 0}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
+      - time: 0.3019995
+        functionName: ShootSound
         data: 
         objectReferenceParameter: {instanceID: 0}
         floatParameter: 0

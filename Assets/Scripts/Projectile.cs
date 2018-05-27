@@ -57,10 +57,13 @@ public class Projectile : NetworkBehaviour
     {
         audioSourceDamage.Play();
         GetComponent<Collider>().enabled = false;
-        rb.isKinematic = true;
-        transform.GetChild(0).gameObject.SetActive(false);
         GetComponent<TrailRenderer>().enabled = false;
-        GetComponent<MeshRenderer>().enabled = false;
+
+        if (GetComponent<MeshRenderer>() != null)
+            GetComponent<MeshRenderer>().enabled = false;
+        if (transform.GetChild(0) != null)
+            transform.GetChild(0).gameObject.SetActive(false);
+
         if (collision.gameObject.CompareTag("Player"))
         {
             var health = collision.gameObject.GetComponent<Health>();

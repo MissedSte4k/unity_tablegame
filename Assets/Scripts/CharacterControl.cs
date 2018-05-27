@@ -131,8 +131,6 @@ public class CharacterControl : NetworkBehaviour
     {
         if (isLocalPlayer)
         {
-            AudioListener.volume = MenuSettings.Instance.masterVolume;
-
             moveVertical = 0;
             if (Input.GetKey(KeyBindManager.MyInstance.Keybinds["Button(MoveForward)"]) == true)
             {

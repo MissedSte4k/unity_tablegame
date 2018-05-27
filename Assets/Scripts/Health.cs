@@ -8,18 +8,21 @@ public class Health : NetworkBehaviour
 {
     [Header("Maximum character health and stamina")]
     [Range(0, 200)]
-    [SerializeField] private int maxHealth;
+    [SerializeField]
+    private int maxHealth;
     [Range(0, 200)]
-    [SerializeField] private int maxStamina;
+    [SerializeField]
+    private int maxStamina;
 
     [Header("Makes maximum stamina dependent on current health")]
-    [SerializeField] private bool dependOnHealth = false;
+    [SerializeField]
+    private bool dependOnHealth = false;
 
     [Header("Delay until stamina can recharge after being used")]
     [Range(0, 5)]
     public float rechargeDelay;
-    [HideInInspector] public float delayRemaining;
-    [HideInInspector] public bool canRecharge = true;
+    [HideInInspector] [SyncVar] public float delayRemaining;
+    [HideInInspector] [SyncVar] public bool canRecharge = true;
 
     [Header("UI elements")]
     public Text teamText;
@@ -71,7 +74,11 @@ public class Health : NetworkBehaviour
         {
             if (!canRecharge)
             {
-                CmdDelayTick();
+                delayRemaining -= Time.deltaTime;
+                if (delayRemaining <= 0)
+                {
+                    canRecharge = true;
+                }
             }
         }
     }
@@ -214,11 +221,9 @@ public class Health : NetworkBehaviour
         else if (!dependOnHealth && stamina + value > maxStamina) stamina = maxStamina;
         else if (stamina + value < 0) stamina = 0;
         else stamina = stamina + value;
-        if (value < 0)
+        if (isServer && value < 0)
         {
-            Debug.Log(canRecharge);
-            canRecharge = false;
-            delayRemaining = rechargeDelay;
+            RpcSetRecharge();
         }
     }
 
@@ -272,13 +277,13 @@ public class Health : NetworkBehaviour
         }
     }
 
-    [Command]
-    void CmdDelayTick()
+    [ClientRpc]
+    void RpcSetRecharge()
     {
-        delayRemaining -= Time.deltaTime; 
-        if (delayRemaining <= 0)
+        if (isLocalPlayer)
         {
-            canRecharge = true;
+            canRecharge = false;
+            delayRemaining = rechargeDelay;
         }
     }
 }

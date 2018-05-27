@@ -2351,6 +2351,14 @@ ModelImporter:
         floatParameter: 0
         intParameter: 0
         messageOptions: 0
+      - time: 0.28799748
+        functionName: ShootSound
+        data: 
+        objectReferenceParameter: {fileID: 1218300826544440, guid: d4000d509a5c2d34585997fb85c8bb9e,
+          type: 2}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
       transformMask: []
       maskType: 3
       maskSource: {instanceID: 0}
@@ -2812,6 +2820,13 @@ ModelImporter:
         data: 
         objectReferenceParameter: {fileID: 1040348701295030, guid: 652b4926bf92e1d46a7e80d5c957002a,
           type: 2}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
+      - time: 0.52999794
+        functionName: ShootSound
+        data: 
+        objectReferenceParameter: {instanceID: 0}
         floatParameter: 0
         intParameter: 0
         messageOptions: 0
@@ -4229,6 +4244,14 @@ ModelImporter:
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
       events:
+      - time: 0.11752137
+        functionName: ShootSound
+        data: 
+        objectReferenceParameter: {fileID: 1329021655568268, guid: fea4fa31962d622478916ae2a5287d40,
+          type: 2}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
       - time: 0.34124368
         functionName: ScoutShoot
         data: 
@@ -4267,6 +4290,13 @@ ModelImporter:
       events:
       - time: 0.23933436
         functionName: CmdScoutRedraw
+        data: 
+        objectReferenceParameter: {instanceID: 0}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
+      - time: 0.47347242
+        functionName: PullString
         data: 
         objectReferenceParameter: {instanceID: 0}
         floatParameter: 0

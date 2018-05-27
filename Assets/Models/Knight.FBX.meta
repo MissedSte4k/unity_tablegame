@@ -2219,6 +2219,14 @@ ModelImporter:
         floatParameter: 0
         intParameter: 0
         messageOptions: 0
+      - time: 0.29199964
+        functionName: ShootSound
+        data: 
+        objectReferenceParameter: {fileID: 1026914031029434, guid: 649be7d64aea5744eb936bcd90906e20,
+          type: 2}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
       transformMask: []
       maskType: 3
       maskSource: {instanceID: 0}
@@ -2634,6 +2642,13 @@ ModelImporter:
         floatParameter: 0
         intParameter: 0
         messageOptions: 0
+      - time: 0.50000226
+        functionName: ShootSound
+        data: 
+        objectReferenceParameter: {instanceID: 0}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
       transformMask: []
       maskType: 3
       maskSource: {instanceID: 0}
@@ -3035,6 +3050,14 @@ ModelImporter:
       events:
       - time: 0.60742587
         functionName: KnightShoot
+        data: 
+        objectReferenceParameter: {fileID: 1149553644589044, guid: fb5a714390816f6498f252a4cd2b43b9,
+          type: 2}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
+      - time: 0.28799936
+        functionName: ShootSound
         data: 
         objectReferenceParameter: {fileID: 1149553644589044, guid: fb5a714390816f6498f252a4cd2b43b9,
           type: 2}
