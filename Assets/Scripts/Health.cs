@@ -30,6 +30,10 @@ public class Health : NetworkBehaviour
     public Text TargetInfoText;
     public Text winText;
 
+    [Header("Audio sources and sounds")]
+    public AudioSource audioSourceHurt;
+    public AudioClip hurtAudio;
+
     private PlayerRespawn pr;
 
     [SyncVar(hook = "OnHealthChanged")] private int health;
@@ -155,6 +159,7 @@ public class Health : NetworkBehaviour
     [ClientRpc]
     public void RpcTakeDamage(int amount, bool died)
     {
+        audioSourceHurt.PlayOneShot(hurtAudio);
         if (died)
         {
             health = 0;

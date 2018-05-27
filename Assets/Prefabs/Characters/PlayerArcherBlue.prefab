@@ -8919,8 +8919,8 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 0}
-  m_PlayOnAwake: 1
+  m_audioClip: {fileID: 8300000, guid: e3ec6ee47088ae64c8e42b72d7019a71, type: 3}
+  m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
   Loop: 0
@@ -8965,7 +8965,7 @@ AudioSource:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 0
+      value: 1
       inSlope: 0
       outSlope: 0
       tangentMode: 0
@@ -9015,8 +9015,8 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
-  m_PlayOnAwake: 1
-  m_Volume: 1
+  m_PlayOnAwake: 0
+  m_Volume: 0.5
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -9110,7 +9110,7 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
-  m_PlayOnAwake: 1
+  m_PlayOnAwake: 0
   m_Volume: 0.5
   m_Pitch: 0.833
   Loop: 1
@@ -9372,12 +9372,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cb82fbd5ec5550c4dbe0861315917c66, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 0
-  isSlash: 0
   weaponColliders:
   - {fileID: 65147734666639068}
   collidersActive: 0
   isTrigger: 0
+  damage: 0
+  isSlash: 0
 --- !u!114 &114236398150343258
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -9657,7 +9657,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d401f883799bd7b47a0e8c3dee85e987, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mouseSensitivity: 1
   defaultMoveSpeed: 80
   referenceMoveSpeed: 64
   moveSpeed: 100
@@ -9666,24 +9665,28 @@ MonoBehaviour:
   increaseTime: 0.04
   decreaseTime: 0.01
   sprintStaminaUse: 1
+  sprintDelay: 2
   jumpStaminaUse: 30
-  shootStaminaUse: 0
   jumpSpeed: 5
-  onSprint: 0
-  isCrouched: 0
-  playerCamera: {fileID: 20243786672050754}
+  height: 2.3
+  center: 0.15
   normalHeight: 2.3
   crouchHeight: 1.65
   normalCenter: 0.15
   crouchCenter: 0.4
   lockCursor: 0
+  playerCamera: {fileID: 20243786672050754}
+  flashbangOverlay: {fileID: 114298012288425290}
   audioSourceWalk: {fileID: 82884030038905426}
   walkClip: {fileID: 8300000, guid: 8d95312f73472a84e8e76da36520d07b, type: 3}
   runClip: {fileID: 8300000, guid: 6481ac8e23bca3d4ea86fa57daa40ac4, type: 3}
-  flashbangOverlay: {fileID: 114298012288425290}
-  spine: {fileID: 4617330800636900}
-  height: 2.3
-  center: 0.15
+  audioSourceOther: {fileID: 82575446357938758}
+  jumpClip: {fileID: 8300000, guid: 21e98346a6a5509409fbedffb38792a2, type: 3}
+  landClip: {fileID: 8300000, guid: 0c31dd3749eedaf46a569f0d6349aa94, type: 3}
+  fallDamage: 40
+  mouseSensitivity: 1
+  onSprint: 0
+  isCrouched: 0
 --- !u!114 &114341977938808624
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -9916,12 +9919,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cb82fbd5ec5550c4dbe0861315917c66, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 0
-  isSlash: 0
   weaponColliders:
   - {fileID: 136240802168788384}
   collidersActive: 0
   isTrigger: 0
+  damage: 0
+  isSlash: 0
 --- !u!114 &114575169389982726
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -10062,12 +10065,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cb82fbd5ec5550c4dbe0861315917c66, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 0
-  isSlash: 0
   weaponColliders:
   - {fileID: 65440515558901498}
   collidersActive: 0
   isTrigger: 0
+  damage: 0
+  isSlash: 0
 --- !u!114 &114765569999772368
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -10199,13 +10202,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cb82fbd5ec5550c4dbe0861315917c66, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 0
-  isSlash: 0
   weaponColliders:
   - {fileID: 136176733679421546}
   - {fileID: 65238022970535142}
   collidersActive: 0
   isTrigger: 0
+  damage: 0
+  isSlash: 0
 --- !u!114 &114889142139436794
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -10220,6 +10223,9 @@ MonoBehaviour:
   maxHealth: 100
   maxStamina: 100
   dependOnHealth: 0
+  rechargeDelay: 1
+  delayRemaining: 0
+  canRecharge: 1
   teamText: {fileID: 114864167354869034}
   healthSlider: {fileID: 114995993381349410}
   staminaSlider: {fileID: 114023966807694786}
@@ -10227,6 +10233,7 @@ MonoBehaviour:
   blueTeamKillsText: {fileID: 114628381831768502}
   TargetInfoText: {fileID: 114044158738803992}
   winText: {fileID: 114044158738803992}
+  audioSourceHurt: {fileID: 82190226103141096}
 --- !u!114 &114890823301679310
 MonoBehaviour:
   m_ObjectHideFlags: 1

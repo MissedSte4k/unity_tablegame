@@ -41,7 +41,8 @@ public class CharacterControl : NetworkBehaviour
     public float jumpSpeed;
 
     [Header("Collider attributes for standing and crouching")]
-    [SyncVar(hook = "OnHeightChanged")] public float height = 2.2f;
+    [SyncVar(hook = "OnHeightChanged")]
+    public float height = 2.2f;
     [SyncVar(hook = "OnCenterChanged")] public float center = 0.1f;
     public float normalHeight = 2.2f;
     public float crouchHeight = 1.5f;
@@ -67,6 +68,10 @@ public class CharacterControl : NetworkBehaviour
     public AudioClip jumpClip;
     public AudioClip landClip;
 
+    [Header("Fall damage per 1 second of falling")]
+    [Range(0, 100)]
+    public int fallDamage;
+
     [HideInInspector] public float mouseSensitivity;
     private float moveHorizontal = 0;
     private float moveVertical = 0;
@@ -86,6 +91,7 @@ public class CharacterControl : NetworkBehaviour
 
     private int team;
     private int hasFlag = 0;
+    private float airTime;
 
     // Use this for initialization
     void Start()
@@ -216,6 +222,9 @@ public class CharacterControl : NetworkBehaviour
                 onSprint = false;
             }
 
+            if (sprintDelayRemaining > 0)
+                sprintDelayRemaining -= Time.deltaTime;
+
             if (onSprint)
             {
                 if (currentDecreaseTime <= 0 && sprintDelayRemaining <= 0)
@@ -233,7 +242,6 @@ public class CharacterControl : NetworkBehaviour
                     if (sprintDelayRemaining > 0)
                     {
                         onSprint = false;
-                        sprintDelayRemaining -= Time.deltaTime;
                     }
                     if (currentDecreaseTime > 0)
                         currentDecreaseTime -= Time.deltaTime;
@@ -307,7 +315,12 @@ public class CharacterControl : NetworkBehaviour
                 CmdWalkAudio(0, false, isCrouched);
             }
 
-            if (Input.GetKey(KeyBindManager.MyInstance.Keybinds["Button(Jump)"]) && onGround)
+            if (!onGround && rb.velocity.y < 0)
+            {
+                airTime += Time.deltaTime;
+            }
+
+            if (Input.GetKeyDown(KeyBindManager.MyInstance.Keybinds["Button(Jump)"]) && onGround)
             {
                 //rb.AddForce(Vector3.up * jumpHeight, ForceMode.Impulse);
                 if (!health.IsStaminaZero(-jumpStaminaUse))
@@ -323,8 +336,11 @@ public class CharacterControl : NetworkBehaviour
 
             if (NetworkServer.active)
             {
-                anim.animator.ResetTrigger("Hurt");
-                anim.animator.ResetTrigger("Block hurt");
+                if (!anim.animator.GetCurrentAnimatorStateInfo(2).IsName("Default"))
+                {
+                    anim.animator.ResetTrigger("Hurt");
+                    anim.animator.ResetTrigger("Block hurt");
+                }
             }
 
             if (isBlind)
@@ -416,6 +432,11 @@ public class CharacterControl : NetworkBehaviour
                 onGround = true;
                 anim.animator.SetBool("Jump", false);
                 anim.animator.SetBool("Falling", false);
+                if ((int)((airTime - 1.05f) * fallDamage) > 0)
+                {
+                    health.TakeDamage(((int)((airTime - 0.8f) * fallDamage)));
+                }
+                airTime = 0;
             }
         }
     }
@@ -632,13 +653,11 @@ public class CharacterControl : NetworkBehaviour
         {
             case 0:
                 audioSourceOther.pitch = 0.5f;
-                audioSourceOther.clip = landClip;
-                audioSourceOther.Play();
+                audioSourceOther.PlayOneShot(landClip);
                 break;
             case 1:
                 audioSourceOther.pitch = 1;
-                audioSourceOther.clip = jumpClip;
-                audioSourceOther.Play();
+                audioSourceOther.PlayOneShot(jumpClip);
                 break;
         }
     }

@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
 
-public class Projectile : NetworkBehaviour {
+public class Projectile : NetworkBehaviour
+{
 
     [Header("The weapon's fire gameObject (if it has one)")]
     public GameObject fire;
@@ -18,8 +19,12 @@ public class Projectile : NetworkBehaviour {
     [SyncVar] [HideInInspector] public int team;
     [SyncVar] [HideInInspector] public bool isOnFire = false;
 
+    [Header("Audio sources and sounds")]
+    public AudioSource audioSourceDamage;
+
     // Use this for initialization
-    void Start () {
+    void Start()
+    {
         if (team == 1)
             GetComponent<TrailRenderer>().startColor = new Color(0, 0, 255);
         rb = GetComponent<Rigidbody>();
@@ -31,15 +36,17 @@ public class Projectile : NetworkBehaviour {
         Physics.IgnoreCollision(GetComponent<Collider>(), obj.GetComponent<Collider>());
 
     }
-	
-	// Update is called once per frame
-	void FixedUpdate () {
+
+    // Update is called once per frame
+    void FixedUpdate()
+    {
         if (!likeARecordBaby)
         {
             Quaternion rotation = transform.rotation;
             rotation.SetLookRotation(rb.velocity);
             transform.rotation = rotation;
-        } else
+        }
+        else
         {
             Quaternion angleRotation = Quaternion.Euler(spin * Time.deltaTime);
             rb.MoveRotation(rb.rotation * angleRotation);
@@ -48,20 +55,26 @@ public class Projectile : NetworkBehaviour {
 
     void OnCollisionEnter(Collision collision)
     {
-            if (collision.gameObject.CompareTag("Player"))
+        audioSourceDamage.Play();
+        GetComponent<Collider>().enabled = false;
+        rb.isKinematic = true;
+        transform.GetChild(0).gameObject.SetActive(false);
+        GetComponent<TrailRenderer>().enabled = false;
+        GetComponent<MeshRenderer>().enabled = false;
+        if (collision.gameObject.CompareTag("Player"))
+        {
+            var health = collision.gameObject.GetComponent<Health>();
+            if (health != null)
             {
-                var health = collision.gameObject.GetComponent<Health>();
-                if (health != null)
-                {
-                    if (isServer)
-                        health.TakeDamage(damage);
-                }
+                if (isServer)
+                    health.TakeDamage(damage);
             }
-            else if (collision.gameObject.CompareTag("Block"))
-            {
-                collision.gameObject.GetComponentInParent<CharacterControl>().RpcBlockHurt();
-            }
-
-            Destroy(gameObject);
         }
+        else if (collision.gameObject.CompareTag("Block"))
+        {
+            collision.gameObject.GetComponentInParent<CharacterControl>().RpcBlockHurt();
+        }
+
+        Destroy(gameObject, audioSourceDamage.clip.length);
+    }
 }
