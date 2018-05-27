@@ -28,6 +28,14 @@ public class Bomb : NetworkBehaviour {
     [Header("Duration of flashbang blind effect")]
     public float flashDuration;
 
+    [Header("Audio sources and sounds")]
+    public AudioSource audioSourceBoom;
+    public AudioClip smokeBoom;
+    public AudioClip explosionBoom;
+    public AudioClip flashBoom;
+    public AudioSource audioSourceClank;
+    public AudioSource audioSourceFuse;
+
     private Rigidbody rb;
     private Rigidbody hitrb;
     private bool isCollided = false;
@@ -82,6 +90,7 @@ public class Bomb : NetworkBehaviour {
         models[bombType * 2].SetActive(true);
         GameObject obj = ClientScene.FindLocalObject(spawnedBy);
         Physics.IgnoreCollision(GetComponent<Collider>(), obj.GetComponent<Collider>());
+        audioSourceFuse.Play();
         StartCoroutine(Delay(fuseTime));
     }
 
@@ -98,10 +107,12 @@ public class Bomb : NetworkBehaviour {
     void OnCollisionEnter()
     {
         isCollided = true;
+        audioSourceClank.Play();
     }
 
     void Boom()
     {
+        audioSourceFuse.Stop();
         GameObject obj = ClientScene.FindLocalObject(spawnedBy);
         Physics.IgnoreCollision(GetComponent<Collider>(), obj.GetComponent<Collider>(), false);
         if (bombType == 0) //flashbang
@@ -111,12 +122,19 @@ public class Bomb : NetworkBehaviour {
             {
                 c.Blind(transform.position, flashDuration);
             }
-            Destroy(gameObject);
+            models[activeBomb].SetActive(false);
+            rb.isKinematic = true;
+            audioSourceBoom.clip = flashBoom;
+            audioSourceBoom.Play();
+            Destroy(gameObject, 3);
         }
         else if (bombType == 1) //smokebomb
         {
             ParticleSystem exp = smokeParticles.GetComponent<ParticleSystem>();
             exp.Play();
+            models[activeBomb].SetActive(false);
+            audioSourceBoom.clip = smokeBoom;
+            audioSourceBoom.Play();
             Destroy(gameObject, exp.main.duration);
         }
         else if (bombType == 2) //grenade
@@ -138,7 +156,11 @@ public class Bomb : NetworkBehaviour {
                         hit.GetComponent<Health>().TakeDamage(damage);
                 }
             }
-            Destroy(gameObject, exp.main.duration);
+            models[activeBomb].SetActive(false);
+            rb.isKinematic = true;
+            audioSourceBoom.clip = explosionBoom;
+            audioSourceBoom.Play();
+            Destroy(gameObject, 3);
         }
     }
 

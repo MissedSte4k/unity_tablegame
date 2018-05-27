@@ -17,6 +17,12 @@ public class MeleeWeapon : NetworkBehaviour
     [HideInInspector] public int damage;
     [HideInInspector] public bool isSlash; //marks whether the weapon can damage more than 1 character.
 
+    [Header("Audio sources and sounds")]
+    public AudioSource audioSourceDamage;
+    public AudioSource audioSourceSlash;
+    public AudioClip damageClip;
+    public AudioClip blockHitClip;
+
     // Use this for initialization
     void Start()
     {
@@ -76,6 +82,7 @@ public class MeleeWeapon : NetworkBehaviour
     {
         if (other.gameObject.CompareTag("Player"))
         {
+            audioSourceDamage.PlayOneShot(damageClip);
             var health = other.gameObject.GetComponent<Health>();
             if (health != null)
             {
@@ -101,9 +108,11 @@ public class MeleeWeapon : NetworkBehaviour
         }
         else if (other.gameObject.CompareTag("Block"))
         {
+            audioSourceDamage.PlayOneShot(blockHitClip);
             collidersActive = false;
             GetComponentInParent<CharacterControl>().RpcHitBlock();
             other.GetComponentInParent<CharacterControl>().RpcBlockHurt();
         }
+        else audioSourceDamage.PlayOneShot(blockHitClip);
     }
 }

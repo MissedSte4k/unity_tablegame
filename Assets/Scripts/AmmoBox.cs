@@ -12,6 +12,10 @@ public class AmmoBox : NetworkBehaviour {
     [Range(0, 10)]
     public int ammoRefreshes;
 
+    [Header("Audio sources and sounds")]
+    public AudioSource audioSourceTrigger;
+    public AudioSource audioSourceClank;
+
     [SyncVar] [HideInInspector] public int team;
     [SyncVar] [HideInInspector] public NetworkInstanceId spawnedBy;
 
@@ -30,6 +34,8 @@ public class AmmoBox : NetworkBehaviour {
 
     void OnCollisionEnter(Collision collision)
     {
+        audioSourceClank.Play();
+
         GameObject hit = collision.gameObject;
         RaycastHit hit2;
         Collider collider = GetComponent<Collider>();
@@ -58,6 +64,7 @@ public class AmmoBox : NetworkBehaviour {
                 {
                     ammoRefreshes--;
                     classControl.ammoRefresh();
+                    audioSourceTrigger.Play();
                 }
             }
             else if (other.gameObject.GetComponent<ArcherControl>() != null)
@@ -67,6 +74,7 @@ public class AmmoBox : NetworkBehaviour {
                 {
                     ammoRefreshes--;
                     classControl.ammoRefresh();
+                    audioSourceTrigger.Play();
                 }
             }
             else if (other.gameObject.GetComponent<KnightControl>() != null)
@@ -76,6 +84,7 @@ public class AmmoBox : NetworkBehaviour {
                 {
                     ammoRefreshes--;
                     classControl.ammoRefresh();
+                    audioSourceTrigger.Play();
                 }
             }
             else if (other.gameObject.GetComponent<BerserkerControl>() != null)
@@ -85,6 +94,7 @@ public class AmmoBox : NetworkBehaviour {
                 {
                     ammoRefreshes--;
                     classControl.ammoRefresh();
+                    audioSourceTrigger.Play();
                 }
             }
             if (ammoRefreshes == 0)

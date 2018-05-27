@@ -22,6 +22,10 @@ public class Trap : NetworkBehaviour {
     [Range(0, 10)]
     public float stopTime;
 
+    [Header("Audio sources and sounds")]
+    public AudioSource audioSourceTrigger;
+    public AudioSource audioSourceClank;
+
     private Rigidbody hitrb;
     [SyncVar] private int activeTrap;
     [SyncVar] [HideInInspector] public bool isExplosive;
@@ -54,13 +58,11 @@ public class Trap : NetworkBehaviour {
     }
 
     // Update is called once per frame
-    void Update()
-    {
-
-    }
 
     void OnCollisionEnter(Collision collision)
     {
+        audioSourceClank.Play();
+
         GameObject hit = collision.gameObject;
         RaycastHit hit2;
         BoxCollider collider = GetComponent<BoxCollider>();
@@ -80,40 +82,41 @@ public class Trap : NetworkBehaviour {
 
     void OnTriggerEnter(Collider other)
     {
+        if (other.CompareTag("Player") && other.GetComponent<CharacterControl>().Team() == team)
+        {
+            audioSourceClank.Play();
+
             if (isExplosive)
             {
-                if (other.CompareTag("Player") && other.GetComponent<CharacterControl>().Team() == team)
+                ParticleSystem exp = explosionParticles.GetComponent<ParticleSystem>();
+                exp.Play();
+                models[activeTrap].SetActive(false);
+                Vector3 explosionPosition = transform.position;
+                Collider[] colliders = Physics.OverlapSphere(explosionPosition, explosionRadius);
+                foreach (Collider hit in colliders)
                 {
-                    ParticleSystem exp = explosionParticles.GetComponent<ParticleSystem>();
-                    exp.Play();
-                    models[activeTrap].SetActive(false);
-                    Vector3 explosionPosition = transform.position;
-                    Collider[] colliders = Physics.OverlapSphere(explosionPosition, explosionRadius);
-                    foreach (Collider hit in colliders)
+                    if (hit.CompareTag("Player"))
                     {
-                        if (hit.CompareTag("Player"))
-                        {
-                            Vector3 closestPoint = hit.ClosestPoint(explosionPosition);
-                            float distance = Vector3.Distance(closestPoint, explosionPosition);
+                        Vector3 closestPoint = hit.ClosestPoint(explosionPosition);
+                        float distance = Vector3.Distance(closestPoint, explosionPosition);
 
-                            int damage = Convert.ToInt32((1 - Mathf.Clamp01(distance / explosionRadius)) * explosionDamage);
+                        int damage = Convert.ToInt32((1 - Mathf.Clamp01(distance / explosionRadius)) * explosionDamage);
                         if (isServer)
                             hit.GetComponent<Health>().TakeDamage(damage);
-                        }
                     }
-                    Destroy(gameObject, exp.main.duration);
                 }
+                Destroy(gameObject, exp.main.duration);
+
             }
             else
             {
-                if (other.CompareTag("Player") && other.GetComponent<CharacterControl>().Team() == team)
-                {
-                    hitrb = other.GetComponent<Rigidbody>();
-                    hitrb.gameObject.transform.position = transform.position;
-                    hitrb.constraints = RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezePositionZ | RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ;
-                    StartCoroutine(Stop(stopTime));
-                }
+                hitrb = other.GetComponent<Rigidbody>();
+                hitrb.gameObject.transform.position = transform.position;
+                hitrb.constraints = RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezePositionZ | RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ;
+                StartCoroutine(Stop(stopTime));
+
             }
+        }
     }
 
     IEnumerator Stop(float time)

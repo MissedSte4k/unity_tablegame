@@ -100,9 +100,9 @@ MonoBehaviour:
   - {fileID: 1091834205823440, guid: 0a1b35c7e460bb745bb6a0d9416d1f89, type: 2}
   - {fileID: 1658256569627566, guid: 3911fb882ec852f42b0da2bc9067c0aa, type: 2}
   - {fileID: 1071890670103780, guid: 1cf8772154fb91a4aacd26094ccaa0c0, type: 2}
-  - {fileID: 1612951201594008, guid: 6d5b4826858cf244796d0cf2718bd2b2, type: 2}
+  - {fileID: 1019050350664526, guid: 6d5b4826858cf244796d0cf2718bd2b2, type: 2}
   - {fileID: 1565383643343962, guid: 0df931e39bf6769438131aeb0e394aaa, type: 2}
-  - {fileID: 1017967962693598, guid: 75c8b9750207e684baed2c82cd826cef, type: 2}
+  - {fileID: 1626383260348746, guid: 75c8b9750207e684baed2c82cd826cef, type: 2}
   m_CustomConfig: 0
   m_MaxConnections: 4
   m_ConnectionConfig:
@@ -165,9 +165,9 @@ MonoBehaviour:
   berserkerRed: {fileID: 1658256569627566, guid: 3911fb882ec852f42b0da2bc9067c0aa,
     type: 2}
   knightBlue: {fileID: 1071890670103780, guid: 1cf8772154fb91a4aacd26094ccaa0c0, type: 2}
-  knightRed: {fileID: 1612951201594008, guid: 6d5b4826858cf244796d0cf2718bd2b2, type: 2}
+  knightRed: {fileID: 1019050350664526, guid: 6d5b4826858cf244796d0cf2718bd2b2, type: 2}
   scoutBlue: {fileID: 1565383643343962, guid: 0df931e39bf6769438131aeb0e394aaa, type: 2}
-  scoutRed: {fileID: 1017967962693598, guid: 75c8b9750207e684baed2c82cd826cef, type: 2}
+  scoutRed: {fileID: 1626383260348746, guid: 75c8b9750207e684baed2c82cd826cef, type: 2}
 --- !u!114 &114100297565548746
 MonoBehaviour:
   m_ObjectHideFlags: 1

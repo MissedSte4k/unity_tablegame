@@ -4122,8 +4122,8 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
-  m_PlayOnAwake: 1
-  m_Volume: 1
+  m_PlayOnAwake: 0
+  m_Volume: 0.5
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -4217,7 +4217,7 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
-  m_PlayOnAwake: 1
+  m_PlayOnAwake: 0
   m_Volume: 0.5
   m_Pitch: 0.833
   Loop: 1
@@ -4311,8 +4311,8 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 0}
-  m_PlayOnAwake: 1
+  m_audioClip: {fileID: 8300000, guid: e3ec6ee47088ae64c8e42b72d7019a71, type: 3}
+  m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
   Loop: 0
@@ -4357,7 +4357,7 @@ AudioSource:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 0
+      value: 1
       inSlope: 0
       outSlope: 0
       tangentMode: 0
@@ -4823,12 +4823,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cb82fbd5ec5550c4dbe0861315917c66, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 0
-  isSlash: 0
   weaponColliders:
   - {fileID: 65459301511767482}
   collidersActive: 0
   isTrigger: 0
+  damage: 0
+  isSlash: 0
 --- !u!114 &114244179493124838
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -4840,33 +4840,36 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d401f883799bd7b47a0e8c3dee85e987, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mouseSensitivity: 1
   defaultMoveSpeed: 64
   referenceMoveSpeed: 64
   moveSpeed: 100
   crouchSpeedMultiplier: 0.5
   sprintSpeedMultiplier: 1.5
-  increaseTime: 4
-  decreaseTime: 1
-  sprintStaminaUse: 0.6
+  increaseTime: 0.04
+  decreaseTime: 0.01
+  sprintStaminaUse: 1
+  sprintDelay: 2
   jumpStaminaUse: 30
-  shootStaminaUse: 0
   jumpSpeed: 5
-  onSprint: 0
-  isCrouched: 0
-  playerCamera: {fileID: 20438473669868508}
+  height: 2.4
+  center: 0.2
   normalHeight: 2.4
   crouchHeight: 1.9
   normalCenter: 0.2
   crouchCenter: 0.5
   lockCursor: 1
+  playerCamera: {fileID: 20438473669868508}
+  flashbangOverlay: {fileID: 114545789814402132}
   audioSourceWalk: {fileID: 82236172222034990}
   walkClip: {fileID: 8300000, guid: 8d95312f73472a84e8e76da36520d07b, type: 3}
   runClip: {fileID: 8300000, guid: 6481ac8e23bca3d4ea86fa57daa40ac4, type: 3}
-  flashbangOverlay: {fileID: 114545789814402132}
-  spine: {fileID: 4156231218095078}
-  height: 2.4
-  center: 0.2
+  audioSourceOther: {fileID: 82232425479579882}
+  jumpClip: {fileID: 8300000, guid: 21e98346a6a5509409fbedffb38792a2, type: 3}
+  landClip: {fileID: 8300000, guid: 0c31dd3749eedaf46a569f0d6349aa94, type: 3}
+  fallDamage: 40
+  mouseSensitivity: 1
+  onSprint: 0
+  isCrouched: 0
 --- !u!114 &114247680972552186
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -4878,13 +4881,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cb82fbd5ec5550c4dbe0861315917c66, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 0
-  isSlash: 0
   weaponColliders:
   - {fileID: 136015490568788554}
   - {fileID: 65602723123575820}
   collidersActive: 0
   isTrigger: 0
+  damage: 0
+  isSlash: 0
 --- !u!114 &114299426246699576
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -4945,12 +4948,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cb82fbd5ec5550c4dbe0861315917c66, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 0
-  isSlash: 0
   weaponColliders:
   - {fileID: 65199394333664902}
   collidersActive: 0
   isTrigger: 0
+  damage: 0
+  isSlash: 0
 --- !u!114 &114339146835104052
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -5070,13 +5073,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cb82fbd5ec5550c4dbe0861315917c66, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 0
-  isSlash: 0
   weaponColliders:
   - {fileID: 136670591107206512}
   - {fileID: 65901685865573322}
   collidersActive: 0
   isTrigger: 0
+  damage: 0
+  isSlash: 0
 --- !u!114 &114428251436265164
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -5198,13 +5201,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cb82fbd5ec5550c4dbe0861315917c66, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 0
-  isSlash: 0
   weaponColliders:
   - {fileID: 136128262648067470}
   - {fileID: 65600176790571626}
   collidersActive: 0
   isTrigger: 0
+  damage: 0
+  isSlash: 0
 --- !u!114 &114506556032868564
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -5305,6 +5308,9 @@ MonoBehaviour:
   maxHealth: 200
   maxStamina: 100
   dependOnHealth: 0
+  rechargeDelay: 1
+  delayRemaining: 0
+  canRecharge: 1
   teamText: {fileID: 114850108676708196}
   healthSlider: {fileID: 114412245158126364}
   staminaSlider: {fileID: 114688464378602150}
@@ -5312,6 +5318,7 @@ MonoBehaviour:
   blueTeamKillsText: {fileID: 114997040556299690}
   TargetInfoText: {fileID: 114428251436265164}
   winText: {fileID: 114428251436265164}
+  audioSourceHurt: {fileID: 82452201156640526}
 --- !u!114 &114593561438066510
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -5377,13 +5384,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cb82fbd5ec5550c4dbe0861315917c66, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 0
-  isSlash: 0
   weaponColliders:
   - {fileID: 65812727277352464}
   - {fileID: 136328865519587972}
   collidersActive: 0
   isTrigger: 0
+  damage: 0
+  isSlash: 0
 --- !u!114 &114688464378602150
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -5561,13 +5568,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cb82fbd5ec5550c4dbe0861315917c66, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 0
-  isSlash: 0
   weaponColliders:
   - {fileID: 65312770024404028}
   - {fileID: 136398085266095704}
   collidersActive: 0
   isTrigger: 0
+  damage: 0
+  isSlash: 0
 --- !u!114 &114817425247026504
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -5723,13 +5730,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cb82fbd5ec5550c4dbe0861315917c66, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 0
-  isSlash: 0
   weaponColliders:
   - {fileID: 65508508215181896}
   - {fileID: 65555578400531290}
   collidersActive: 0
   isTrigger: 0
+  damage: 0
+  isSlash: 0
 --- !u!114 &114939358448556164
 MonoBehaviour:
   m_ObjectHideFlags: 1
