@@ -21,8 +21,8 @@ public class Health : NetworkBehaviour
     [Header("Delay until stamina can recharge after being used")]
     [Range(0, 5)]
     public float rechargeDelay;
-    [HideInInspector] [SyncVar] public float delayRemaining;
-    [HideInInspector] [SyncVar] public bool canRecharge = true;
+    [HideInInspector] public float delayRemaining;
+    [HideInInspector] public bool canRecharge = true;
 
     [Header("UI elements")]
     public Text teamText;
