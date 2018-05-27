@@ -11834,7 +11834,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dbd43f890537e8640876e1fb89e67b96, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 100
+  maxHealth: 120
   maxStamina: 100
   dependOnHealth: 0
   rechargeDelay: 1
@@ -11981,7 +11981,7 @@ MonoBehaviour:
   sprintSpeedMultiplier: 1.5
   increaseTime: 0.04
   decreaseTime: 0.01
-  sprintStaminaUse: 0.6
+  sprintStaminaUse: 0.5
   sprintDelay: 2
   jumpStaminaUse: 30
   jumpSpeed: 5
@@ -12059,21 +12059,21 @@ MonoBehaviour:
   - Dagger
   - Sticky trap
   - Explosive trap
-  maxAmmo: 04000000040000000400000004000000040000000000000000000000000000000200000002000000
+  maxAmmo: 0a0000000c0000000a0000000c000000080000000000000000000000000000000300000003000000
   attackSpeeds:
+  - 1.2
+  - 1.5
   - 1
-  - 1
-  - 1
-  - 1
-  - 1
-  - 1
-  - 1
-  - 1
-  - 1
-  - 1
-  slashStaminaUse: 00000000000000000000000000000000050000000500000005000000050000000000000000000000
-  stabStaminaUse: 00000000000000000000000000000000000000000000000000000000000000000000000000000000
-  overheadStaminaUse: 00000000000000000000000000000000000000000000000000000000000000000000000000000000
+  - 1.25
+  - 1.2
+  - 1.2
+  - 1.35
+  - 1.5
+  - 1.2
+  - 1.2
+  slashStaminaUse: 00000000000000000000000000000000180000001800000016000000140000000000000000000000
+  stabStaminaUse: 00000000000000000000000000000000180000001800000016000000140000000000000000000000
+  overheadStaminaUse: 000000000000000000000000000000002400000024000000210000001e0000000000000000000000
   projectileModels:
   - {fileID: 1966485960303836}
   - {fileID: 1135821949332100}
@@ -12091,27 +12091,27 @@ MonoBehaviour:
   bulletSpawn: {fileID: 4763361740022172}
   longbowArrowSpeed: 40
   shortbowArrowSpeed: 30
-  lightCrossbowArrowSpeed: 60
-  heavyCrossbowArrowSpeed: 70
+  lightCrossbowArrowSpeed: 48
+  heavyCrossbowArrowSpeed: 60
   javelinSpeed: 25
   trapSpeed: 1
-  longbowDamage: 50
-  shortbowDamage: 40
-  lightCrossbowDamage: 70
-  heavyCrossbowDamage: 80
+  longbowDamage: 40
+  shortbowDamage: 30
+  lightCrossbowDamage: 48
+  heavyCrossbowDamage: 60
   javelinDamage: 40
-  javelinSlashDamage: 20
-  handaxeSlashDamage: 5
-  shortswordSlashDamage: 25
+  javelinSlashDamage: 25
+  handaxeSlashDamage: 40
+  shortswordSlashDamage: 30
   daggerSlashDamage: 20
   javelinOverheadDamage: 28
-  handaxeOverheadDamage: 42
-  shortswordOverheadDamage: 35
-  daggerOverheadDamage: 28
-  javelinStabDamage: 36
-  handaxeStabDamage: 10
-  shortswordStabDamage: 45
-  daggerStabDamage: 36
+  handaxeOverheadDamage: 60
+  shortswordOverheadDamage: 45
+  daggerOverheadDamage: 30
+  javelinStabDamage: 25
+  handaxeStabDamage: 40
+  shortswordStabDamage: 30
+  daggerStabDamage: 20
   shortbowShootSpeedMultiplier: 0.7
   longbowShootSpeedMultiplier: 0.5
   lightCrossbowShootSpeedMultiplier: 0.5

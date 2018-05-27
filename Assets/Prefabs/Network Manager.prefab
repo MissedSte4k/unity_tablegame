@@ -95,13 +95,13 @@ MonoBehaviour:
   - {fileID: 1329021655568268, guid: fea4fa31962d622478916ae2a5287d40, type: 2}
   - {fileID: 1026914031029434, guid: 649be7d64aea5744eb936bcd90906e20, type: 2}
   - {fileID: 1149553644589044, guid: fb5a714390816f6498f252a4cd2b43b9, type: 2}
-  - {fileID: 1216465396659552, guid: e1db559a15b9bd94b9edb7b4bb3d5483, type: 2}
+  - {fileID: 1052258555971420, guid: aeb3bbf074b983b44b8b47ec476eeabb, type: 2}
   - {fileID: 1192070953300808, guid: 5307948cf3f9f464a9a1a6d7f495b7e7, type: 2}
-  - {fileID: 1091834205823440, guid: 0a1b35c7e460bb745bb6a0d9416d1f89, type: 2}
+  - {fileID: 1530737949014732, guid: 9cdbb4118c6247943b248db58dd3d398, type: 2}
   - {fileID: 1658256569627566, guid: 3911fb882ec852f42b0da2bc9067c0aa, type: 2}
-  - {fileID: 1071890670103780, guid: 1cf8772154fb91a4aacd26094ccaa0c0, type: 2}
+  - {fileID: 1491427890389940, guid: 1e4741ecd9d511f4fbdc62a5a4fc771f, type: 2}
   - {fileID: 1019050350664526, guid: 6d5b4826858cf244796d0cf2718bd2b2, type: 2}
-  - {fileID: 1565383643343962, guid: 0df931e39bf6769438131aeb0e394aaa, type: 2}
+  - {fileID: 1972183631431432, guid: efdf77917331ced41a9cbd7df94d6eaa, type: 2}
   - {fileID: 1626383260348746, guid: 75c8b9750207e684baed2c82cd826cef, type: 2}
   m_CustomConfig: 0
   m_MaxConnections: 4
@@ -158,15 +158,15 @@ MonoBehaviour:
   matchSize: 4
   isNetworkActive: 0
   matchMaker: {fileID: 0}
-  archerBlue: {fileID: 1216465396659552, guid: e1db559a15b9bd94b9edb7b4bb3d5483, type: 2}
+  archerBlue: {fileID: 1052258555971420, guid: aeb3bbf074b983b44b8b47ec476eeabb, type: 2}
   archerRed: {fileID: 1192070953300808, guid: 5307948cf3f9f464a9a1a6d7f495b7e7, type: 2}
-  berserkerBlue: {fileID: 1091834205823440, guid: 0a1b35c7e460bb745bb6a0d9416d1f89,
+  berserkerBlue: {fileID: 1530737949014732, guid: 9cdbb4118c6247943b248db58dd3d398,
     type: 2}
   berserkerRed: {fileID: 1658256569627566, guid: 3911fb882ec852f42b0da2bc9067c0aa,
     type: 2}
-  knightBlue: {fileID: 1071890670103780, guid: 1cf8772154fb91a4aacd26094ccaa0c0, type: 2}
+  knightBlue: {fileID: 1491427890389940, guid: 1e4741ecd9d511f4fbdc62a5a4fc771f, type: 2}
   knightRed: {fileID: 1019050350664526, guid: 6d5b4826858cf244796d0cf2718bd2b2, type: 2}
-  scoutBlue: {fileID: 1565383643343962, guid: 0df931e39bf6769438131aeb0e394aaa, type: 2}
+  scoutBlue: {fileID: 1972183631431432, guid: efdf77917331ced41a9cbd7df94d6eaa, type: 2}
   scoutRed: {fileID: 1626383260348746, guid: 75c8b9750207e684baed2c82cd826cef, type: 2}
 --- !u!114 &114100297565548746
 MonoBehaviour:

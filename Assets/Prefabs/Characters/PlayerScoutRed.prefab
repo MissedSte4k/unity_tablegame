@@ -7081,21 +7081,21 @@ MonoBehaviour:
   - Smoke bomb
   - Throwing knives
   - Crossbow
-  maxAmmo: 00000000000000000000000000000000000000000000000002000000020000000200000005000000
+  maxAmmo: 00000000000000000000000000000000000000000000000003000000030000000800000008000000
   attackSpeeds:
+  - 1.35
+  - 1.5
+  - 1.2
+  - 1.35
   - 1
   - 1
   - 1
   - 1
+  - 1.2
   - 1
-  - 1
-  - 1
-  - 1
-  - 1
-  - 1
-  slashStaminaUse: 05000000000000000000000000000000000000000000000000000000000000000000000000000000
-  stabStaminaUse: 05000000000000000000000000000000000000000000000000000000000000000000000000000000
-  overheadStaminaUse: 05000000000000000000000000000000000000000000000000000000000000000000000000000000
+  slashStaminaUse: 210000001e0000002400000016000000280000000000000000000000000000000000000000000000
+  stabStaminaUse: 210000001e0000002400000016000000280000000000000000000000000000000000000000000000
+  overheadStaminaUse: 320000002d00000036000000210000003c0000000000000000000000000000000000000000000000
   projectileModels:
   - {fileID: 1673667514199080}
   - {fileID: 1605675404527420}
@@ -7104,31 +7104,31 @@ MonoBehaviour:
   - {fileID: 1340628947096260}
   - {fileID: 1153796917338806}
   bulletSpawn: {fileID: 4822525314205656}
-  shortswordSlashDamage: 25
-  daggerSlashDamage: 20
-  lightMaceSlashDamage: 40
+  shortswordSlashDamage: 23
+  daggerSlashDamage: 15
+  lightMaceSlashDamage: 30
   shortswordSlashDamage2: 30
-  quarterstaffSlashDamage: 60
-  shortswordOverheadDamage: 50
-  daggerOverheadDamage: 40
-  lightMaceOverheadDamage: 80
-  shortswordOverheadDamage2: 60
-  quarterstaffOverheadDamage: 120
-  shortswordStabDamage: 25
-  daggerStabDamage: 20
-  lightMaceStabDamage: 40
+  quarterstaffSlashDamage: 50
+  shortswordOverheadDamage: 34
+  daggerOverheadDamage: 23
+  lightMaceOverheadDamage: 45
+  shortswordOverheadDamage2: 45
+  quarterstaffOverheadDamage: 75
+  shortswordStabDamage: 23
+  daggerStabDamage: 15
+  lightMaceStabDamage: 30
   shortswordStabDamage2: 30
-  quarterstaffStabDamage: 60
+  quarterstaffStabDamage: 50
   flashBombSpeed: 10
   smokeBombSpeed: 10
-  throwingDaggerSpeed: 10
-  handCrossbowBoltSpeed: 60
-  throwingDaggerDamage: 40
-  handCrossbowBoltDamage: 60
+  throwingDaggerSpeed: 20
+  handCrossbowBoltSpeed: 40
+  throwingDaggerDamage: 36
+  handCrossbowBoltDamage: 44
   flashBombThrowSpeedMultiplier: 0.8
   smokeBombThrowSpeedMultiplier: 0.8
   throwingDaggerThrowSpeedMultiplier: 0.8
-  handCrossbowBoltShootSpeedMultiplier: 0.8
+  handCrossbowBoltShootSpeedMultiplier: 0.7
   weaponSwapSpeedMultiplier: 0.8
   daggerThrowStaminaUse: 0
   flashBombThrowStaminaUse: 0
@@ -7669,7 +7669,7 @@ MonoBehaviour:
   sprintSpeedMultiplier: 1.5
   increaseTime: 0.04
   decreaseTime: 0.01
-  sprintStaminaUse: 0.6
+  sprintStaminaUse: 0.5
   sprintDelay: 2
   jumpStaminaUse: 30
   jumpSpeed: 5
@@ -7735,8 +7735,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dbd43f890537e8640876e1fb89e67b96, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 100
-  maxStamina: 100
+  maxHealth: 120
+  maxStamina: 120
   dependOnHealth: 0
   rechargeDelay: 1
   delayRemaining: 0
