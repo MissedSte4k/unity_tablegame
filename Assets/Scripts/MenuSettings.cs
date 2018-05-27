@@ -15,6 +15,8 @@ public class MenuSettings : MonoBehaviour
 
     public AudioMixer menuAudioMixer;
     public Slider menuVolumeSlider;
+    public Slider masterVolumeSlider;
+    public float masterVolume;
 
     public Slider mouseSensitivitySlider;
     public InputField mouseSensitivityField;
@@ -23,7 +25,7 @@ public class MenuSettings : MonoBehaviour
     public Slider FoVSlider;
     public InputField FoVField;
     public float fieldOfView;
-
+   
     public GameObject[] keybindButtons;
 
     public static MenuSettings Instance;
@@ -59,6 +61,13 @@ public class MenuSettings : MonoBehaviour
             menuVolumeSlider.value = PlayerPrefs.GetFloat("menu volume");
         }
 
+        //master volume slider
+        if (PlayerPrefs.HasKey("master volume"))
+        {
+            masterVolumeSlider.value = PlayerPrefs.GetFloat("master volume");
+            masterVolume = PlayerPrefs.GetFloat("master volume");
+        }      
+
         //Mouse sensitivity slider & input field
         if (PlayerPrefs.HasKey("mouse sensitivity"))
         {
@@ -80,6 +89,11 @@ public class MenuSettings : MonoBehaviour
         {
             Instance = FindObjectOfType<MenuSettings>();
         }
+    }
+
+    public void Update()
+    {
+        AudioListener.volume = masterVolume;
     }
 
 
@@ -130,6 +144,13 @@ public class MenuSettings : MonoBehaviour
         menuAudioMixer.SetFloat("MenuVolume", volume);
         PlayerPrefs.SetFloat("menu volume", volume);
         PlayerPrefs.Save();
+    }
+
+    //master volume settings
+    public void SetMasterVolume(float volume)
+    {
+        masterVolume = volume;
+        PlayerPrefs.SetFloat("master volume", volume);
     }
 
 

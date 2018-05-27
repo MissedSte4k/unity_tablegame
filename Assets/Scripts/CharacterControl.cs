@@ -116,6 +116,8 @@ public class CharacterControl : NetworkBehaviour
 
         playerCamera.fieldOfView = MenuSettings.Instance.fieldOfView;
 
+        AudioListener.volume = MenuSettings.Instance.masterVolume;
+
         //CmdTeam();
         SetTeam();
     }
@@ -129,6 +131,8 @@ public class CharacterControl : NetworkBehaviour
     {
         if (isLocalPlayer)
         {
+            AudioListener.volume = MenuSettings.Instance.masterVolume;
+
             moveVertical = 0;
             if (Input.GetKey(KeyBindManager.MyInstance.Keybinds["Button(MoveForward)"]) == true)
             {
