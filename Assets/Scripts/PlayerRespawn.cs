@@ -22,7 +22,11 @@ public class PlayerRespawn : NetworkBehaviour {
     {
         foreach(GameObject obj in FindObjectsOfType<GameObject>())
         {
-            if (obj.tag == "MainCamera") mainCamera = obj;
+            if (obj.tag == "MainCamera")
+            {
+                mainCamera = obj;
+                break;
+            }
         }
         EnablePlayer();
     }
