@@ -657,9 +657,30 @@ public class CharacterControl : NetworkBehaviour
     {
         GameObject spawnpointA = GameObject.Find("Spawn Point A1");
         GameObject spawnpointB = GameObject.Find("Spawn Point B1");
-        if (team == 1) transform.position = spawnpointB.transform.position;
-        else if (team == 2) transform.position = spawnpointA.transform.position;
+        if (team == 1) transform.position = PointAvalaible(spawnpointB.transform.position);
+        else if (team == 2) transform.position = PointAvalaible(spawnpointA.transform.position);
     }
+
+    private Vector3 PointAvalaible(Vector3 center)
+    {
+        for (int i = 0; i < 5; i++)
+        {
+            Vector3 point = new Vector3(center.x + Random.Range(-3, 3), center.y, center.z + Random.Range(-3, 3));
+            bool avalaible = true;
+            foreach (CharacterControl cc in FindObjectsOfType<CharacterControl>())
+            {
+                Vector3 pos = cc.GetComponent<Transform>().transform.position;
+                if (Mathf.Abs(pos.x - center.x) <= 0.5 && Mathf.Abs(pos.z - center.z) <= 0.5)
+                {
+                    avalaible = false;
+                    break;
+                }
+            }
+            if (avalaible) return point;
+        }
+        return center;
+    }
+
     public void FlagGot()
     {
         hasFlag = 1;
