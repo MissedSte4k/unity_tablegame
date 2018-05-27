@@ -666,11 +666,17 @@ public class CharacterControl : NetworkBehaviour
         for (int i = 0; i < 5; i++)
         {
             Vector3 point = new Vector3(center.x + Random.Range(-3, 3), center.y, center.z + Random.Range(-3, 3));
+            bool avalaible = true;
             foreach (CharacterControl cc in FindObjectsOfType<CharacterControl>())
             {
                 Vector3 pos = cc.GetComponent<Transform>().transform.position;
-                if (Mathf.Abs(pos.x - center.x) > 0.5 && Mathf.Abs(pos.z - center.z) > 0.5) return point;
+                if (Mathf.Abs(pos.x - center.x) <= 0.5 && Mathf.Abs(pos.z - center.z) <= 0.5)
+                {
+                    avalaible = false;
+                    break;
+                }
             }
+            if (avalaible) return point;
         }
         return center;
     }
