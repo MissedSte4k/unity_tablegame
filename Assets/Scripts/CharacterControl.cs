@@ -105,7 +105,6 @@ public class CharacterControl : NetworkBehaviour
         Application.targetFrameRate = -1;
         capsule = GetComponent<CapsuleCollider>();
         moveSpeed = defaultMoveSpeed;
-        mouseSensitivity = MenuSettings.Instance.mouseSensitivity;
         rb = GetComponent<Rigidbody>();
         currentIncreaseTime = increaseTime;
         currentDecreaseTime = decreaseTime;
@@ -114,9 +113,10 @@ public class CharacterControl : NetworkBehaviour
         minHeightChangeSpeed = 0.001f;
         minCenterChangeSpeed = 0.0001f;
 
+        mouseSensitivity = MenuSettings.Instance.mouseSensitivity;
         playerCamera.fieldOfView = MenuSettings.Instance.fieldOfView;
-
         AudioListener.volume = MenuSettings.Instance.masterVolume;
+        QualitySettings.SetQualityLevel(MenuSettings.Instance.activeGraphicsIndex);
 
         //CmdTeam();
         SetTeam();

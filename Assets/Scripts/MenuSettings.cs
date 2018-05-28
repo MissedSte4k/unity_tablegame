@@ -12,6 +12,7 @@ public class MenuSettings : MonoBehaviour
     public int[] screenWidths;
 
     public Dropdown graphicsDropdown;
+    public int activeGraphicsIndex;
 
     public AudioMixer menuAudioMixer;
     public Slider menuVolumeSlider;
@@ -49,7 +50,7 @@ public class MenuSettings : MonoBehaviour
         //Graphics                                                                          
         if (PlayerPrefs.HasKey("graphics index"))
         {
-            int activeGraphicsIndex = PlayerPrefs.GetInt("graphics index");
+            activeGraphicsIndex = PlayerPrefs.GetInt("graphics index");
             QualitySettings.SetQualityLevel(activeGraphicsIndex);
             graphicsDropdown.value = activeGraphicsIndex;
             graphicsDropdown.RefreshShownValue();
@@ -73,6 +74,7 @@ public class MenuSettings : MonoBehaviour
         {
             mouseSensitivitySlider.value = PlayerPrefs.GetFloat("mouse sensitivity");
             mouseSensitivityField.text = PlayerPrefs.GetFloat("mouse sensitivity").ToString();
+            mouseSensitivity = PlayerPrefs.GetFloat("mouse sensitivity");
         }
 
         //FoV slider & input field
@@ -80,6 +82,7 @@ public class MenuSettings : MonoBehaviour
         {
             FoVSlider.value = PlayerPrefs.GetFloat("field of view");
             FoVField.text = PlayerPrefs.GetFloat("field of view").ToString();
+            fieldOfView = PlayerPrefs.GetFloat("field of view");
         }
     }
 
@@ -133,6 +136,7 @@ public class MenuSettings : MonoBehaviour
     //Graphics settings
     public void SetQuality(int qualityIndex)
     {
+        activeGraphicsIndex = qualityIndex;
         QualitySettings.SetQualityLevel(qualityIndex);
         PlayerPrefs.SetInt("graphics index", qualityIndex);
         PlayerPrefs.Save();
