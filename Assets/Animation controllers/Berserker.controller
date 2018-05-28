@@ -2535,6 +2535,9 @@ AnimatorStateTransition:
   - m_ConditionMode: 1
     m_ConditionEvent: Stop
     m_EventTreshold: 0
+  - m_ConditionMode: 1
+    m_ConditionEvent: Greathammer
+    m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 1102329296409911926}
   m_Solo: 0
@@ -2545,7 +2548,7 @@ AnimatorStateTransition:
   m_TransitionOffset: 0
   m_ExitTime: 0.75
   m_HasExitTime: 0
-  m_HasFixedDuration: 1
+  m_HasFixedDuration: 0
   m_InterruptionSource: 0
   m_OrderedInterruption: 1
   m_CanTransitionToSelf: 1
@@ -3993,6 +3996,9 @@ AnimatorStateTransition:
   - m_ConditionMode: 1
     m_ConditionEvent: Stop
     m_EventTreshold: 0
+  - m_ConditionMode: 1
+    m_ConditionEvent: Greataxe
+    m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 1102191964118301418}
   m_Solo: 0
@@ -4003,7 +4009,7 @@ AnimatorStateTransition:
   m_TransitionOffset: 0
   m_ExitTime: 0.75
   m_HasExitTime: 0
-  m_HasFixedDuration: 1
+  m_HasFixedDuration: 0
   m_InterruptionSource: 0
   m_OrderedInterruption: 1
   m_CanTransitionToSelf: 1
@@ -9054,6 +9060,9 @@ AnimatorStateTransition:
   - m_ConditionMode: 1
     m_ConditionEvent: Stop
     m_EventTreshold: 0
+  - m_ConditionMode: 1
+    m_ConditionEvent: Greatsword
+    m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 1102699771184051900}
   m_Solo: 0
@@ -9064,7 +9073,7 @@ AnimatorStateTransition:
   m_TransitionOffset: 0
   m_ExitTime: 0.75
   m_HasExitTime: 0
-  m_HasFixedDuration: 1
+  m_HasFixedDuration: 0
   m_InterruptionSource: 0
   m_OrderedInterruption: 1
   m_CanTransitionToSelf: 1
@@ -9099,6 +9108,9 @@ AnimatorStateTransition:
   - m_ConditionMode: 1
     m_ConditionEvent: Stop
     m_EventTreshold: 0
+  - m_ConditionMode: 1
+    m_ConditionEvent: Fists
+    m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 1102840128441456884}
   m_Solo: 0
@@ -9109,7 +9121,7 @@ AnimatorStateTransition:
   m_TransitionOffset: 0
   m_ExitTime: 0.75
   m_HasExitTime: 0
-  m_HasFixedDuration: 1
+  m_HasFixedDuration: 0
   m_InterruptionSource: 0
   m_OrderedInterruption: 1
   m_CanTransitionToSelf: 1
@@ -9399,6 +9411,9 @@ AnimatorStateTransition:
   - m_ConditionMode: 1
     m_ConditionEvent: Stop
     m_EventTreshold: 0
+  - m_ConditionMode: 1
+    m_ConditionEvent: Handaxes
+    m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 1102590266456321868}
   m_Solo: 0
@@ -9409,7 +9424,7 @@ AnimatorStateTransition:
   m_TransitionOffset: 0
   m_ExitTime: 0.75
   m_HasExitTime: 0
-  m_HasFixedDuration: 1
+  m_HasFixedDuration: 0
   m_InterruptionSource: 0
   m_OrderedInterruption: 1
   m_CanTransitionToSelf: 1
@@ -10239,6 +10254,9 @@ AnimatorStateTransition:
   - m_ConditionMode: 1
     m_ConditionEvent: Stop
     m_EventTreshold: 0
+  - m_ConditionMode: 1
+    m_ConditionEvent: Greatclub
+    m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 1102762302923450174}
   m_Solo: 0
@@ -10249,7 +10267,7 @@ AnimatorStateTransition:
   m_TransitionOffset: 0
   m_ExitTime: 0.75
   m_HasExitTime: 0
-  m_HasFixedDuration: 1
+  m_HasFixedDuration: 0
   m_InterruptionSource: 0
   m_OrderedInterruption: 1
   m_CanTransitionToSelf: 1
@@ -13042,7 +13060,7 @@ AnimatorState:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_Name: Block
-  m_Speed: 0.1
+  m_Speed: 0.5
   m_CycleOffset: 0
   m_Transitions:
   - {fileID: 1101832078683041920}

@@ -6510,7 +6510,7 @@ MonoBehaviour:
   weaponSwapSpeedMultiplier: 0.8
   bombThrowStaminaUse: 0
   diskThrowStaminaUse: 0
-  blockStaminaUse: 0
+  blockStaminaUse: 20
   bannerHealInterval: 0.1
   bannerHealRadius: 10
   bannerHealAmount: 2
@@ -7688,7 +7688,7 @@ CapsuleCollider:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1491427890389940}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: eb01f58aee90ace4cbc4f8ac95573f17, type: 2}
   m_IsTrigger: 0
   m_Enabled: 1
   m_Radius: 0.5

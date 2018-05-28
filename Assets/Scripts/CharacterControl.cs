@@ -470,7 +470,7 @@ public class CharacterControl : NetworkBehaviour
                 anim.animator.SetBool("Falling", false);
                 if (!Input.GetKey(KeyBindManager.MyInstance.Keybinds["Button(Jump)"]))
                 {
-                    rb.AddForce(0, -300, 0);
+                    rb.AddForce(0, -3.3f * moveSpeed * (onSprint ? sprintSpeedMultiplier : 1), 0);
                 }
             }
         }
