@@ -112,6 +112,11 @@ public class MeleeWeapon : NetworkBehaviour
             collidersActive = false;
             GetComponentInParent<CharacterControl>().RpcHitBlock();
             other.GetComponentInParent<CharacterControl>().RpcBlockHurt();
+        } else if (other.gameObject.CompareTag("Ground"))
+        {
+            audioSourceDamage.PlayOneShot(blockHitClip);
+            collidersActive = false;
+            GetComponentInParent<CharacterControl>().RpcHitBlock();
         }
         else audioSourceDamage.PlayOneShot(blockHitClip);
     }

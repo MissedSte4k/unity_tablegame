@@ -7133,7 +7133,7 @@ MonoBehaviour:
   daggerThrowStaminaUse: 0
   flashBombThrowStaminaUse: 0
   smokeBombThrowStaminaUse: 0
-  blockStaminaUse: 0
+  blockStaminaUse: 20
   ammoText: {fileID: 114144514928025770}
   playerModel: {fileID: 1280821340421992}
   flashBombFuse: {fileID: 1312093393832522}
@@ -8279,7 +8279,7 @@ CapsuleCollider:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1626383260348746}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: eb01f58aee90ace4cbc4f8ac95573f17, type: 2}
   m_IsTrigger: 0
   m_Enabled: 1
   m_Radius: 0.5

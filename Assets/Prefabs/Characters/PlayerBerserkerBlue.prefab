@@ -6362,7 +6362,7 @@ MonoBehaviour:
   weaponSwapSpeedMultiplier: 0.8
   axeThrowStaminaUse: 0
   boulderThrowStaminaUse: 0
-  blockStaminaUse: 0
+  blockStaminaUse: 20
   energyPillDuration: 10
   energyPillSpeedMultiplier: 2
   peanutHealTotal: 100
