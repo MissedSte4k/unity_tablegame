@@ -95,7 +95,7 @@ MonoBehaviour:
   - {fileID: 1329021655568268, guid: fea4fa31962d622478916ae2a5287d40, type: 2}
   - {fileID: 1026914031029434, guid: 649be7d64aea5744eb936bcd90906e20, type: 2}
   - {fileID: 1149553644589044, guid: fb5a714390816f6498f252a4cd2b43b9, type: 2}
-  - {fileID: 1052258555971420, guid: aeb3bbf074b983b44b8b47ec476eeabb, type: 2}
+  - {fileID: 1252008355496828, guid: aeb3bbf074b983b44b8b47ec476eeabb, type: 2}
   - {fileID: 1192070953300808, guid: 5307948cf3f9f464a9a1a6d7f495b7e7, type: 2}
   - {fileID: 1530737949014732, guid: 9cdbb4118c6247943b248db58dd3d398, type: 2}
   - {fileID: 1658256569627566, guid: 3911fb882ec852f42b0da2bc9067c0aa, type: 2}
@@ -158,7 +158,7 @@ MonoBehaviour:
   matchSize: 4
   isNetworkActive: 0
   matchMaker: {fileID: 0}
-  archerBlue: {fileID: 1052258555971420, guid: aeb3bbf074b983b44b8b47ec476eeabb, type: 2}
+  archerBlue: {fileID: 1252008355496828, guid: aeb3bbf074b983b44b8b47ec476eeabb, type: 2}
   archerRed: {fileID: 1192070953300808, guid: 5307948cf3f9f464a9a1a6d7f495b7e7, type: 2}
   berserkerBlue: {fileID: 1530737949014732, guid: 9cdbb4118c6247943b248db58dd3d398,
     type: 2}

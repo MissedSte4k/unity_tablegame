@@ -55,6 +55,21 @@ public class Projectile : NetworkBehaviour
 
     void OnCollisionEnter(Collision collision)
     {
+
+        if (collision.gameObject.CompareTag("Player"))
+        {
+            var health = collision.gameObject.GetComponent<Health>();
+            if (health != null)
+            {
+                if (isServer)
+                    health.RpcTakeDamage(damage, health.IsFatal(damage));
+            }
+        }
+        else if (collision.gameObject.CompareTag("Block"))
+        {
+            collision.gameObject.GetComponentInParent<CharacterControl>().RpcBlockHurt();
+        }
+
         audioSourceDamage.Play();
         GetComponent<Collider>().enabled = false;
         GetComponent<TrailRenderer>().enabled = false;
@@ -63,20 +78,6 @@ public class Projectile : NetworkBehaviour
             GetComponent<MeshRenderer>().enabled = false;
         if (transform.GetChild(0) != null)
             transform.GetChild(0).gameObject.SetActive(false);
-
-        if (collision.gameObject.CompareTag("Player"))
-        {
-            var health = collision.gameObject.GetComponent<Health>();
-            if (health != null)
-            {
-                if (isServer)
-                    health.TakeDamage(damage);
-            }
-        }
-        else if (collision.gameObject.CompareTag("Block"))
-        {
-            collision.gameObject.GetComponentInParent<CharacterControl>().RpcBlockHurt();
-        }
 
         Destroy(gameObject, audioSourceDamage.clip.length);
     }

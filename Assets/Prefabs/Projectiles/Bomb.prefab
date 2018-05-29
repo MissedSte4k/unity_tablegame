@@ -926,7 +926,7 @@ MonoBehaviour:
   - {fileID: 1070168609580706}
   explosionParticles: {fileID: 1002022629836758}
   smokeParticles: {fileID: 1022876068885642}
-  explosionDamage: 80
+  explosionDamage: 110
   explosionRadius: 10
   spin: {x: 0, y: -360, z: 0}
   fuseTime: 3

@@ -153,7 +153,7 @@ public class Bomb : NetworkBehaviour {
 
                     int damage = Convert.ToInt32((1 - Mathf.Clamp01(distance / explosionRadius)) * explosionDamage);
                     if (isServer)
-                        hit.GetComponent<Health>().TakeDamage(damage);
+                        hit.GetComponent<Health>().RpcTakeDamage(damage, hit.GetComponent<Health>().IsFatal(damage));
                 }
             }
             models[activeBomb].SetActive(false);

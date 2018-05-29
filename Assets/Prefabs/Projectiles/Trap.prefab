@@ -675,7 +675,7 @@ MonoBehaviour:
   - {fileID: 1593331121856370}
   - {fileID: 1937907783349762}
   explosionParticles: {fileID: 1705358492702936}
-  explosionDamage: 80
+  explosionDamage: 110
   explosionRadius: 10
   stopTime: 3
   audioSourceTrigger: {fileID: 82981033977816288}

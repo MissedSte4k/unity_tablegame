@@ -82,7 +82,7 @@ public class Trap : NetworkBehaviour {
 
     void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player") && other.GetComponent<CharacterControl>().Team() == team)
+        if (other.CompareTag("Player") && other.GetComponent<CharacterControl>().Team() != team)
         {
             audioSourceClank.Play();
 
@@ -102,7 +102,7 @@ public class Trap : NetworkBehaviour {
 
                         int damage = Convert.ToInt32((1 - Mathf.Clamp01(distance / explosionRadius)) * explosionDamage);
                         if (isServer)
-                            hit.GetComponent<Health>().TakeDamage(damage);
+                            hit.GetComponent<Health>().RpcTakeDamage(damage, hit.GetComponent<Health>().IsFatal(damage));
                     }
                 }
                 Destroy(gameObject, exp.main.duration);
