@@ -20,14 +20,11 @@ public class KillOnTouchWithoutDestroying : NetworkBehaviour
 
     void OnCollisionEnter(Collision collision)
     {
-        if (isLocalPlayer)
+        var hit = collision.gameObject;
+        var health = hit.GetComponent<Health>();
+        if (health != null)
         {
-            var hit = collision.gameObject;
-            var health = hit.GetComponent<Health>();
-            if (health != null)
-            {
-                health.TakeDamage(health.CurrentHealth());
-            }
+            health.TakeDamage(health.CurrentHealth());
         }
     }
 

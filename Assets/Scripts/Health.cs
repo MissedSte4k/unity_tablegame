@@ -176,7 +176,6 @@ public class Health : NetworkBehaviour
             pr.Die();
             if (isLocalPlayer)
             {
-                Debug.Log("Potato");
                 CmdUpScore(team);
             }
         }
