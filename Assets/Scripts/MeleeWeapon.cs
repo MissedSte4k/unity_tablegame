@@ -86,10 +86,8 @@ public class MeleeWeapon : NetworkBehaviour
             var health = other.gameObject.GetComponent<Health>();
             if (health != null)
             {
-                {
-                    health.RpcTakeDamage(damage, health.IsFatal(damage));
-                }
-            }
+                    health.RpcTakeDamage(damage, health.IsFatal(damage), other.GetComponent<CharacterControl>().Team());
+            } 
 
             if (!isSlash)
             {

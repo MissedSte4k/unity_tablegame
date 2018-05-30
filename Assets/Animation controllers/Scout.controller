@@ -6733,6 +6733,9 @@ AnimatorStateTransition:
   - m_ConditionMode: 2
     m_ConditionEvent: Empty
     m_EventTreshold: 0
+  - m_ConditionMode: 2
+    m_ConditionEvent: Crossbow
+    m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 1102094396051034050}
   m_Solo: 0

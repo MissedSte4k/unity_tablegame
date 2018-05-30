@@ -102,7 +102,7 @@ public class Trap : NetworkBehaviour {
 
                         int damage = Convert.ToInt32((1 - Mathf.Clamp01(distance / explosionRadius)) * explosionDamage);
                         if (isServer)
-                            hit.GetComponent<Health>().RpcTakeDamage(damage, hit.GetComponent<Health>().IsFatal(damage));
+                            hit.GetComponent<Health>().RpcTakeDamage(damage, hit.GetComponent<Health>().IsFatal(damage), hit.GetComponent<CharacterControl>().Team());
                     }
                 }
                 Destroy(gameObject, exp.main.duration);

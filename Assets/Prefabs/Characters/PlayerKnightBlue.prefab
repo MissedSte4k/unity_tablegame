@@ -6699,7 +6699,7 @@ MonoBehaviour:
   crouchHeight: 1.5
   normalCenter: 0.1
   crouchCenter: 0.25
-  lockCursor: 0
+  lockCursor: 1
   playerCamera: {fileID: 20969648968655048}
   flashbangOverlay: {fileID: 114934229443376104}
   audioSourceWalk: {fileID: 82437921076249330}

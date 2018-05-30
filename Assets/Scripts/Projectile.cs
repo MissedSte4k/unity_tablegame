@@ -25,8 +25,10 @@ public class Projectile : NetworkBehaviour
     // Use this for initialization
     void Start()
     {
-        if (team == 1)
+        if (team == 1){
             GetComponent<TrailRenderer>().startColor = new Color(0, 0, 255);
+            GetComponent<TrailRenderer>().endColor = new Color(0, 0, 255);
+        }
         rb = GetComponent<Rigidbody>();
         if (isOnFire)
         {
@@ -62,7 +64,7 @@ public class Projectile : NetworkBehaviour
             if (health != null)
             {
                 if (isServer)
-                    health.RpcTakeDamage(damage, health.IsFatal(damage));
+                    health.RpcTakeDamage(damage, health.IsFatal(damage), collision.gameObject.GetComponent<CharacterControl>().Team());
             }
         }
         else if (collision.gameObject.CompareTag("Block"))
@@ -76,7 +78,7 @@ public class Projectile : NetworkBehaviour
 
         if (GetComponent<MeshRenderer>() != null)
             GetComponent<MeshRenderer>().enabled = false;
-        if (transform.GetChild(0) != null)
+        if (transform.childCount > 0)
             transform.GetChild(0).gameObject.SetActive(false);
 
         Destroy(gameObject, audioSourceDamage.clip.length);

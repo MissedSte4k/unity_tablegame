@@ -44,20 +44,22 @@ public class Health : NetworkBehaviour
 
     void Start()
     {
-        CmdCurrentScore();
         if (isLocalPlayer)
         {
+            CmdCurrentScore();
+
+            canRecharge = true;
             healthSlider.maxValue = maxHealth;
             healthSlider.value = maxHealth;
             if (dependOnHealth)
             {
-                staminaSlider.value = maxHealth;
                 staminaSlider.maxValue = maxHealth;
+                staminaSlider.value = maxHealth;
             }
             else
             {
-                staminaSlider.value = maxStamina;
                 staminaSlider.maxValue = maxStamina;
+                staminaSlider.value = maxStamina;
             }
         }
     }
@@ -65,7 +67,8 @@ public class Health : NetworkBehaviour
     void Awake()
     {
         pr = GetComponent<PlayerRespawn>();
-        CmdCurrentScore();
+        if (isLocalPlayer)
+            CmdCurrentScore();
     }
 
     void Update()
@@ -123,7 +126,7 @@ public class Health : NetworkBehaviour
     [Command]
     public void CmdTakeDamage(int amount, int team, bool fatal)
     {
-        TakeDamage(amount, team, fatal);
+        ServerTakeDamage(amount, team, fatal);
     }
 
     [Command]
@@ -151,10 +154,9 @@ public class Health : NetworkBehaviour
     }
 
     [Server]
-    private void TakeDamage(int amount, int team, bool fatal)
+    public void ServerTakeDamage(int amount, int team, bool fatal)
     {
-        if (fatal) FindObjectOfType<TeamControl>().IncreaseByOne(team);
-        RpcTakeDamage(amount, fatal);
+        RpcTakeDamage(amount, fatal, team);
     }
 
     [ClientRpc]
@@ -164,7 +166,7 @@ public class Health : NetworkBehaviour
     }
 
     [ClientRpc]
-    public void RpcTakeDamage(int amount, bool died)
+    public void RpcTakeDamage(int amount, bool died, int team)
     {
         audioSourceHurt.PlayOneShot(hurtAudio);
         if (died)
@@ -172,6 +174,11 @@ public class Health : NetworkBehaviour
             health = 0;
             stamina = 0;
             pr.Die();
+            if (isLocalPlayer)
+            {
+                Debug.Log("Potato");
+                CmdUpScore(team);
+            }
         }
         else
         {
@@ -182,6 +189,12 @@ public class Health : NetworkBehaviour
             health = health - amount;
             if (dependOnHealth && stamina > health) ChangeStamina(-1);
         }
+    }
+    
+    [Command]
+    void CmdUpScore(int team)
+    {
+        FindObjectOfType<TeamControl>().IncreaseByOne(team);
     }
 
     [ClientRpc]
@@ -261,19 +274,22 @@ public class Health : NetworkBehaviour
 
     public void UpdateKillText(int target, int blue, int red, int won)
     {
-        TargetInfoText.text = "TARGET\n" + target;
-        blueTeamKillsText.text = blue.ToString();
-        redTeamKillsText.text = red.ToString();
+        if (isLocalPlayer)
+        {
+            TargetInfoText.text = "TARGET\n" + target;
+            blueTeamKillsText.text = blue.ToString();
+            redTeamKillsText.text = red.ToString();
 
-        if (won == 1)
-        {
-            winText.color = Color.blue;
-            winText.text = "TEAM BLUE WINS!";
-        }
-        if (won == 2)
-        {
-            winText.color = Color.red;
-            winText.text = "TEAM RED WINS!";
+            if (won == 1)
+            {
+                winText.color = Color.blue;
+                winText.text = "TEAM BLUE WINS!";
+            }
+            if (won == 2)
+            {
+                winText.color = Color.red;
+                winText.text = "TEAM RED WINS!";
+            }
         }
     }
 

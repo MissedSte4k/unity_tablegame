@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
 
-public class KillOnTouchWithoudDestroying : NetworkBehaviour {
+public class KillOnTouch : NetworkBehaviour {
 
 	// Use this for initialization
 	void Start () {
@@ -17,15 +17,18 @@ public class KillOnTouchWithoudDestroying : NetworkBehaviour {
 
     void OnCollisionEnter(Collision collision)
     {
-        var hit = collision.gameObject;
-        var health = hit.GetComponent<Health>();
-        if (health != null)
+        if (isLocalPlayer)
         {
-            health.TakeDamage(health.CurrentHealth());
-        }
-        else
-        {
-            Destroy(collision.gameObject);
+            var hit = collision.gameObject;
+            var health = hit.GetComponent<Health>();
+            if (health != null)
+            {
+                health.TakeDamage(health.CurrentHealth());
+            }
+            else
+            {
+                Destroy(collision.gameObject);
+            }
         }
     }
 }
