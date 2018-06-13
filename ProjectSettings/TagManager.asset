@@ -12,6 +12,7 @@ TagManager:
   - Battery
   - Block
   - Weapon
+  - Bomb
   layers:
   - Default
   - TransparentFX

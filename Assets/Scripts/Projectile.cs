@@ -26,8 +26,8 @@ public class Projectile : NetworkBehaviour
     void Start()
     {
         if (team == 1){
-            GetComponent<TrailRenderer>().startColor = new Color(0, 0, 255);
-            GetComponent<TrailRenderer>().endColor = new Color(0, 0, 255);
+            GetComponent<TrailRenderer>().startColor = new Color(0, 0, 255, 100);
+            GetComponent<TrailRenderer>().endColor = new Color(0, 0, 255, 0);
         }
         rb = GetComponent<Rigidbody>();
         if (isOnFire)

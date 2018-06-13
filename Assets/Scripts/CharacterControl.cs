@@ -77,6 +77,7 @@ public class CharacterControl : NetworkBehaviour
     private float moveVertical = 0;
     private float mouseH = 0.0f;
     private float mouseV = 0.0f;
+    private float prevMouseV;
 
     private NetworkAnimator anim;
     private Rigidbody rb;
@@ -92,6 +93,8 @@ public class CharacterControl : NetworkBehaviour
     private int team;
     private int hasFlag = 0;
     private float airTime;
+
+    float time = 0;
 
     // Use this for initialization
     void Start()
@@ -131,6 +134,7 @@ public class CharacterControl : NetworkBehaviour
     {
         if (isLocalPlayer)
         {
+            Debug.Log(time += Time.deltaTime);
             moveVertical = 0;
             if (Input.GetKey(KeyBindManager.MyInstance.Keybinds["Button(MoveForward)"]) == true)
             {
@@ -170,6 +174,8 @@ public class CharacterControl : NetworkBehaviour
             //anim.animator.SetFloat("Speed", Input.GetAxis("Vertical"));
             //anim.animator.SetFloat("Strafe", Input.GetAxis("Horizontal"));
 
+            prevMouseV = mouseV;
+
             mouseH += Input.GetAxis("Mouse X") * mouseSensitivity;
             mouseV -= Input.GetAxis("Mouse Y") * mouseSensitivity;
 
@@ -186,7 +192,9 @@ public class CharacterControl : NetworkBehaviour
             playerCamera.transform.rotation = Quaternion.Euler(mouseV, mouseH, 0);
 
             anim.animator.SetFloat("Look", (mouseV + 60) / 120);
-            CmdLook(mouseV);
+
+            if (mouseV - prevMouseV != 0)
+                CmdLook(mouseV);
 
             if (Input.GetKeyDown(KeyBindManager.MyInstance.Keybinds["Button(Crouch)"]))
             {
@@ -310,11 +318,13 @@ public class CharacterControl : NetworkBehaviour
                     pitch = 0.833f * moveSpeed / referenceMoveSpeed / crouchSpeedMultiplier;
                 }
 
-                CmdWalkAudio(pitch, true, isCrouched);
+                if (audioSourceWalk.pitch != pitch || !audioSourceWalk.isPlaying)
+                    CmdWalkAudio(pitch, true, isCrouched);
             }
             else
             {
-                CmdWalkAudio(0, false, isCrouched);
+                if (audioSourceWalk.isPlaying)
+                    CmdWalkAudio(0, false, isCrouched);
             }
 
             if (!onGround && rb.velocity.y < 0)

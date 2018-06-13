@@ -5,19 +5,9 @@ using UnityEngine.Networking;
 
 public class KillOnTouch : NetworkBehaviour {
 
-	// Use this for initialization
-	void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
-
     void OnCollisionEnter(Collision collision)
     {
-        if (isLocalPlayer)
+        if (isServer)
         {
             var hit = collision.gameObject;
             var health = hit.GetComponent<Health>();

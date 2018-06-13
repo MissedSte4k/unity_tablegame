@@ -14,10 +14,6 @@ public class Health : NetworkBehaviour
     [SerializeField]
     private int maxStamina;
 
-    [Header("Makes maximum stamina dependent on current health")]
-    [SerializeField]
-    private bool dependOnHealth = false;
-
     [Header("Delay until stamina can recharge after being used")]
     [Range(0, 5)]
     public float rechargeDelay;
@@ -40,7 +36,7 @@ public class Health : NetworkBehaviour
     private PlayerRespawn pr;
 
     [SyncVar(hook = "OnHealthChanged")] private int health;
-    [SyncVar(hook = "OnStaminaChanged")] private float stamina;
+    private float stamina;
 
     void Start()
     {
@@ -51,16 +47,10 @@ public class Health : NetworkBehaviour
             canRecharge = true;
             healthSlider.maxValue = maxHealth;
             healthSlider.value = maxHealth;
-            if (dependOnHealth)
-            {
-                staminaSlider.maxValue = maxHealth;
-                staminaSlider.value = maxHealth;
-            }
-            else
-            {
-                staminaSlider.maxValue = maxStamina;
-                staminaSlider.value = maxStamina;
-            }
+            staminaSlider.maxValue = maxStamina;
+            staminaSlider.value = maxStamina;
+            stamina = maxStamina;
+            CmdMaxHealth();
         }
     }
 
@@ -105,12 +95,26 @@ public class Health : NetworkBehaviour
         }
     }
 
-    [ServerCallback]
     void OnEnable()
     {
+        if (isLocalPlayer)
+        {
+            stamina = maxStamina;
+            CmdMaxHealth();
+        }
+    }
+
+    [Command]
+    void CmdMaxHealth()
+    {
         health = maxHealth;
-        if (dependOnHealth) stamina = maxHealth;
-        else stamina = maxStamina;
+        RpcMaxHealth();
+    }
+
+    [ClientRpc]
+    void RpcMaxHealth()
+    {
+        health = maxHealth;
     }
 
     public void TakeDamage(int amount)
@@ -186,7 +190,6 @@ public class Health : NetworkBehaviour
                 GetComponent<NetworkAnimator>().SetTrigger("Hurt");
             }
             health = health - amount;
-            if (dependOnHealth && stamina > health) ChangeStamina(-1);
         }
     }
     
@@ -211,7 +214,7 @@ public class Health : NetworkBehaviour
 
     public bool IsStaminaMax()
     {
-        if (dependOnHealth && stamina >= health || !dependOnHealth && stamina >= maxHealth) return true;
+        if (stamina >= maxHealth) return true;
         else return false;
     }
 
@@ -229,24 +232,18 @@ public class Health : NetworkBehaviour
 
     public void ChangeStamina(float value)
     {
-        if (dependOnHealth && stamina + value > health) stamina = health;
-        else if (!dependOnHealth && stamina + value > maxStamina) stamina = maxStamina;
+        if (stamina + value > maxStamina) stamina = maxStamina;
         else if (stamina + value < 0) stamina = 0;
         else stamina = stamina + value;
-        if (isServer && value < 0)
+        OnStaminaChanged(stamina);
+        if (value < 0)
         {
-            RpcSetRecharge();
+            canRecharge = false;
+            delayRemaining = rechargeDelay;
         }
     }
 
-    [Command]
     public void CmdChangeStamina(float value)
-    {
-        ChangeStaminaServer(value);
-    }
-
-    [Server]
-    public void ChangeStaminaServer(float value)
     {
         ChangeStamina(value);
     }
@@ -265,8 +262,7 @@ public class Health : NetworkBehaviour
     void OnStaminaChanged(float value)
     {
         stamina = value;
-        if (dependOnHealth && stamina > health) stamina = health;
-        if (!dependOnHealth && stamina > maxStamina) stamina = maxStamina;
+        if (stamina > maxStamina) stamina = maxStamina;
         if (stamina < 0) stamina = 0;
         if (isLocalPlayer) staminaSlider.value = stamina;
     }
@@ -289,16 +285,6 @@ public class Health : NetworkBehaviour
                 winText.color = Color.red;
                 winText.text = "TEAM RED WINS!";
             }
-        }
-    }
-
-    [ClientRpc]
-    void RpcSetRecharge()
-    {
-        if (isLocalPlayer)
-        {
-            canRecharge = false;
-            delayRemaining = rechargeDelay;
         }
     }
 }
